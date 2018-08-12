@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FF8800</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorAppBackground">#E6E6E6</color>
+    <color name="colorBottomToolbar">#FAFAFA</color>
+    <color name="white">#ffffff</color>
+    <color name="gray">#424242</color>
+    <color name="black">#050000</color>
+    <color name="background">#EEEEEE</color>
+
+    <color name="transparent">#00000000</color>
+
+
+    <color name="navigation_view">#DADADC</color>
+    <color name="navigation_items">#303030</color>
+    <color name="gray_navegation">#ffffff</color>
+
+    <color name="blue_light">#33B5E5</color>
+    <color name="purple_light">#AA66CC</color>
+    <color name="green_light">#99CC00</color>
+    <color name="orange_light">#FFBB33</color>
+    <color name="red_light">#FF4444</color>
+
+    <color name="blue_dark">#0099CC</color>
+    <color name="purple_dark">#9933CC</color>
+    <color name="green_dark">#669900</color>
+    <color name="orange_dark">#FF8800</color>
+    <color name="red_dark">#CC0000</color>
+
+    <color name="primary_light">#3F51B5</color>
+    <color name="primary_dark_light">#303F9F</color>
+    <color name="accent_light">#FF4081</color>
+
+    <color name="unablebtn">#dcdcdc</color>
+    <color name="dark_bg">#505050</color>
+    <color name="light">#ECECEC</color>
+    <color name="green">#05D992</color>
+    <color name="zise">#E5004F</color>
+    <color name="dark_bg1">#414141</color>
+    <color name="pink">#FF5877</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="number_light_salmon">#FFA07A</color>
+
+    <color name="default_background_color">#E4E4E4</color>
+    <color name="title">#666666</color>
+    <color name="hint">#DDDDDD</color>
+
+    <!--  Note colors -->
+    <color name="colorDefault">#FAFAFA</color>
+    <color name="colorRed">#FF8A80</color>
+    <color name="colorOrange">#FFD181</color>
+    <color name="colorYellow">#FFFF8D</color>
+    <color name="colorGreen">#CDFF90</color>
+    <color name="colorCyan">#A7FEEB</color>
+    <color name="colorLightBlue">#80D8FE</color>
+    <color name="colorDarkBlue">#82B1FF</color>
+    <color name="colorPurple">#B388FE</color>
+    <color name="colorPink">#F9BBD0</color>
+    <color name="colorBrow">#D7CCC8</color>
+    <color name="colorGrey">#CFD8DD</color>
+
+   <!-- &lt;!&ndash; Basic colors &ndash;&gt;
+    <color name="colorBlack">#000000</color>
+
+
+    &lt;!&ndash; Text colors &ndash;&gt;
+    <color name="colorHint">#afafaf</color>-->
+</resources>

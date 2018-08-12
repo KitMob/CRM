@@ -1,0 +1,93 @@
+<resources>
+    <string name="app_name">CRM System</string>
+    <string name="ent_mail">Entry e-mail</string>
+    <string name="ent_pass">Entry password</string>
+    <string name="accept">Accept</string>
+    <string name="apply">Apply</string>
+    <string name="action_settings">Settings</string>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="user">User</string>
+    <string name="contragent">Contr Agent</string>
+    <string name="company">Company</string>
+    <string name="contacts">Contacts</string>
+    <string name="products">Products</string>
+    <string name="title_activity_user_module">User Module</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="title_activity_products_module">Products Module</string>
+    <string name="title_activity_contragent_module">Contragent Module</string>
+    <string name="title_activity_company_module">Company Module</string>
+    <string name="title_activity_contacts_module">Contacts Module</string>
+    <string name="change_theme">Change theme</string>
+    <string name="drk_lite">Dark/Light</string>
+
+    <string name="changge_to_night">Change to night</string>
+    <string name="changge_to_day">Change to light</string>
+    <string name="all">ALL</string>
+    <string name="create_user">CREATE</string>
+    <string name="delete_user">DELETE</string>
+
+    <!--content_user_module_info-->
+    <string name="name_user">name:</string>
+    <string name="surname_user">surname:</string>
+    <string name="further_user">further:</string>
+    <string name="phone_user">phone:</string>
+    <string name="birthday_user">birthday:</string>
+    <string name="country_user">country:</string>
+    <string name="city_user">city:</string>
+    <string name="job_user">job:</string>
+
+    <!--deleteUserTab-->
+    <string name="delete_user_name">Enter user name for deleting</string>
+
+
+    <string-array name="titles">
+        <item>New user</item>
+        <item>All Users</item>
+        <item>Delete users</item>
+    </string-array>
+    <string name="title_activity_dashboard">Dashboard</string>
+    <string name="tools">Tools</string>
+    <string name="communicate">Communicate</string>
+    <string name="prof">Profile</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="sales">Sales</string>
+
+    <!--Dashboard-->
+    <string name="create_new_note">Create new note...</string>
+    <string name="title_placeholder">Title</string>
+    <string name="note_placeholder">Note</string>
+    <string name="last_modification_date">Last modification date</string>
+    <string name="note_actions">Note actions</string>
+    <string name="note_types">note_types</string>
+    <string name="checkbox_notes_button">Checkbox notes button</string>
+    <string name="draw_notes_button">Draw notes button</string>
+    <string name="micro_notes_button">Micro notes button</string>
+    <string name="photo_notes_button">Photo notes button</string>
+    <string name="note_picture">Note picture</string>
+
+    <!-- Note colors -->
+    <color name="colorNoteDefault">#FAFAFA</color>
+    <color name="colorNoteRed">#FF8A80</color>
+    <color name="colorNoteOrange">#FFD181</color>
+    <color name="colorNoteYellow">#FFFF8D</color>
+    <color name="colorNoteGreen">#CDFF90</color>
+    <color name="colorNoteCyan">#A7FEEB</color>
+    <color name="colorNoteLightBlue">#80D8FE</color>
+    <color name="colorNoteDarkBlue">#82B1FF</color>
+    <color name="colorNotePurple">#B388FE</color>
+    <color name="colorNotePink">#F9BBD0</color>
+    <color name="colorNoteBrow">#D7CCC8</color>
+    <color name="colorNoteGrey">#CFD8DD</color>
+
+    <!-- Basic colors -->
+    <color name="colorBlack">#000000</color>
+
+
+    <!-- Text colors -->
+    <color name="colorHint">#afafaf</color>
+</resources>
