@@ -73,12 +73,14 @@ public class SimpleNoteCreation extends AppCompatActivity {
         notePosition = editionIntent.getIntExtra("position", -1);
 
         // Set activity default color
-        noteLayout.setBackgroundColor(Color.parseColor(color));
-        noteActionsLayout.setBackgroundColor(Color.parseColor(color));
-        bottomToolbar.setBackgroundColor(Color.parseColor(color));
-        noteColor = color;
+        if (android.os.Build.VERSION.SDK_INT >= 21) {
+            noteLayout.setBackgroundColor(Color.parseColor(color));
+            noteActionsLayout.setBackgroundColor(Color.parseColor(color));
+            bottomToolbar.setBackgroundColor(Color.parseColor(color));
+            noteColor = color;
 //        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(color)));
-        getWindow().setStatusBarColor(darkenNoteColor(Color.parseColor(noteColor), 0.7f));
+            getWindow().setStatusBarColor(darkenNoteColor(Color.parseColor(noteColor), 0.7f));
+        }
 
         // Set title and content if edit
         titleEditText.setText(lastTitle);
