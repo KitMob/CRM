@@ -38,7 +38,6 @@ public class SimpleNoteCreation extends AppCompatActivity {
 
     LinearLayout                        noteLayout, noteActionsLayout;
     TableLayout                         bottomToolbar;
-    android.support.v7.app.ActionBar    actionBar;
     ImageButton                         noteActionsButton;
 
     String                              noteColor;
@@ -55,7 +54,6 @@ public class SimpleNoteCreation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simple_note_creation);
 
-        actionBar = getSupportActionBar();
         titleEditText = findViewById(R.id.title_edit_text);
         contentEditText = findViewById(R.id.content_edit_text);
         colorPickerRadioGroup = findViewById(R.id.color_picker_radio_group);
@@ -164,7 +162,6 @@ public class SimpleNoteCreation extends AppCompatActivity {
                 noteLayout.setBackgroundColor(Color.parseColor(noteColor));
                 noteActionsLayout.setBackgroundColor(Color.parseColor(noteColor));
                 bottomToolbar.setBackgroundColor(Color.parseColor(noteColor));
-                actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(noteColor)));
                 getWindow().setStatusBarColor(darkenNoteColor(Color.parseColor(noteColor), 0.7f));
 
                 noteActionsButton.setBackgroundColor(darkenNoteColor(Color.parseColor(noteColor), 0.9f));
