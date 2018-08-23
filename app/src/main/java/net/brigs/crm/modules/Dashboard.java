@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -22,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import net.brigs.crm.R;
 import net.brigs.crm.modules.mykeep.GridSpacingItemDecoration;
@@ -115,6 +117,24 @@ public class Dashboard extends AppCompatActivity
             @SuppressLint("ResourceType")
             public void onClick(View v) {
                 Intent simpleNoteIntent = new Intent(getApplicationContext(), SimpleNoteCreation.class);
+                simpleNoteIntent.putExtra("title", "");
+                simpleNoteIntent.putExtra("content", "");
+                simpleNoteIntent.putExtra("color", getResources().getString(R.color.colorNoteDefault));
+                simpleNoteIntent.putExtra("creationDate", "");
+                simpleNoteIntent.putExtra("position", -1);
+                // TODO
+                startActivityForResult(simpleNoteIntent, 1);
+            }
+        });
+
+        // create_new_photo_note
+        ImageButton createNewPhotoNote = findViewById(R.id.create_new_photo_note);
+        createNewPhotoNote.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceType")
+            public void onClick(View v) {
+                Intent simpleNoteIntent = new Intent(getApplicationContext(), SimpleNoteCreation.class);
+                //TODO foto from camera
+                simpleNoteIntent.putExtra("photo","emma");
                 simpleNoteIntent.putExtra("title", "");
                 simpleNoteIntent.putExtra("content", "");
                 simpleNoteIntent.putExtra("color", getResources().getString(R.color.colorNoteDefault));

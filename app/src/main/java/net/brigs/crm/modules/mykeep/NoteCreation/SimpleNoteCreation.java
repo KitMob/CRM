@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TableLayout;
@@ -39,6 +41,7 @@ public class SimpleNoteCreation extends AppCompatActivity {
     LinearLayout                        noteLayout, noteActionsLayout;
     TableLayout                         bottomToolbar;
     ImageButton                         noteActionsButton;
+    ImageView                           imageViewPhoto;
 
     String                              noteColor;
     String                              lastUpdateDateString, creationDateString;
@@ -53,7 +56,7 @@ public class SimpleNoteCreation extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simple_note_creation);
-
+        imageViewPhoto = findViewById(R.id.simple_note_creation_image_view_photo);
         titleEditText = findViewById(R.id.title_edit_text);
         contentEditText = findViewById(R.id.content_edit_text);
         colorPickerRadioGroup = findViewById(R.id.color_picker_radio_group);
@@ -64,6 +67,7 @@ public class SimpleNoteCreation extends AppCompatActivity {
         noteActionsButton = findViewById(R.id.note_actions_button);
 
         Intent editionIntent = getIntent();
+        String photo = editionIntent.getStringExtra("photo");
         lastTitle = editionIntent.getStringExtra("title");
         lastContent = editionIntent.getStringExtra("content");
         String color = editionIntent.getStringExtra("color");
@@ -79,6 +83,9 @@ public class SimpleNoteCreation extends AppCompatActivity {
         getWindow().setStatusBarColor(darkenNoteColor(Color.parseColor(noteColor), 0.7f));
 
         // Set title and content if edit
+        if(photo !=null) {
+            imageViewPhoto.setImageResource(this.getResources().getIdentifier(photo,"drawable",this.getPackageName()));
+        }
         titleEditText.setText(lastTitle);
         contentEditText.setText(lastContent);
 
