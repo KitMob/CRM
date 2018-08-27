@@ -5,12 +5,16 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.Image;
+import android.icu.text.SimpleDateFormat;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -19,11 +23,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import net.brigs.crm.R;
 import net.brigs.crm.modules.mykeep.GridSpacingItemDecoration;
@@ -35,6 +41,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -42,11 +49,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 
 public class Dashboard extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private static final String TAG = "myLog";
+
+    static final int REQUEST_TAKE_PHOTO = 1;
+    private String mCurrentPhotoPath;
+    private Uri photoURI;
+
 
     List<ItemObjects> staggeredList;
     SolventRecyclerViewAdapter rcAdapter;
@@ -54,13 +68,13 @@ public class Dashboard extends AppCompatActivity
     List<ItemObjects> listViewItems;
     RecyclerView recyclerView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -132,19 +146,12 @@ public class Dashboard extends AppCompatActivity
         createNewPhotoNote.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("ResourceType")
             public void onClick(View v) {
-                Intent simpleNoteIntent = new Intent(getApplicationContext(), SimpleNoteCreation.class);
-                //TODO foto from camera
-                simpleNoteIntent.putExtra("photo","emma");
-                simpleNoteIntent.putExtra("title", "");
-                simpleNoteIntent.putExtra("content", "");
-                simpleNoteIntent.putExtra("color", getResources().getString(R.color.colorNoteDefault));
-                simpleNoteIntent.putExtra("creationDate", "");
-                simpleNoteIntent.putExtra("position", -1);
-                // TODO
-                startActivityForResult(simpleNoteIntent, 1);
+                //TODO
+                dispatchTakePictureIntent();
             }
         });
     }
+
 
     // Drag and drop
     ItemTouchHelper.Callback _ithCallback = new ItemTouchHelper.Callback() {
@@ -172,6 +179,9 @@ public class Dashboard extends AppCompatActivity
     // Get the data from the note creation
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        fotoFromCameraCoise(requestCode, resultCode, data);
+
         if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
 
             String noteJSON = data.getStringExtra("noteJSON");
@@ -184,7 +194,7 @@ public class Dashboard extends AppCompatActivity
                 String noteColor = json.getString("noteColor");
                 String noteLastUpdateDate = json.getString("noteLastUpdateDate");
                 String noteCreationDate = json.getString("noteCreationDate");
-                int    notePosition = json.getInt("notePosition");
+                int notePosition = json.getInt("notePosition");
 
                 saveNote(noteJSON, noteCreationDate);
 
@@ -192,8 +202,7 @@ public class Dashboard extends AppCompatActivity
                     listViewItems.remove(notePosition);
                     listViewItems.add(notePosition, new ItemObjects(noteTitle, noteContent, noteColor, noteLastUpdateDate, noteCreationDate));
                     rcAdapter.notifyItemChanged(notePosition);
-                }
-                else {
+                } else {
                     listViewItems.add(new ItemObjects(noteTitle, noteContent, noteColor, noteLastUpdateDate, noteCreationDate));
                     rcAdapter.notifyDataSetChanged();
                 }
@@ -203,6 +212,7 @@ public class Dashboard extends AppCompatActivity
             }
         }
     }
+
 
     // Load notes from internal storage
     private List<ItemObjects> loadNotes() {
@@ -346,13 +356,13 @@ public class Dashboard extends AppCompatActivity
 
 
     @SuppressLint("ResourceType")
-    private List<ItemObjects> getListItemData(){
+    private List<ItemObjects> getListItemData() {
 
         listViewItems = new ArrayList<>();
 
         listViewItems.add(new ItemObjects("", "Cat cat cat cat", getResources().getString(R.color.colorNoteRed)));
         listViewItems.add(new ItemObjects("Lorem", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nullapariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", getResources().getString(R.color.colorNoteOrange)));
-        listViewItems.add(new ItemObjects("","Length length length length", getResources().getString(R.color.colorNoteYellow)));
+        listViewItems.add(new ItemObjects("", "Length length length length", getResources().getString(R.color.colorNoteYellow)));
         listViewItems.add(new ItemObjects("", "String string string string", getResources().getString(R.color.colorNoteGreen)));
         listViewItems.add(new ItemObjects("", "Content content content content", getResources().getString(R.color.colorNoteCyan)));
         listViewItems.add(new ItemObjects("", "Size size size size size size size size size size size", getResources().getString(R.color.colorNoteLightBlue)));
@@ -362,7 +372,7 @@ public class Dashboard extends AppCompatActivity
 
         listViewItems.add(new ItemObjects("", "test test test test test test", getResources().getString(R.color.colorNoteRed)));
         listViewItems.add(new ItemObjects("Lorem", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nullapariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", getResources().getString(R.color.colorNoteOrange)));
-        listViewItems.add(new ItemObjects("Alkane","Hello Markdown", R.drawable.one, getResources().getString(R.color.colorNoteYellow)));
+        listViewItems.add(new ItemObjects("Alkane", "Hello Markdown", R.drawable.one, getResources().getString(R.color.colorNoteYellow)));
         listViewItems.add(new ItemObjects("Ethane", "Hello Markdown", getResources().getString(R.color.colorNoteGreen)));
         listViewItems.add(new ItemObjects("Alkyne", "Hello Markdown", R.drawable.three, getResources().getString(R.color.colorNoteCyan)));
         listViewItems.add(new ItemObjects("Benzene", "Hello Markdown", R.drawable.four, getResources().getString(R.color.colorNoteLightBlue)));
@@ -434,4 +444,75 @@ public class Dashboard extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+//for foto from camera
+
+
+
+
+    private void fotoFromCameraCoise(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
+            startSimpleNoteIntentForFoto(photoURI);
+        }
+    }
+
+
+    @SuppressLint("ResourceType")
+    private void startSimpleNoteIntentForFoto(Uri photo) {
+        Intent simpleNoteIntent = new Intent(getApplicationContext(), SimpleNoteCreation.class);
+        simpleNoteIntent.putExtra("photo", photo.toString());
+        simpleNoteIntent.putExtra("title", "");
+        simpleNoteIntent.putExtra("content", "");
+
+        simpleNoteIntent.putExtra("color", getResources().getString(R.color.colorNoteDefault));
+        simpleNoteIntent.putExtra("creationDate", "");
+        simpleNoteIntent.putExtra("position", -1);
+        startActivityForResult(simpleNoteIntent, 1);
+    }
+
+
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        } else {
+            timeStamp = String.valueOf(System.currentTimeMillis());
+        }
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+                Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show();
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                photoURI = FileProvider.getUriForFile(this,
+                        "net.brigs.crm.provider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+            }
+        }
+    }
+
+
 }

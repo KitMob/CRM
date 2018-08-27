@@ -7,11 +7,15 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -27,11 +31,13 @@ import net.brigs.crm.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 public class SimpleNoteCreation extends AppCompatActivity {
+
 
     EditText titleEditText;
     EditText contentEditText;
@@ -85,7 +91,8 @@ public class SimpleNoteCreation extends AppCompatActivity {
 
         // Set title and content if edit
         if (photo != null) {
-            imageViewPhoto.setImageResource(this.getResources().getIdentifier(photo, "drawable", this.getPackageName()));
+            imageViewPhoto.setImageURI(Uri.parse(photo));
+
         }
         titleEditText.setText(lastTitle);
         contentEditText.setText(lastContent);
@@ -212,5 +219,11 @@ public class SimpleNoteCreation extends AppCompatActivity {
             setResult(Activity.RESULT_OK, resultIntent);
         }
         this.finish();
+
+
     }
+
+
+
+
 }
