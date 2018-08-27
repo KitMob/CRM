@@ -454,6 +454,9 @@ public class Dashboard extends AppCompatActivity
     private void fotoFromCameraCoise(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
             startSimpleNoteIntentForFoto(photoURI);
+        }else if (resultCode == RESULT_CANCELED) {
+            //TODO
+            Log.d(TAG, "Canceled");
         }
     }
 
