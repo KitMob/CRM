@@ -6,15 +6,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TableLayout;
@@ -25,27 +31,30 @@ import net.brigs.crm.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 public class SimpleNoteCreation extends AppCompatActivity {
 
-    EditText                            titleEditText;
-    EditText                            contentEditText;
-    TextView                            lastUpdateDateTextView;
-    RadioGroup                          colorPickerRadioGroup;
 
-    LinearLayout                        noteLayout, noteActionsLayout;
-    TableLayout                         bottomToolbar;
-    android.support.v7.app.ActionBar    actionBar;
-    ImageButton                         noteActionsButton;
+    EditText titleEditText;
+    EditText contentEditText;
+    TextView lastUpdateDateTextView;
+    RadioGroup colorPickerRadioGroup;
 
-    String                              noteColor;
-    String                              lastUpdateDateString, creationDateString;
+    LinearLayout noteLayout, noteActionsLayout;
+    TableLayout bottomToolbar;
+    ImageButton noteActionsButton;
+    ImageView imageViewPhoto;
 
-    String                              lastTitle, lastContent;
-    int                                 notePosition;
+    String photo;
+    String noteColor;
+    String lastUpdateDateString, creationDateString;
+
+    String lastTitle, lastContent;
+    int notePosition;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("SetTextI18n")
@@ -54,8 +63,7 @@ public class SimpleNoteCreation extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simple_note_creation);
-
-        actionBar = getSupportActionBar();
+        imageViewPhoto = findViewById(R.id.simple_note_creation_image_view_photo);
         titleEditText = findViewById(R.id.title_edit_text);
         contentEditText = findViewById(R.id.content_edit_text);
         colorPickerRadioGroup = findViewById(R.id.color_picker_radio_group);
@@ -66,6 +74,7 @@ public class SimpleNoteCreation extends AppCompatActivity {
         noteActionsButton = findViewById(R.id.note_actions_button);
 
         Intent editionIntent = getIntent();
+        photo = editionIntent.getStringExtra("photo");
         lastTitle = editionIntent.getStringExtra("title");
         lastContent = editionIntent.getStringExtra("content");
         String color = editionIntent.getStringExtra("color");
@@ -81,6 +90,10 @@ public class SimpleNoteCreation extends AppCompatActivity {
         getWindow().setStatusBarColor(darkenNoteColor(Color.parseColor(noteColor), 0.7f));
 
         // Set title and content if edit
+        if (photo != null) {
+            imageViewPhoto.setImageURI(Uri.parse(photo));
+
+        }
         titleEditText.setText(lastTitle);
         contentEditText.setText(lastContent);
 
@@ -109,8 +122,7 @@ public class SimpleNoteCreation extends AppCompatActivity {
                 if (noteActionsLayout.getVisibility() == View.GONE) {
                     noteActionsLayout.setVisibility(View.VISIBLE);
                     noteActionsButton.setBackgroundColor(darkenNoteColor(Color.parseColor(noteColor), 0.9f));
-                }
-                else if (noteActionsLayout.getVisibility() == View.VISIBLE) {
+                } else if (noteActionsLayout.getVisibility() == View.VISIBLE) {
                     noteActionsButton.setBackgroundColor(Color.parseColor(noteColor));
                     noteActionsLayout.setVisibility(View.GONE);
                 }
@@ -127,44 +139,32 @@ public class SimpleNoteCreation extends AppCompatActivity {
                 if (checkedId == R.id.default_color_checkbox) {
                     noteColor = getResources().getString(R.color.colorNoteDefault);
 
-                }
-                else if (checkedId == R.id.red_color_checkbox) {
+                } else if (checkedId == R.id.red_color_checkbox) {
                     noteColor = getResources().getString(R.color.colorNoteRed);
-                }
-                else if (checkedId == R.id.orange_color_checkbox) {
+                } else if (checkedId == R.id.orange_color_checkbox) {
                     noteColor = getResources().getString(R.color.colorNoteOrange);
-                }
-                else if (checkedId == R.id.yellow_color_checkbox) {
+                } else if (checkedId == R.id.yellow_color_checkbox) {
                     noteColor = getResources().getString(R.color.colorNoteYellow);
-                }
-                else if (checkedId == R.id.green_color_checkbox) {
+                } else if (checkedId == R.id.green_color_checkbox) {
                     noteColor = getResources().getString(R.color.colorNoteGreen);
-                }
-                else if (checkedId == R.id.cyan_color_checkbox) {
+                } else if (checkedId == R.id.cyan_color_checkbox) {
                     noteColor = getResources().getString(R.color.colorNoteCyan);
-                }
-                else if (checkedId == R.id.light_blue_color_checkbox) {
+                } else if (checkedId == R.id.light_blue_color_checkbox) {
                     noteColor = getResources().getString(R.color.colorNoteLightBlue);
-                }
-                else if (checkedId == R.id.dark_blue_color_checkbox) {
+                } else if (checkedId == R.id.dark_blue_color_checkbox) {
                     noteColor = getResources().getString(R.color.colorNoteDarkBlue);
-                }
-                else if (checkedId == R.id.purple_color_checkbox) {
+                } else if (checkedId == R.id.purple_color_checkbox) {
                     noteColor = getResources().getString(R.color.colorNotePurple);
-                }
-                else if (checkedId == R.id.pink_color_checkbox) {
+                } else if (checkedId == R.id.pink_color_checkbox) {
                     noteColor = getResources().getString(R.color.colorNotePink);
-                }
-                else if (checkedId == R.id.brown_color_checkbox) {
+                } else if (checkedId == R.id.brown_color_checkbox) {
                     noteColor = getResources().getString(R.color.colorNoteBrow);
-                }
-                else if (checkedId == R.id.grey_color_checkbox) {
+                } else if (checkedId == R.id.grey_color_checkbox) {
                     noteColor = getResources().getString(R.color.colorNoteGrey);
                 }
                 noteLayout.setBackgroundColor(Color.parseColor(noteColor));
                 noteActionsLayout.setBackgroundColor(Color.parseColor(noteColor));
                 bottomToolbar.setBackgroundColor(Color.parseColor(noteColor));
-                actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(noteColor)));
                 getWindow().setStatusBarColor(darkenNoteColor(Color.parseColor(noteColor), 0.7f));
 
                 noteActionsButton.setBackgroundColor(darkenNoteColor(Color.parseColor(noteColor), 0.9f));
@@ -178,9 +178,9 @@ public class SimpleNoteCreation extends AppCompatActivity {
         int g = Math.round(Color.green(color) * factor);
         int b = Math.round(Color.blue(color) * factor);
         return Color.argb(a,
-                Math.min(r,255),
-                Math.min(g,255),
-                Math.min(b,255));
+                Math.min(r, 255),
+                Math.min(g, 255),
+                Math.min(b, 255));
     }
 
     // Save note content on back pressed
@@ -206,6 +206,9 @@ public class SimpleNoteCreation extends AppCompatActivity {
                 noteJSON.put("noteCreationDate", creationDateString);
                 noteJSON.put("noteLastUpdateDate", lastUpdateDateString);
                 noteJSON.put("notePosition", notePosition);
+                if (photo != null) {
+                    noteJSON.put("imageViewPhoto", imageViewPhoto.getDrawable());
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -216,5 +219,11 @@ public class SimpleNoteCreation extends AppCompatActivity {
             setResult(Activity.RESULT_OK, resultIntent);
         }
         this.finish();
+
+
     }
+
+
+
+
 }
