@@ -26,7 +26,6 @@
             android:paddingStart="12dp"
             android:paddingTop="8dp"
             app:srcCompat="@drawable/black_border"
-            android:src="@drawable/emma"
             android:gravity="top|left"
             />
 
