@@ -57,7 +57,7 @@ public class Dashboard extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "myLog";
 
-    static final int REQUEST_TAKE_PHOTO = 1;
+    static final int REQUEST_TAKE_PHOTO = 2;
     private String mCurrentPhotoPath;
     private Uri photoURI;
 
@@ -189,6 +189,9 @@ public class Dashboard extends AppCompatActivity
             try {
                 JSONObject json = new JSONObject(noteJSON);
 
+                int noteLastFoto = json.getInt("imageViewPhoto");
+                Log.d(TAG, "noteLastFoto = " + noteLastFoto);
+
                 String noteTitle = json.getString("noteTitle");
                 String noteContent = json.getString("noteContent");
                 String noteColor = json.getString("noteColor");
@@ -197,19 +200,33 @@ public class Dashboard extends AppCompatActivity
                 int notePosition = json.getInt("notePosition");
 
                 saveNote(noteJSON, noteCreationDate);
+                Log.d(TAG, "Get the data from the note creation: " + noteJSON.toString());
+                //TODO
 
                 if (notePosition > -1) {
+
                     listViewItems.remove(notePosition);
-                    listViewItems.add(notePosition, new ItemObjects(noteTitle, noteContent, noteColor, noteLastUpdateDate, noteCreationDate));
+
+                    notePositionChecker(noteLastFoto, noteTitle, noteContent, noteColor, noteLastUpdateDate, noteCreationDate, notePosition);
                     rcAdapter.notifyItemChanged(notePosition);
                 } else {
-                    listViewItems.add(new ItemObjects(noteTitle, noteContent, noteColor, noteLastUpdateDate, noteCreationDate));
+                    notePositionChecker(noteLastFoto, noteTitle, noteContent, noteColor, noteLastUpdateDate, noteCreationDate, notePosition);
                     rcAdapter.notifyDataSetChanged();
                 }
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+
+    private void notePositionChecker(int noteLastFoto, String noteTitle, String noteContent, String noteColor, String noteLastUpdateDate, String noteCreationDate, int notePosition) {
+        if (noteLastFoto == 0) {
+            Log.d(TAG, "notePoto: " + noteLastFoto);
+            listViewItems.add(new ItemObjects(noteTitle, noteContent, noteColor, noteLastUpdateDate, noteCreationDate));
+        } else {
+            listViewItems.add(notePosition, new ItemObjects(noteTitle, noteContent, noteLastFoto,noteColor, noteLastUpdateDate, noteCreationDate));
         }
     }
 
@@ -299,9 +316,26 @@ public class Dashboard extends AppCompatActivity
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            int notePoto = 0;
+            try {
+                if (json != null) {
+                    notePoto = json.getInt("imageViewPhoto");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //TODO
 
-            if (secure)
-                listViewItems.add(new ItemObjects(noteTitle, noteContent, noteColor, noteLastUpdateDate, noteCreationDate));
+            if (secure) {
+                if (notePoto != 0) {
+                    Log.d(TAG, "notePoto: " + notePoto);
+                    listViewItems.add(new ItemObjects(noteTitle, noteContent, notePoto, noteColor, noteLastUpdateDate, noteCreationDate));
+                } else {
+                    //TODO
+                    listViewItems.add(new ItemObjects(noteTitle, noteContent, noteColor, noteLastUpdateDate, noteCreationDate));
+
+                }
+            }
         }
         return listViewItems;
     }
@@ -449,13 +483,11 @@ public class Dashboard extends AppCompatActivity
 //for foto from camera
 
 
-
-
     private void fotoFromCameraCoise(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
             startSimpleNoteIntentForFoto(photoURI);
-        }else if (resultCode == RESULT_CANCELED) {
-            //TODO
+        } else if (resultCode == RESULT_CANCELED) {
+
             Log.d(TAG, "Canceled");
         }
     }
@@ -473,7 +505,6 @@ public class Dashboard extends AppCompatActivity
         simpleNoteIntent.putExtra("position", -1);
         startActivityForResult(simpleNoteIntent, 1);
     }
-
 
 
     private File createImageFile() throws IOException {
