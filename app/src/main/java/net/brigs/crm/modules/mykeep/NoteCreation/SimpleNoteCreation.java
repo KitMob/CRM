@@ -1,6 +1,7 @@
 package net.brigs.crm.modules.mykeep.NoteCreation;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -91,7 +92,9 @@ public class SimpleNoteCreation extends AppCompatActivity {
 
         // Set title and content if edit
         if (photo != null) {
+            imageViewPhoto.setTag(photo);
             imageViewPhoto.setImageURI(Uri.parse(photo));
+
 
         }
         titleEditText.setText(lastTitle);
@@ -184,6 +187,8 @@ public class SimpleNoteCreation extends AppCompatActivity {
     }
 
     // Save note content on back pressed
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onBackPressed() {
 
@@ -191,11 +196,21 @@ public class SimpleNoteCreation extends AppCompatActivity {
         String titleText = titleEditText.getText().toString();
         String contentText = contentEditText.getText().toString();
 
-        if (!titleText.equals(lastTitle) || !contentText.equals(lastContent))
-            changed = true;
+        //TODO
+        String imageViewPhotoText = (String) imageViewPhoto.getTag();
+
+        if (photo != null && imageViewPhotoText != null) {
+            if (!titleText.equals(lastTitle) || !contentText.equals(lastContent) || !imageViewPhotoText.equals(Uri.parse(photo))) {
+                changed = true;
+            }
+        } else {
+            if (!titleText.equals(lastTitle) || !contentText.equals(lastContent)) {
+                changed = true;
+            }
+        }
 
         // Check if fields are not empty
-        if ((!TextUtils.isEmpty(titleText) || !TextUtils.isEmpty(contentText)) && changed) {
+        if ((!TextUtils.isEmpty(titleText) || !TextUtils.isEmpty(contentText) || photo != null) && changed) {
 
 
             JSONObject noteJSON = new JSONObject();
@@ -207,8 +222,13 @@ public class SimpleNoteCreation extends AppCompatActivity {
                 noteJSON.put("noteLastUpdateDate", lastUpdateDateString);
                 noteJSON.put("notePosition", notePosition);
                 if (photo != null) {
-                    noteJSON.put("imageViewPhoto", imageViewPhoto.getDrawable());
+                    Log.d("myLog", "imageViewPhoto = " + imageViewPhoto.getTag());
+                    noteJSON.put("imageViewPhoto", imageViewPhoto.getTag());
+                } else if (photo == null) {
+                    noteJSON.put("imageViewPhoto", 0);
+
                 }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -222,8 +242,6 @@ public class SimpleNoteCreation extends AppCompatActivity {
 
 
     }
-
-
 
 
 }

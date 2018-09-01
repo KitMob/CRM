@@ -8,63 +8,59 @@
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <LinearLayout
-        android:id="@+id/simple_note_creation_linear_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/bottom_toolbar"
-        android:background="@color/colorNoteDefault"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-
-        <ImageView
-            android:id="@+id/simple_note_creation_image_view_photo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingStart="12dp"
-            android:paddingTop="8dp"
-            app:srcCompat="@drawable/black_border"
-            android:gravity="top|left"
-            />
-
-        <EditText
-            android:id="@+id/title_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="0"
-            android:background="@android:color/transparent"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:focusedByDefault="false"
-            android:gravity="top|left"
-            android:hint="@string/title_placeholder"
-            android:inputType="textCapSentences"
-            android:paddingStart="12dp"
-            android:paddingTop="8dp"
-            android:textStyle="bold"
-            tools:ignore="RtlSymmetry" />
-
-        <EditText
-            android:id="@+id/content_edit_text"
+        <LinearLayout
+            android:id="@+id/simple_note_creation_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="50"
-            android:background="@android:color/transparent"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:focusedByDefault="false"
-            android:gravity="top|left"
-            android:hint="@string/note_placeholder"
-            android:inputType="textCapSentences|textMultiLine"
-            android:paddingStart="12dp"
-            android:paddingTop="8dp"
-            android:scrollbars="vertical"
-            tools:ignore="RtlHardcoded,RtlSymmetry" />
+            android:layout_above="@+id/bottom_toolbar"
+            android:background="@color/colorNoteDefault"
+            android:orientation="vertical">
 
-    </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+
+            <ImageView
+                android:id="@+id/simple_note_creation_image_view_photo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:gravity="top|left"
+                android:paddingStart="12dp"
+                android:paddingTop="8dp"
+                app:srcCompat="@drawable/black_border" />
+
+            <EditText
+                android:id="@+id/title_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@android:color/transparent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:focusedByDefault="false"
+                android:gravity="top|left"
+                android:hint="@string/title_placeholder"
+                android:inputType="textCapSentences"
+                android:paddingStart="12dp"
+                android:paddingTop="8dp"
+                android:textStyle="bold"
+                tools:ignore="RtlSymmetry" />
+
+            <EditText
+                android:id="@+id/content_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:focusedByDefault="false"
+                android:gravity="top|left"
+                android:hint="@string/note_placeholder"
+                android:inputType="textCapSentences|textMultiLine"
+                android:scrollbars="vertical"
+                tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
     <LinearLayout
         android:id="@+id/note_actions_layout"

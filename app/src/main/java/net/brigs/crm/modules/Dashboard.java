@@ -189,7 +189,7 @@ public class Dashboard extends AppCompatActivity
             try {
                 JSONObject json = new JSONObject(noteJSON);
 
-                int noteLastFoto = json.getInt("imageViewPhoto");
+                String noteLastFoto = json.getString("imageViewPhoto");
                 Log.d(TAG, "noteLastFoto = " + noteLastFoto);
 
                 String noteTitle = json.getString("noteTitle");
@@ -221,8 +221,8 @@ public class Dashboard extends AppCompatActivity
     }
 
 
-    private void notePositionChecker(int noteLastFoto, String noteTitle, String noteContent, String noteColor, String noteLastUpdateDate, String noteCreationDate, int notePosition) {
-        if (noteLastFoto == 0) {
+    private void notePositionChecker(String noteLastFoto, String noteTitle, String noteContent, String noteColor, String noteLastUpdateDate, String noteCreationDate, int notePosition) {
+        if (noteLastFoto.equals(0)) {
             Log.d(TAG, "notePoto: " + noteLastFoto);
             listViewItems.add(new ItemObjects(noteTitle, noteContent, noteColor, noteLastUpdateDate, noteCreationDate));
         } else {
@@ -266,6 +266,7 @@ public class Dashboard extends AppCompatActivity
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
 
             JSONObject json = null;
             try {
@@ -316,10 +317,10 @@ public class Dashboard extends AppCompatActivity
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            int notePoto = 0;
+            String notePoto = null;
             try {
                 if (json != null) {
-                    notePoto = json.getInt("imageViewPhoto");
+                    notePoto = json.getString("imageViewPhoto");
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -327,7 +328,7 @@ public class Dashboard extends AppCompatActivity
             //TODO
 
             if (secure) {
-                if (notePoto != 0) {
+                if (notePoto != null) {
                     Log.d(TAG, "notePoto: " + notePoto);
                     listViewItems.add(new ItemObjects(noteTitle, noteContent, notePoto, noteColor, noteLastUpdateDate, noteCreationDate));
                 } else {
@@ -406,18 +407,18 @@ public class Dashboard extends AppCompatActivity
 
         listViewItems.add(new ItemObjects("", "test test test test test test", getResources().getString(R.color.colorNoteRed)));
         listViewItems.add(new ItemObjects("Lorem", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nullapariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", getResources().getString(R.color.colorNoteOrange)));
-        listViewItems.add(new ItemObjects("Alkane", "Hello Markdown", R.drawable.one, getResources().getString(R.color.colorNoteYellow)));
+        listViewItems.add(new ItemObjects("Alkane", "Hello Markdown", String.valueOf(R.drawable.one), getResources().getString(R.color.colorNoteYellow)));
         listViewItems.add(new ItemObjects("Ethane", "Hello Markdown", getResources().getString(R.color.colorNoteGreen)));
-        listViewItems.add(new ItemObjects("Alkyne", "Hello Markdown", R.drawable.three, getResources().getString(R.color.colorNoteCyan)));
-        listViewItems.add(new ItemObjects("Benzene", "Hello Markdown", R.drawable.four, getResources().getString(R.color.colorNoteLightBlue)));
-        listViewItems.add(new ItemObjects("Amide", "Hello Markdown", R.drawable.one, getResources().getString(R.color.colorNoteDarkBlue)));
-        listViewItems.add(new ItemObjects("Amino Acid", "Hello Markdown", R.drawable.two, getResources().getString(R.color.colorNotePurple)));
-        listViewItems.add(new ItemObjects("Phenol", "Hello Markdown", getResources().getString(R.color.colorNotePink)));
-        listViewItems.add(new ItemObjects("Carbonxylic", "Hello Markdown", R.drawable.four, getResources().getString(R.color.colorNoteRed)));
-        listViewItems.add(new ItemObjects("Nitril", "Hello Markdown", R.drawable.one, getResources().getString(R.color.colorNoteOrange)));
-        listViewItems.add(new ItemObjects("Ether", "Hello Markdown", R.drawable.two, getResources().getString(R.color.colorNoteYellow)));
-        listViewItems.add(new ItemObjects("Ester", "Hello Markdown", R.drawable.three, getResources().getString(R.color.colorNoteGreen)));
-        listViewItems.add(new ItemObjects("Alcohol", "Hello Markdown", getResources().getString(R.color.colorNoteCyan)));
+//        listViewItems.add(new ItemObjects("Alkyne", "Hello Markdown", R.drawable.three, getResources().getString(R.color.colorNoteCyan)));
+//        listViewItems.add(new ItemObjects("Benzene", "Hello Markdown", R.drawable.four, getResources().getString(R.color.colorNoteLightBlue)));
+//        listViewItems.add(new ItemObjects("Amide", "Hello Markdown", R.drawable.one, getResources().getString(R.color.colorNoteDarkBlue)));
+//        listViewItems.add(new ItemObjects("Amino Acid", "Hello Markdown", R.drawable.two, getResources().getString(R.color.colorNotePurple)));
+//        listViewItems.add(new ItemObjects("Phenol", "Hello Markdown", getResources().getString(R.color.colorNotePink)));
+//        listViewItems.add(new ItemObjects("Carbonxylic", "Hello Markdown", R.drawable.four, getResources().getString(R.color.colorNoteRed)));
+//        listViewItems.add(new ItemObjects("Nitril", "Hello Markdown", R.drawable.one, getResources().getString(R.color.colorNoteOrange)));
+//        listViewItems.add(new ItemObjects("Ether", "Hello Markdown", R.drawable.two, getResources().getString(R.color.colorNoteYellow)));
+//        listViewItems.add(new ItemObjects("Ester", "Hello Markdown", R.drawable.three, getResources().getString(R.color.colorNoteGreen)));
+//        listViewItems.add(new ItemObjects("Alcohol", "Hello Markdown", getResources().getString(R.color.colorNoteCyan)));
         listViewItems.add(new ItemObjects("Title only", "", getResources().getString(R.color.colorNoteLightBlue)));
         listViewItems.add(new ItemObjects("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "", getResources().getString(R.color.colorNoteDarkBlue)));
         listViewItems.add(new ItemObjects("", "Content only", getResources().getString(R.color.colorNotePurple)));
