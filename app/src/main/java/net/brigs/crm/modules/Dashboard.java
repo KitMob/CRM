@@ -112,9 +112,6 @@ public class Dashboard extends AppCompatActivity
         int spacing = (int) (1 * scale + 0.5f);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(spacing));
 
-        // Load data
-        //staggeredList = getListItemData();
-
         // Load notes from internal storage
         staggeredList = loadNotes();
 
@@ -390,47 +387,7 @@ public class Dashboard extends AppCompatActivity
     }
 
 
-    @SuppressLint("ResourceType")
-    private List<ItemObjects> getListItemData() {
 
-        listViewItems = new ArrayList<>();
-
-        listViewItems.add(new ItemObjects("", "Cat cat cat cat", getResources().getString(R.color.colorNoteRed)));
-        listViewItems.add(new ItemObjects("Lorem", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nullapariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", getResources().getString(R.color.colorNoteOrange)));
-        listViewItems.add(new ItemObjects("", "Length length length length", getResources().getString(R.color.colorNoteYellow)));
-        listViewItems.add(new ItemObjects("", "String string string string", getResources().getString(R.color.colorNoteGreen)));
-        listViewItems.add(new ItemObjects("", "Content content content content", getResources().getString(R.color.colorNoteCyan)));
-        listViewItems.add(new ItemObjects("", "Size size size size size size size size size size size", getResources().getString(R.color.colorNoteLightBlue)));
-        listViewItems.add(new ItemObjects("", "Char char char char char char char", getResources().getString(R.color.colorNoteDarkBlue)));
-        listViewItems.add(new ItemObjects("", "Dog dog dog dog dog dog", getResources().getString(R.color.colorNotePurple)));
-        listViewItems.add(new ItemObjects("", "Int hold dog cat hold hold hold cat hold hold dog hold int hold hold hold hold hold", getResources().getString(R.color.colorNotePink)));
-
-        listViewItems.add(new ItemObjects("", "test test test test test test", getResources().getString(R.color.colorNoteRed)));
-        listViewItems.add(new ItemObjects("Lorem", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nullapariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", getResources().getString(R.color.colorNoteOrange)));
-        listViewItems.add(new ItemObjects("Alkane", "Hello Markdown", String.valueOf(R.drawable.one), getResources().getString(R.color.colorNoteYellow)));
-        listViewItems.add(new ItemObjects("Ethane", "Hello Markdown", getResources().getString(R.color.colorNoteGreen)));
-//        listViewItems.add(new ItemObjects("Alkyne", "Hello Markdown", R.drawable.three, getResources().getString(R.color.colorNoteCyan)));
-//        listViewItems.add(new ItemObjects("Benzene", "Hello Markdown", R.drawable.four, getResources().getString(R.color.colorNoteLightBlue)));
-//        listViewItems.add(new ItemObjects("Amide", "Hello Markdown", R.drawable.one, getResources().getString(R.color.colorNoteDarkBlue)));
-//        listViewItems.add(new ItemObjects("Amino Acid", "Hello Markdown", R.drawable.two, getResources().getString(R.color.colorNotePurple)));
-//        listViewItems.add(new ItemObjects("Phenol", "Hello Markdown", getResources().getString(R.color.colorNotePink)));
-//        listViewItems.add(new ItemObjects("Carbonxylic", "Hello Markdown", R.drawable.four, getResources().getString(R.color.colorNoteRed)));
-//        listViewItems.add(new ItemObjects("Nitril", "Hello Markdown", R.drawable.one, getResources().getString(R.color.colorNoteOrange)));
-//        listViewItems.add(new ItemObjects("Ether", "Hello Markdown", R.drawable.two, getResources().getString(R.color.colorNoteYellow)));
-//        listViewItems.add(new ItemObjects("Ester", "Hello Markdown", R.drawable.three, getResources().getString(R.color.colorNoteGreen)));
-//        listViewItems.add(new ItemObjects("Alcohol", "Hello Markdown", getResources().getString(R.color.colorNoteCyan)));
-        listViewItems.add(new ItemObjects("Title only", "", getResources().getString(R.color.colorNoteLightBlue)));
-        listViewItems.add(new ItemObjects("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "", getResources().getString(R.color.colorNoteDarkBlue)));
-        listViewItems.add(new ItemObjects("", "Content only", getResources().getString(R.color.colorNotePurple)));
-        listViewItems.add(new ItemObjects("", "Kkk", getResources().getString(R.color.colorNotePink)));
-        listViewItems.add(new ItemObjects("", "Kkkkkk", getResources().getString(R.color.colorNoteRed)));
-        listViewItems.add(new ItemObjects("", "Kkkkkkkkkk", getResources().getString(R.color.colorNoteOrange)));
-        listViewItems.add(new ItemObjects("", "Kkkkkkkkkkkkk", getResources().getString(R.color.colorNoteYellow)));
-        listViewItems.add(new ItemObjects("", "Kkkkkkkkkkkkkkkkkkk", getResources().getString(R.color.colorNoteGreen)));
-        listViewItems.add(new ItemObjects("", "Kkkkkkkkkkkkkkkkkkkkkkkk", getResources().getString(R.color.colorNoteCyan)));
-
-        return listViewItems;
-    }
 
     // Check for read in external storage
     public boolean checkPermissionForReadExternalStorage() {
