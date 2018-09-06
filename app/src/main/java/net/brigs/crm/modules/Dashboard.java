@@ -207,7 +207,7 @@ public class Dashboard extends AppCompatActivity
                     notePositionChecker(noteLastFoto, noteTitle, noteContent, noteColor, noteLastUpdateDate, noteCreationDate, notePosition);
                     rcAdapter.notifyItemChanged(notePosition);
                 } else {
-                    notePositionChecker(noteLastFoto, noteTitle, noteContent, noteColor, noteLastUpdateDate, noteCreationDate, notePosition);
+                    notePositionChecker(noteLastFoto, noteTitle, noteContent, noteColor, noteLastUpdateDate, noteCreationDate);
                     rcAdapter.notifyDataSetChanged();
                 }
 
@@ -218,14 +218,26 @@ public class Dashboard extends AppCompatActivity
     }
 
 
-    private void notePositionChecker(String noteLastFoto, String noteTitle, String noteContent, String noteColor, String noteLastUpdateDate, String noteCreationDate, int notePosition) {
+    private void notePositionChecker(String noteLastFoto, String noteTitle, String noteContent, String noteColor, String noteLastUpdateDate,
+                                     String noteCreationDate, int notePosition) {
+        if (noteLastFoto.equals(0)) {
+            Log.d(TAG, "notePoto: " + noteLastFoto);
+            listViewItems.add(notePosition, new ItemObjects(noteTitle, noteContent, noteColor, noteLastUpdateDate, noteCreationDate));
+        } else {
+            listViewItems.add(notePosition, new ItemObjects(noteTitle, noteContent, noteLastFoto, noteColor, noteLastUpdateDate, noteCreationDate));
+        }
+    }
+
+    private void notePositionChecker(String noteLastFoto, String noteTitle, String noteContent, String noteColor, String noteLastUpdateDate, String noteCreationDate) {
         if (noteLastFoto.equals(0)) {
             Log.d(TAG, "notePoto: " + noteLastFoto);
             listViewItems.add(new ItemObjects(noteTitle, noteContent, noteColor, noteLastUpdateDate, noteCreationDate));
         } else {
-            listViewItems.add(notePosition, new ItemObjects(noteTitle, noteContent, noteLastFoto,noteColor, noteLastUpdateDate, noteCreationDate));
+            listViewItems.add(new ItemObjects(noteTitle, noteContent, noteLastFoto, noteColor, noteLastUpdateDate, noteCreationDate));
         }
     }
+
+
 
 
     // Load notes from internal storage
