@@ -57,6 +57,8 @@
                 android:hint="@string/note_placeholder"
                 android:inputType="textCapSentences|textMultiLine"
                 android:scrollbars="vertical"
+                android:paddingStart="12dp"
+                android:paddingTop="8dp"
                 tools:ignore="RtlHardcoded,RtlSymmetry" />
 
         </LinearLayout>
