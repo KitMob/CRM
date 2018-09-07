@@ -51,7 +51,7 @@ public class SimpleNoteCreation extends AppCompatActivity {
     ImageView imageViewPhoto;
 
     String photo;
-    String noteColor;
+    String noteColor, color;
     String lastUpdateDateString, creationDateString;
 
     String lastTitle, lastContent;
@@ -78,7 +78,7 @@ public class SimpleNoteCreation extends AppCompatActivity {
         photo = editionIntent.getStringExtra("photo");
         lastTitle = editionIntent.getStringExtra("title");
         lastContent = editionIntent.getStringExtra("content");
-        String color = editionIntent.getStringExtra("color");
+        color = editionIntent.getStringExtra("color");
         creationDateString = editionIntent.getStringExtra("creationDate");
         notePosition = editionIntent.getIntExtra("position", -1);
 
@@ -195,22 +195,23 @@ public class SimpleNoteCreation extends AppCompatActivity {
         Boolean changed = false;
         String titleText = titleEditText.getText().toString();
         String contentText = contentEditText.getText().toString();
+        String ativityColor = noteColor;
 
         //TODO
         String imageViewPhotoText = (String) imageViewPhoto.getTag();
 
         if (photo != null && imageViewPhotoText != null) {
-            if (!titleText.equals(lastTitle) || !contentText.equals(lastContent) || !imageViewPhotoText.equals(Uri.parse(photo))) {
+            if (!titleText.equals(lastTitle) || !contentText.equals(lastContent) || !ativityColor.equals(color) || !imageViewPhotoText.equals(Uri.parse(photo))) {
                 changed = true;
             }
         } else {
-            if (!titleText.equals(lastTitle) || !contentText.equals(lastContent)) {
+            if (!titleText.equals(lastTitle) || !contentText.equals(lastContent) || !ativityColor.equals(color)) {
                 changed = true;
             }
         }
 
         // Check if fields are not empty
-        if ((!TextUtils.isEmpty(titleText) || !TextUtils.isEmpty(contentText) || photo != null) && changed) {
+        if ((!TextUtils.isEmpty(titleText) || !TextUtils.isEmpty(contentText) || photo != null) || noteColor != null && changed) {
 
 
             JSONObject noteJSON = new JSONObject();

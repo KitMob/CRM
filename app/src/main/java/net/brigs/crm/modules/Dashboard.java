@@ -198,7 +198,6 @@ public class Dashboard extends AppCompatActivity
 
                 saveNote(noteJSON, noteCreationDate);
                 Log.d(TAG, "Get the data from the note creation: " + noteJSON.toString());
-                //TODO
 
                 if (notePosition > -1) {
 
@@ -236,8 +235,6 @@ public class Dashboard extends AppCompatActivity
             listViewItems.add(new ItemObjects(noteTitle, noteContent, noteLastFoto, noteColor, noteLastUpdateDate, noteCreationDate));
         }
     }
-
-
 
 
     // Load notes from internal storage
@@ -339,10 +336,11 @@ public class Dashboard extends AppCompatActivity
             if (secure) {
                 if (notePoto != null) {
                     Log.d(TAG, "notePoto: " + notePoto);
-                    listViewItems.add(new ItemObjects(noteTitle, noteContent, notePoto, noteColor, noteLastUpdateDate, noteCreationDate));
+                    listViewItems.add(new ItemObjects(noteTitle, noteContent, notePoto, noteColor,
+                            noteLastUpdateDate, noteCreationDate));
                 } else {
-                    //TODO
-                    listViewItems.add(new ItemObjects(noteTitle, noteContent, noteColor, noteLastUpdateDate, noteCreationDate));
+                    listViewItems.add(new ItemObjects(noteTitle, noteContent, noteColor,
+                            noteLastUpdateDate, noteCreationDate));
 
                 }
             }
@@ -397,8 +395,6 @@ public class Dashboard extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
-
-
 
 
     // Check for read in external storage
@@ -456,7 +452,7 @@ public class Dashboard extends AppCompatActivity
     private void fotoFromCameraCoise(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
             startSimpleNoteIntentForFoto(photoURI);
-        } else if (resultCode == RESULT_CANCELED) {
+        } else if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_CANCELED) {
 
             Log.d(TAG, "Canceled");
         }
@@ -469,7 +465,6 @@ public class Dashboard extends AppCompatActivity
         simpleNoteIntent.putExtra("photo", photo.toString());
         simpleNoteIntent.putExtra("title", "");
         simpleNoteIntent.putExtra("content", "");
-
         simpleNoteIntent.putExtra("color", getResources().getString(R.color.colorNoteDefault));
         simpleNoteIntent.putExtra("creationDate", "");
         simpleNoteIntent.putExtra("position", -1);

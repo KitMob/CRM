@@ -23,7 +23,8 @@
                 android:id="@+id/simple_note_creation_image_view_photo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="50"
+                android:layout_weight="2"
+                android:contentDescription="@android:string/yes"
                 android:gravity="top|left"
                 android:paddingStart="12dp"
                 android:paddingTop="8dp"
@@ -33,6 +34,7 @@
                 android:id="@+id/title_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_weight="2"
                 android:background="@android:color/transparent"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
@@ -49,6 +51,7 @@
                 android:id="@+id/content_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
@@ -56,9 +59,9 @@
                 android:gravity="top|left"
                 android:hint="@string/note_placeholder"
                 android:inputType="textCapSentences|textMultiLine"
-                android:scrollbars="vertical"
                 android:paddingStart="12dp"
                 android:paddingTop="8dp"
+                android:scrollbars="vertical"
                 tools:ignore="RtlHardcoded,RtlSymmetry" />
 
         </LinearLayout>
