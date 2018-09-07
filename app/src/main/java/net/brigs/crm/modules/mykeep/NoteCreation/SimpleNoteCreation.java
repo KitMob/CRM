@@ -211,7 +211,7 @@ public class SimpleNoteCreation extends AppCompatActivity {
         }
 
         // Check if fields are not empty
-        if ((!TextUtils.isEmpty(titleText) || !TextUtils.isEmpty(contentText) || photo != null) || noteColor != null && changed) {
+        if ((!TextUtils.isEmpty(titleText) || !TextUtils.isEmpty(contentText) || photo != null) && changed) {
 
 
             JSONObject noteJSON = new JSONObject();
