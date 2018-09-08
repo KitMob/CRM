@@ -55,19 +55,37 @@ import java.util.List;
 
 public class Dashboard extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private static final String TAG = "myLog";
-
     static final int REQUEST_TAKE_PHOTO = 2;
-    private String mCurrentPhotoPath;
-    private Uri photoURI;
-
-
+    private static final String TAG = "myLog";
+    final String DIR_NAME = "/MyFiles";
     List<ItemObjects> staggeredList;
     SolventRecyclerViewAdapter rcAdapter;
-
     List<ItemObjects> listViewItems;
     RecyclerView recyclerView;
+    // Drag and drop
+    ItemTouchHelper.Callback _ithCallback = new ItemTouchHelper.Callback() {
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
 
+            Collections.swap(staggeredList, viewHolder.getAdapterPosition(), target.getAdapterPosition());
+            rcAdapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+            return true;
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+            //TODO
+        }
+
+        // Defines the enabled move directions in each state (idle, swiping, dragging).
+        @Override
+        public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+
+            return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG,
+                    ItemTouchHelper.DOWN | ItemTouchHelper.UP | ItemTouchHelper.START | ItemTouchHelper.END);
+        }
+    };
+    private String mCurrentPhotoPath;
+    private Uri photoURI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,30 +166,6 @@ public class Dashboard extends AppCompatActivity
             }
         });
     }
-
-
-    // Drag and drop
-    ItemTouchHelper.Callback _ithCallback = new ItemTouchHelper.Callback() {
-        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-
-            Collections.swap(staggeredList, viewHolder.getAdapterPosition(), target.getAdapterPosition());
-            rcAdapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
-            return true;
-        }
-
-        @Override
-        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-            //TODO
-        }
-
-        // Defines the enabled move directions in each state (idle, swiping, dragging).
-        @Override
-        public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-
-            return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG,
-                    ItemTouchHelper.DOWN | ItemTouchHelper.UP | ItemTouchHelper.START | ItemTouchHelper.END);
-        }
-    };
 
     // Get the data from the note creation
     @Override
@@ -467,6 +461,29 @@ public class Dashboard extends AppCompatActivity
     }
 
 
+    //part of a code is taken from here: https://startandroid.ru/ru/uroki/vse-uroki-spiskom/138-urok-75-hranenie-dannyh-rabota-s-fajlami.html
+    private File writeFileSD() {
+        File sdPath = null;
+        // проверяем доступность SD
+        if (!Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED)) {
+            sdPath = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+
+            Log.d(TAG, "SD-карта не доступна: " + Environment.getExternalStorageState());
+        } else {
+            // получаем путь к SD
+            sdPath = Environment.getExternalStorageDirectory();
+            // добавляем свой каталог к пути
+            sdPath = new File(sdPath.getAbsolutePath() + "/" + "." + getPackageName() + "/" + Environment.DIRECTORY_PICTURES);
+            // создаем каталог
+            if (!sdPath.exists()) {
+                sdPath.mkdirs();
+            }
+            return sdPath;
+        }
+        return sdPath;
+    }
+
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = null;
@@ -476,7 +493,9 @@ public class Dashboard extends AppCompatActivity
             timeStamp = String.valueOf(System.currentTimeMillis());
         }
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File storageDir = writeFileSD();
+//        File storageDir = new File(Environment.DIRECTORY_PICTURES);
+        Log.d(TAG, "storageDir: " + storageDir);
         File image = File.createTempFile(imageFileName, ".jpg", storageDir
         );
 
@@ -493,15 +512,16 @@ public class Dashboard extends AppCompatActivity
             File photoFile = null;
             try {
                 photoFile = createImageFile();
+
             } catch (IOException ex) {
                 // Error occurred while creating the File
-                Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Error occurred while creating the File!", Toast.LENGTH_SHORT).show();
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                photoURI = FileProvider.getUriForFile(this,
-                        "net.brigs.crm.provider",
+                photoURI = FileProvider.getUriForFile(this, "net.brigs.crm.provider",
                         photoFile);
+                Log.d(TAG, "photoURI: " + photoURI);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             }
