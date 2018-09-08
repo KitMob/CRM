@@ -203,10 +203,10 @@ public class Dashboard extends AppCompatActivity
 
                     listViewItems.remove(notePosition);
 
-                    notePositionChecker(noteLastFoto, noteTitle, noteContent, noteColor, noteLastUpdateDate, noteCreationDate, notePosition);
+                    listViewItems.add(notePosition, new ItemObjects(noteTitle, noteContent, noteLastFoto, noteColor, noteLastUpdateDate, noteCreationDate));
                     rcAdapter.notifyItemChanged(notePosition);
                 } else {
-                    notePositionChecker(noteLastFoto, noteTitle, noteContent, noteColor, noteLastUpdateDate, noteCreationDate);
+                    listViewItems.add(new ItemObjects(noteTitle, noteContent, noteLastFoto, noteColor, noteLastUpdateDate, noteCreationDate));
                     rcAdapter.notifyDataSetChanged();
                 }
 
@@ -334,15 +334,10 @@ public class Dashboard extends AppCompatActivity
             //TODO
 
             if (secure) {
-                if (notePoto != null) {
-                    Log.d(TAG, "notePoto: " + notePoto);
-                    listViewItems.add(new ItemObjects(noteTitle, noteContent, notePoto, noteColor,
-                            noteLastUpdateDate, noteCreationDate));
-                } else {
-                    listViewItems.add(new ItemObjects(noteTitle, noteContent, noteColor,
-                            noteLastUpdateDate, noteCreationDate));
 
-                }
+                Log.d(TAG, "notePoto: " + notePoto);
+                listViewItems.add(new ItemObjects(noteTitle, noteContent, notePoto, noteColor,
+                        noteLastUpdateDate, noteCreationDate));
             }
         }
         return listViewItems;

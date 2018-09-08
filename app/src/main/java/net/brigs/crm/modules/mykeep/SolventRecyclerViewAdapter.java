@@ -48,8 +48,8 @@ public class SolventRecyclerViewAdapter extends RecyclerView.Adapter<SolventView
         }
 
         if (_itemList.get(position).getImage() != null) {
-            Log.d("myLog", "getImage: " + _itemList.get(position).getImage());
             holder.image.setImageURI(Uri.parse(_itemList.get(position).getImage()));
+            holder.image.setTag(_itemList.get(position).getImage().toString());
         }
 
         if (_itemList.get(position).getImage() != null || (!holder.title.getText().toString().isEmpty() && holder.content.getText().toString().isEmpty())) {

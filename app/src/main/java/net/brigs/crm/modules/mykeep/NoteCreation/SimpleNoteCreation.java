@@ -50,7 +50,7 @@ public class SimpleNoteCreation extends AppCompatActivity {
     ImageButton noteActionsButton;
     ImageView imageViewPhoto;
 
-    String photo;
+    String photo, photoDrawable;
     String noteColor, color;
     String lastUpdateDateString, creationDateString;
 
@@ -76,6 +76,7 @@ public class SimpleNoteCreation extends AppCompatActivity {
 
         Intent editionIntent = getIntent();
         photo = editionIntent.getStringExtra("photo");
+        photoDrawable = editionIntent.getStringExtra("photoDrawable");
         lastTitle = editionIntent.getStringExtra("title");
         lastContent = editionIntent.getStringExtra("content");
         color = editionIntent.getStringExtra("color");
@@ -94,9 +95,9 @@ public class SimpleNoteCreation extends AppCompatActivity {
         if (photo != null) {
             imageViewPhoto.setTag(photo);
             imageViewPhoto.setImageURI(Uri.parse(photo));
-
-
         }
+
+
         titleEditText.setText(lastTitle);
         contentEditText.setText(lastContent);
 
@@ -204,14 +205,13 @@ public class SimpleNoteCreation extends AppCompatActivity {
             if (!titleText.equals(lastTitle) || !contentText.equals(lastContent) || !ativityColor.equals(color) || !imageViewPhotoText.equals(Uri.parse(photo))) {
                 changed = true;
             }
-        } else {
-            if (!titleText.equals(lastTitle) || !contentText.equals(lastContent) || !ativityColor.equals(color)) {
-                changed = true;
-            }
+        } else if (!titleText.equals(lastTitle) || !contentText.equals(lastContent) || !ativityColor.equals(color)) {
+            changed = true;
         }
 
+
         // Check if fields are not empty
-        if ((!TextUtils.isEmpty(titleText) || !TextUtils.isEmpty(contentText) || photo != null) && changed) {
+        if ((!TextUtils.isEmpty(titleText) || !TextUtils.isEmpty(contentText) || photo != null || photoDrawable != null) && changed) {
 
 
             JSONObject noteJSON = new JSONObject();
@@ -223,12 +223,12 @@ public class SimpleNoteCreation extends AppCompatActivity {
                 noteJSON.put("noteLastUpdateDate", lastUpdateDateString);
                 noteJSON.put("notePosition", notePosition);
                 if (photo != null) {
-                    Log.d("myLog", "imageViewPhoto = " + imageViewPhoto.getTag());
                     noteJSON.put("imageViewPhoto", imageViewPhoto.getTag());
                 } else if (photo == null) {
                     noteJSON.put("imageViewPhoto", 0);
 
                 }
+
 
             } catch (JSONException e) {
                 e.printStackTrace();
