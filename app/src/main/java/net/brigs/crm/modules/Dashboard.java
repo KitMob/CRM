@@ -151,8 +151,15 @@ public class Dashboard extends AppCompatActivity
                 simpleNoteIntent.putExtra("color", getResources().getString(R.color.colorNoteDefault));
                 simpleNoteIntent.putExtra("creationDate", "");
                 simpleNoteIntent.putExtra("position", -1);
-                // TODO
                 startActivityForResult(simpleNoteIntent, 1);
+            }
+        });
+
+        //create new checkbox note
+        ImageButton createNewNoteChekboxNote = findViewById(R.id.create_new_checkbox_note);
+        createNewNoteChekboxNote.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+             //TODO create_new_checkbox_note
             }
         });
 
@@ -161,7 +168,7 @@ public class Dashboard extends AppCompatActivity
         createNewPhotoNote.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("ResourceType")
             public void onClick(View v) {
-                //TODO
+
                 dispatchTakePictureIntent();
             }
         });
@@ -325,7 +332,6 @@ public class Dashboard extends AppCompatActivity
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            //TODO
 
             if (secure) {
 
