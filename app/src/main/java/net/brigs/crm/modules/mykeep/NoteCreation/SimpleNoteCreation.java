@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -46,6 +47,7 @@ public class SimpleNoteCreation extends AppCompatActivity {
     RadioGroup colorPickerRadioGroup;
 
     LinearLayout noteLayout, noteActionsLayout;
+    NestedScrollView nestedScrollView;
     TableLayout bottomToolbar;
     ImageButton noteActionsButton;
     ImageView imageViewPhoto;
@@ -68,6 +70,7 @@ public class SimpleNoteCreation extends AppCompatActivity {
         titleEditText = findViewById(R.id.title_edit_text);
         contentEditText = findViewById(R.id.content_edit_text);
         colorPickerRadioGroup = findViewById(R.id.color_picker_radio_group);
+        nestedScrollView = findViewById(R.id.simple_note_creation_nested_scrollView);
         noteLayout = findViewById(R.id.simple_note_creation_linear_layout);
         noteActionsLayout = findViewById(R.id.note_actions_layout);
         bottomToolbar = findViewById(R.id.bottom_toolbar);
@@ -86,6 +89,7 @@ public class SimpleNoteCreation extends AppCompatActivity {
         // Set activity default color
         noteLayout.setBackgroundColor(Color.parseColor(color));
         noteActionsLayout.setBackgroundColor(Color.parseColor(color));
+        nestedScrollView.setBackgroundColor(Color.parseColor(color));
         bottomToolbar.setBackgroundColor(Color.parseColor(color));
         noteColor = color;
 //        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(color)));
@@ -166,6 +170,7 @@ public class SimpleNoteCreation extends AppCompatActivity {
                 } else if (checkedId == R.id.grey_color_checkbox) {
                     noteColor = getResources().getString(R.color.colorNoteGrey);
                 }
+//                nestedScrollView.setBackgroundColor(Color.parseColor(color));
                 noteLayout.setBackgroundColor(Color.parseColor(noteColor));
                 noteActionsLayout.setBackgroundColor(Color.parseColor(noteColor));
                 bottomToolbar.setBackgroundColor(Color.parseColor(noteColor));

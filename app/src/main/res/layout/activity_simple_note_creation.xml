@@ -7,8 +7,10 @@
     android:background="@color/colorAppBackground">
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/simple_note_creation_nested_scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_toolbar">
 
         <LinearLayout
             android:id="@+id/simple_note_creation_linear_layout"
@@ -61,6 +63,7 @@
                 android:inputType="textCapSentences|textMultiLine"
                 android:paddingStart="12dp"
                 android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:scrollbars="vertical"
                 tools:ignore="RtlHardcoded,RtlSymmetry" />
 
@@ -217,7 +220,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_above="@id/bottom_toolbar"
-        android:background="#60545454" />
+        android:background="#60545454"/>
 
     <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/bottom_toolbar"
@@ -225,6 +228,7 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:gravity="center"
+        android:background="#60545454"
         android:stretchColumns="1">
 
         <TableRow
