@@ -170,7 +170,7 @@ public class SimpleNoteCreation extends AppCompatActivity {
                 } else if (checkedId == R.id.grey_color_checkbox) {
                     noteColor = getResources().getString(R.color.colorNoteGrey);
                 }
-//                nestedScrollView.setBackgroundColor(Color.parseColor(color));
+                nestedScrollView.setBackgroundColor(Color.parseColor(noteColor));
                 noteLayout.setBackgroundColor(Color.parseColor(noteColor));
                 noteActionsLayout.setBackgroundColor(Color.parseColor(noteColor));
                 bottomToolbar.setBackgroundColor(Color.parseColor(noteColor));
