@@ -227,24 +227,6 @@ public class Dashboard extends AppCompatActivity
     }
 
 
-    private void notePositionChecker(String noteLastFoto, String noteTitle, String noteContent, String noteColor, String noteLastUpdateDate,
-                                     String noteCreationDate, int notePosition) {
-        if (noteLastFoto.equals(0)) {
-            Log.d(TAG, "notePoto: " + noteLastFoto);
-            listViewItems.add(notePosition, new ItemObjects(noteTitle, noteContent, noteColor, noteLastUpdateDate, noteCreationDate));
-        } else {
-            listViewItems.add(notePosition, new ItemObjects(noteTitle, noteContent, noteLastFoto, noteColor, noteLastUpdateDate, noteCreationDate));
-        }
-    }
-
-    private void notePositionChecker(String noteLastFoto, String noteTitle, String noteContent, String noteColor, String noteLastUpdateDate, String noteCreationDate) {
-        if (noteLastFoto.equals(0)) {
-            Log.d(TAG, "notePoto: " + noteLastFoto);
-            listViewItems.add(new ItemObjects(noteTitle, noteContent, noteColor, noteLastUpdateDate, noteCreationDate));
-        } else {
-            listViewItems.add(new ItemObjects(noteTitle, noteContent, noteLastFoto, noteColor, noteLastUpdateDate, noteCreationDate));
-        }
-    }
 
 
     // Load notes from internal storage
