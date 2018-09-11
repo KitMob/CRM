@@ -34,6 +34,7 @@ import android.widget.Toast;
 import net.brigs.crm.R;
 import net.brigs.crm.modules.mykeep.GridSpacingItemDecoration;
 import net.brigs.crm.modules.mykeep.ItemObjects;
+import net.brigs.crm.modules.mykeep.NoteCreation.NewCheckboxNoteCreation;
 import net.brigs.crm.modules.mykeep.NoteCreation.SimpleNoteCreation;
 import net.brigs.crm.modules.mykeep.SolventRecyclerViewAdapter;
 
@@ -158,8 +159,16 @@ public class Dashboard extends AppCompatActivity
         //create new checkbox note
         ImageButton createNewNoteChekboxNote = findViewById(R.id.create_new_checkbox_note);
         createNewNoteChekboxNote.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceType")
             public void onClick(View v) {
              //TODO create_new_checkbox_note
+                Intent simpleNoteIntent = new Intent(getApplicationContext(), NewCheckboxNoteCreation.class);
+                simpleNoteIntent.putExtra("title", "");
+                simpleNoteIntent.putExtra("content", "");
+                simpleNoteIntent.putExtra("color", getResources().getString(R.color.colorNoteDefault));
+                simpleNoteIntent.putExtra("creationDate", "");
+                simpleNoteIntent.putExtra("position", -1);
+                startActivityForResult(simpleNoteIntent, 1);
             }
         });
 
