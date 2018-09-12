@@ -10,86 +10,108 @@
         android:id="@+id/_new_checkbox_note_creation_nested_scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottom_toolbar">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
 
-        <GridLayout
-            android:id="@+id/new_checkbox_note_creation_grid_layout"
+        <LinearLayout
+            android:id="@+id/new_checkbox_note_creation_table_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/bottom_toolbar"
             android:background="@color/colorNoteDefault"
-            android:columnCount="3"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/new_checkbox_note_creation_title_edit_text"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_columnSpan="3"
-                android:background="@android:color/transparent"
-                android:focusedByDefault="false"
-                android:gravity="top|left"
-                android:hint="@string/title_placeholder"
-                android:inputType="textCapSentences"
-                android:paddingStart="12dp"
-                android:paddingTop="8dp"
-                android:textStyle="bold"
-                tools:ignore="RtlSymmetry" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-            <CheckBox
-                android:id="@+id/new_checkbox_note_creation_check_box"
+                <EditText
+                    android:id="@+id/new_checkbox_note_creation_title_edit_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:focusedByDefault="false"
+                    android:gravity="top|left"
+                    android:hint="@string/title_placeholder"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:paddingStart="12dp"
+                    android:paddingTop="8dp"
+                    android:textStyle="bold"
+                    tools:ignore="RtlSymmetry" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/new_checkbox_note_creation_check_box"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="12dp"
+                    android:paddingTop="8dp" />
+
+                <EditText
+                    android:id="@+id/new_checkbox_note_creation_text_check_box"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="@dimen/new_checkbox_note_creation_text_check_box_min_width"
+                    android:minWidth="@dimen/new_checkbox_note_creation_text_check_box_min_width"
+                    android:background="@android:color/transparent"
+                    android:focusable="true"
+                    android:focusedByDefault="true"
+                    android:gravity="left"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:paddingStart="12dp"
+                    android:paddingTop="8dp"
+                    tools:ignore="RtlSymmetry" />
+
+                <ImageView
+                    android:id="@+id/image_button_dell_check_box"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imageView_add_check_box"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="left"
+                    android:clickable="true"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/checkbox_dell" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_row="1"
-                android:paddingStart="12dp"
-                android:paddingTop="8dp" />
+                android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/new_checkbox_note_creation_text_check_box"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:layout_row="1"
-                android:focusable="true"
-                android:focusedByDefault="true"
-                android:gravity="center"
-                android:paddingStart="12dp"
-                android:paddingTop="8dp"
-                android:background="@android:color/transparent"
-                tools:ignore="RtlSymmetry"/>
+                <ImageView
+                    android:id="@+id/imageView_add_check_box"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:clickable="true"
+                    android:paddingStart="12dp"
+                    android:paddingTop="8dp"
+                    app:srcCompat="@drawable/checkbox_add" />
 
-            <ImageView
-                android:id="@+id/image_button_dell_check_box"
-                android:layout_column="2"
-                android:layout_gravity="center"
-                android:layout_row="1"
-                android:clickable="true"
-                app:srcCompat="@drawable/checkbox_dell" />
-
-            <ImageView
-                android:id="@+id/imageView_add_check_box"
-                android:layout_column="0"
-                android:layout_row="2"
-                android:clickable="true"
-                android:paddingStart="12dp"
-                android:paddingTop="8dp"
-                app:srcCompat="@drawable/checkbox_add" />
-
-            <TextView
-                android:id="@+id/text_view__add_check_box"
-                android:layout_width="match_parent"
-                android:layout_height="41dp"
-                android:layout_column="1"
-                android:layout_columnSpan="2"
-                android:layout_row="2"
-                android:gravity=""
-                android:paddingStart="12dp"
-                android:paddingTop="8dp"
-                android:text="@string/text_view__add_check_box" />
+                <TextView
+                    android:id="@+id/text_view__add_check_box"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:paddingStart="12dp"
+                    android:paddingTop="8dp"
+                    android:text="@string/text_view__add_check_box" />
 
 
-        </GridLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
     <LinearLayout
