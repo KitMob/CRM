@@ -1,13 +1,17 @@
 package net.brigs.crm.modules.mykeep.NoteCreation;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import net.brigs.crm.R;
@@ -19,6 +23,7 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements OnClic
     private ImageView imageViewAddCheckBox, imageViewDelCheckBox;
 
     private TableLayout newCheckboxNoteCreationTableLayout;
+    private long id;
 
 
     @Override
@@ -41,6 +46,8 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements OnClic
 
         imageViewAddCheckBox.setOnClickListener(this);
         textViewAdCheckBox.setOnClickListener(this);
+
+        id = 4;
 //TODO
 
     }
@@ -49,34 +56,46 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.imageView_add_check_box:
-                addChecboxPoint();
-
+                addChecboxPoint(id);
+                id++;
                 break;
 
             case R.id.text_view__add_check_box:
-                addChecboxPoint();
+                addChecboxPoint(id);
+
                 break;
 
         }
 
     }
 
-    private void addChecboxPoint() {
+    @SuppressLint("ResourceAsColor")
+    private void addChecboxPoint(long id) {
         CheckBox newCheckBox = new CheckBox(this);
 
-        TextView newTextCheckBox = new TextView(this);
+        EditText newTextCheckBox = new EditText(this);
         newTextCheckBox.setBackground(textCheckBox.getBackground());
+        newTextCheckBox.setMaxWidth(R.dimen.new_checkbox_note_creation_text_check_box_min_width);
+        newCheckBox.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE|InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
+
 
 
         ImageView newImageViewDelCheckBox = new ImageView(this);
-        newImageViewDelCheckBox.setImageResource(R.drawable.checkbox_dell);
+        newImageViewDelCheckBox.setImageDrawable(imageViewDelCheckBox.getDrawable());
         newImageViewDelCheckBox.setClickable(true);
 
-        int count = 0;
+        TableRow newTableRow = new TableRow(this);
+
+
 //                newCheckboxNoteCreationTableLayout.removeView(imageViewAddCheckBox);
 //                newCheckboxNoteCreationTableLayout.removeView(editTexttextAddCheckBox);
-        newCheckboxNoteCreationTableLayout.addView(newCheckBox);
-        newCheckboxNoteCreationTableLayout.addView(newTextCheckBox);
-        newCheckboxNoteCreationTableLayout.addView(newImageViewDelCheckBox);
+        newCheckboxNoteCreationTableLayout.addView(newTableRow);
+        newTableRow.setId((int) id);
+        newTableRow.addView(newCheckBox);
+        newTableRow.addView(newTextCheckBox);
+        newTableRow.addView(newImageViewDelCheckBox);
+//        newCheckboxNoteCreationTableLayout.addView(newTextCheckBox);
+//        newCheckboxNoteCreationTableLayout.addView(newImageViewDelCheckBox);
+
     }
 }
