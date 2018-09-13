@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import net.brigs.crm.R;
@@ -19,7 +20,7 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements OnClic
     private CheckBox checkBox;
     private ImageView imageViewAddCheckBox, imageViewDelCheckBox;
 
-    private LinearLayout newCheckboxNoteCreationTableLayout;
+    private TableLayout newCheckboxNoteCreationTableLayout;
 
 
     @Override

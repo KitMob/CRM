@@ -13,18 +13,16 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true">
 
-        <LinearLayout
+        <TableLayout
             android:id="@+id/new_checkbox_note_creation_table_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/bottom_toolbar"
             android:background="@color/colorNoteDefault"
-            android:orientation="vertical">
+            android:stretchColumns="1">
 
-            <LinearLayout
+            <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content">
 
                 <EditText
                     android:id="@+id/new_checkbox_note_creation_title_edit_text"
@@ -34,17 +32,19 @@
                     android:focusedByDefault="false"
                     android:gravity="top|left"
                     android:hint="@string/title_placeholder"
+                    android:maxWidth="@dimen/new_checkbox_note_creation_text_check_box_min_width"
+                    android:minWidth="@dimen/new_checkbox_note_creation_text_check_box_min_width"
                     android:inputType="textMultiLine|textCapSentences"
                     android:paddingStart="12dp"
                     android:paddingTop="8dp"
                     android:textStyle="bold"
-                    tools:ignore="RtlSymmetry" />
-            </LinearLayout>
+                    tools:ignore="RtlSymmetry"
+                    android:layout_span="3"/>
+            </TableRow>
 
-            <LinearLayout
+            <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content">
 
                 <CheckBox
                     android:id="@+id/new_checkbox_note_creation_check_box"
@@ -80,13 +80,13 @@
                     app:srcCompat="@drawable/checkbox_dell" />
 
 
-            </LinearLayout>
+            </TableRow>
 
 
-            <LinearLayout
+            <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+              >
 
                 <ImageView
                     android:id="@+id/imageView_add_check_box"
@@ -108,10 +108,10 @@
                     android:text="@string/text_view__add_check_box" />
 
 
-            </LinearLayout>
+            </TableRow>
 
 
-        </LinearLayout>
+        </TableLayout>
     </android.support.v4.widget.NestedScrollView>
 
     <LinearLayout
