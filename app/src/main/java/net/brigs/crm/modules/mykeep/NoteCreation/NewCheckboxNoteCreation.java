@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,7 +18,7 @@ import net.brigs.crm.R;
 
 public class NewCheckboxNoteCreation extends AppCompatActivity implements OnClickListener {
     private EditText editText, textCheckBox;
-    private TextView editTexttextAddCheckBox, textViewAdCheckBox;
+    private TextView  textViewAdCheckBox;
     private CheckBox checkBox;
     private ImageView imageViewAddCheckBox, imageViewDelCheckBox;
 
@@ -39,16 +40,15 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements OnClic
         textCheckBox = findViewById(R.id.new_checkbox_note_creation_text_check_box);
         imageViewDelCheckBox = findViewById(R.id.image_button_dell_check_box);
 
+
+        tableRowAddCheckbox = findViewById(R.id.new_checkbox_note_creation__table_row_add_check_box);
         imageViewAddCheckBox = findViewById(R.id.imageView_add_check_box);
         textViewAdCheckBox = findViewById(R.id.text_view__add_check_box);
-        editTexttextAddCheckBox = findViewById(R.id.text_view__add_check_box);
 
-        tableRowAddCheckbox = findViewById(R.id.create_new_checkbox_note)
 
 
         imageViewAddCheckBox.setOnClickListener(this);
         textViewAdCheckBox.setOnClickListener(this);
-
 
 
         id = 0;
@@ -105,7 +105,15 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements OnClic
         newTableRow.addView(newTextCheckBox);
         newTableRow.addView(newImageViewDelCheckBox);
 
-        newCheckboxNoteCreationTableLayout.addView(newTextCheckBox);
-        newCheckboxNoteCreationTableLayout.addView(newImageViewDelCheckBox);
+
+        removeViewTableRowAddCheckboxAndAdd();
+    }
+
+    private void removeViewTableRowAddCheckboxAndAdd() {
+
+        //TODO
+        newCheckboxNoteCreationTableLayout.removeView(tableRowAddCheckbox);
+        newCheckboxNoteCreationTableLayout.addView(tableRowAddCheckbox);
+
     }
 }
