@@ -43,7 +43,7 @@
             </TableRow>
 
             <TableRow
-                android:id="@+id/new_checkbox_note_creation_table_layoutable_row_check_table_row_check_box"
+                android:id="@+id/new_checkbox_note_creation_table_layout_table_row_check_table_row_check_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -85,6 +85,7 @@
 
 
             <TableRow
+                android:id="@+id/add_check_box"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 

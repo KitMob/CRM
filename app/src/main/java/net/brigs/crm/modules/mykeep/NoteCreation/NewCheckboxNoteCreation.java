@@ -56,7 +56,7 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements OnClic
 
 
                 ImageView newImageViewDelCheckBox = new ImageView(this);
-                newImageViewDelCheckBox.setImageDrawable(imageViewDelCheckBox.getDrawable());
+                newImageViewDelCheckBox.setImageResource(R.drawable.checkbox_dell);
                 newImageViewDelCheckBox.setClickable(true);
 
                 int count = 0;
