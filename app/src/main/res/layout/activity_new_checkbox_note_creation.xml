@@ -101,12 +101,13 @@
 
                 <TextView
                     android:id="@+id/text_view__add_check_box"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:paddingStart="12dp"
                     android:paddingTop="8dp"
                     android:clickable="true"
+                    android:layout_span="2"
                     android:text="@string/text_view__add_check_box" />
 
 
