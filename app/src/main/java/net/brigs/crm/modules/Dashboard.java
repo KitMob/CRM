@@ -60,6 +60,8 @@ public class Dashboard extends AppCompatActivity
     private static final String TAG = "myLog";
 
     private Uri photoURI;
+    private String mCurrentPhotoPath;
+
     List<ItemObjects> staggeredList;
     SolventRecyclerViewAdapter rcAdapter;
     List<ItemObjects> listViewItems;
@@ -491,7 +493,6 @@ public class Dashboard extends AppCompatActivity
         }
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = writeFileSD();
-//        File storageDir = new File(Environment.DIRECTORY_PICTURES);
         Log.d(TAG, "storageDir: " + storageDir);
         File image = File.createTempFile(imageFileName, ".jpg", storageDir
         );
