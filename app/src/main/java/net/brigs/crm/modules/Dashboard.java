@@ -58,7 +58,8 @@ public class Dashboard extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     static final int REQUEST_TAKE_PHOTO = 2;
     private static final String TAG = "myLog";
-    final String DIR_NAME = "/MyFiles";
+
+    private Uri photoURI;
     List<ItemObjects> staggeredList;
     SolventRecyclerViewAdapter rcAdapter;
     List<ItemObjects> listViewItems;
@@ -85,8 +86,7 @@ public class Dashboard extends AppCompatActivity
                     ItemTouchHelper.DOWN | ItemTouchHelper.UP | ItemTouchHelper.START | ItemTouchHelper.END);
         }
     };
-    private String mCurrentPhotoPath;
-    private Uri photoURI;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -110,8 +110,6 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements OnClic
     }
 
     private void removeViewTableRowAddCheckboxAndAdd() {
-
-        //TODO
         newCheckboxNoteCreationTableLayout.removeView(tableRowAddCheckbox);
         newCheckboxNoteCreationTableLayout.addView(tableRowAddCheckbox);
 
