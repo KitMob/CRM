@@ -34,7 +34,7 @@ import android.widget.Toast;
 import net.brigs.crm.R;
 import net.brigs.crm.modules.mykeep.GridSpacingItemDecoration;
 import net.brigs.crm.modules.mykeep.ItemObjects;
-import net.brigs.crm.modules.mykeep.NoteCreation.NewCheckboxNoteCreation;
+import net.brigs.crm.modules.mykeep.NoteCreation.NewCheckboxNoteCreation.NewCheckboxNoteCreation;
 import net.brigs.crm.modules.mykeep.NoteCreation.SimpleNoteCreation;
 import net.brigs.crm.modules.mykeep.SolventRecyclerViewAdapter;
 
@@ -143,7 +143,7 @@ public class Dashboard extends AppCompatActivity
         ItemTouchHelper ith = new ItemTouchHelper(_ithCallback);
         ith.attachToRecyclerView(recyclerView);
 
-        // Create a simple note button click listener
+        // Create a simple note button click listenersimpleNoteIntent
         Button createSimpleNoteButton = findViewById(R.id.create_new_note);
         createSimpleNoteButton.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("ResourceType")
@@ -164,13 +164,13 @@ public class Dashboard extends AppCompatActivity
             @SuppressLint("ResourceType")
             public void onClick(View v) {
              //TODO create_new_checkbox_note
-                Intent simpleNoteIntent = new Intent(getApplicationContext(), NewCheckboxNoteCreation.class);
-                simpleNoteIntent.putExtra("title", "");
-                simpleNoteIntent.putExtra("content", "");
-                simpleNoteIntent.putExtra("color", getResources().getString(R.color.colorNoteDefault));
-                simpleNoteIntent.putExtra("creationDate", "");
-                simpleNoteIntent.putExtra("position", -1);
-                startActivityForResult(simpleNoteIntent, 1);
+                Intent NewCheckboxNoteCreationNoteIntent = new Intent(getApplicationContext(), NewCheckboxNoteCreation.class);
+                NewCheckboxNoteCreationNoteIntent.putExtra("title", "");
+                NewCheckboxNoteCreationNoteIntent.putExtra("content", "");
+                NewCheckboxNoteCreationNoteIntent.putExtra("color", getResources().getString(R.color.colorNoteDefault));
+                NewCheckboxNoteCreationNoteIntent.putExtra("creationDate", "");
+                NewCheckboxNoteCreationNoteIntent.putExtra("position", -1);
+                startActivityForResult(NewCheckboxNoteCreationNoteIntent, 1);
             }
         });
 

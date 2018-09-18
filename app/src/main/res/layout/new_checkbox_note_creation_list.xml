@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAppBackground"
+    android:id="@+id/new_checkbox_note_creation_list_liner_layout_liner_layout">
+        <!--TODO-->
+                <CheckBox
+                    android:id="@+id/new_checkbox_note_creation_check_box"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="12dp"
+                    android:paddingTop="8dp" />
+
+                <EditText
+                    android:id="@+id/new_checkbox_note_creation_text_check_box"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="@dimen/new_checkbox_note_creation_text_check_box_min_width"
+                    android:minWidth="@dimen/new_checkbox_note_creation_text_check_box_min_width"
+                    android:background="@android:color/transparent"
+                    android:focusable="true"
+                    android:focusedByDefault="true"
+                    android:gravity="left"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:paddingStart="12dp"
+                    android:paddingTop="8dp"
+                    tools:ignore="RtlSymmetry" />
+
+                <ImageView
+                    android:id="@+id/image_button_dell_check_box"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imageView_add_check_box"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="left"
+                    android:clickable="true"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/checkbox_dell" />
+
+
+
+
+
+
+</LinearLayout>

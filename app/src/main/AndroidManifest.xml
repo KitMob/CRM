@@ -36,7 +36,7 @@
             android:name=".modules.Dashboard"
             android:screenOrientation="portrait" />
         <activity android:name=".modules.mykeep.NoteCreation.SimpleNoteCreation" />
-        <activity android:name=".modules.mykeep.NoteCreation.NewCheckboxNoteCreation"></activity>
+        <activity android:name=".modules.mykeep.NoteCreation.NewCheckboxNoteCreation.NewCheckboxNoteCreation" />
     </application>
 
 </manifest>
