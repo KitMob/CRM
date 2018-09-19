@@ -67,7 +67,7 @@
                     app:srcCompat="@drawable/checkbox_add" />
 
                 <TextView
-                    android:id="@+id/text_view__add_check_box"
+                    android:id="@+id/text_view_add_check_box"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
