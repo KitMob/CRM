@@ -1,6 +1,10 @@
 package net.brigs.crm.modules.mykeep.NoteCreation.NewCheckboxNoteCreation;
 
+import android.annotation.SuppressLint;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -31,28 +35,21 @@ public class NewCheckboxNoteCreationViewHolders extends RecyclerView.ViewHolder 
     }
 
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onClick(View view) {
         //TODO dell
 
         Toast.makeText(view.getContext(), "Clicked Position  = " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
 
-//        switch (view.getId()) {
-//            case R.id.button1:
-//                textView.setText(R.string.text1);
-//
-//                break;
-//            case R.id.button2:
-//                textView.setText(R.string.text2);
-//                break;
-//            case R.id.button3:
-//                textView.setText(R.string.text3);
-//                break;
-//            case R.id.textView:
-//                button3.setText(R.string.textButton);
-//                break;
-//
-//        }
+        if (checkBox.isChecked() == true) {
+
+            text.setPaintFlags(text.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        } else if (checkBox.isChecked() == false) {
+            //TODO color
+            Log.d("MyLog", " in");
+            text.setPaintFlags(0);
+        }
 
 //        if (view.equals(imageButtonDell)) {
 //            removeAt(getPosition());
