@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -13,13 +14,13 @@ import net.brigs.crm.R;
 
 import java.util.ArrayList;
 
-public class NewCheckboxNoteCreation extends AppCompatActivity  {
+public class NewCheckboxNoteCreation extends AppCompatActivity implements View.OnClickListener {
 
     private RecyclerView recyclerViewNewCheckboxCoteCreationList;
     private NewCheckboxNoteCreationObjects newCheckboxNoteCreationObjects;
     private NewCheckboxNoteCreationRecyclerViewAdapter newCheckboxNoteCreationRecyclerViewAdapter;
 
-    private TextView  textViewAdCheckBox;
+    private TextView textViewAdCheckBox;
     private ImageView imageViewAddCheckBox;
 
     private TableLayout newCheckboxNoteCreationTableLayout;
@@ -27,6 +28,7 @@ public class NewCheckboxNoteCreation extends AppCompatActivity  {
     private String lastContent;
     private String color;
     private String creationDateString;
+    private int id;
 
 
     @Override
@@ -40,40 +42,48 @@ public class NewCheckboxNoteCreation extends AppCompatActivity  {
         color = editionIntent.getStringExtra("color");
         creationDateString = editionIntent.getStringExtra("creationDate");
 
-        recyclerViewNewCheckboxCoteCreationList = findViewById(R.id.new_checkbox_note_creation_recycler_view);
-        ArrayList<NewCheckboxNoteCreationObjects> newCheckboxNoteCreationObjects = new ArrayList<>();
-        newCheckboxNoteCreationObjects.add(new NewCheckboxNoteCreationObjects(lastContent));
+        id = 0;
+        recyclerViewNewCheckboxCoteCreationList(lastTitle, id);
 
-        newCheckboxNoteCreationRecyclerViewAdapter = new NewCheckboxNoteCreationRecyclerViewAdapter(newCheckboxNoteCreationObjects);
-        recyclerViewNewCheckboxCoteCreationList.setAdapter(newCheckboxNoteCreationRecyclerViewAdapter);
-        recyclerViewNewCheckboxCoteCreationList.setLayoutManager(new LinearLayoutManager(this));
-
-//        newCheckboxNoteCreationTableLayout = findViewById(R.id.new_checkbox_note_creation_liner_layout);
-
-//        editText = findViewById(R.id.new_checkbox_note_creation_title_edit_text);
-//
-//        checkBox = findViewById(R.id.new_checkbox_note_creation_check_box);
-//        textCheckBox = findViewById(R.id.new_checkbox_note_creation_text_check_box);
-//        imageViewDelCheckBox = findViewById(R.id.image_button_dell_check_box);
-//
-//
-//        tableRowAddCheckbox = findViewById(R.id.new_checkbox_note_creation__table_row_add_check_box);
-//        imageViewAddCheckBox = findViewById(R.id.imageView_add_check_box);
-//        textViewAdCheckBox = findViewById(R.id.text_view__add_check_box);
-//
+        imageViewAddCheckBox = findViewById(R.id.imageView_add_check_box);
+        textViewAdCheckBox = findViewById(R.id.text_view_add_check_box);
 
 
-//        imageViewAddCheckBox.setOnClickListener(this);
-//        textViewAdCheckBox.setOnClickListener(this);
-//
-//
-//        id = 0;
+        imageViewAddCheckBox.setOnClickListener(this);
+        textViewAdCheckBox.setOnClickListener(this);
+
+
 //TODO
 
     }
 
-    public ArrayList<NewCheckboxNoteCreationObjects> getList(){
+
+    @Override
+    public void onClick(View v) {
+        id++;
+        recyclerViewNewCheckboxCoteCreationList("", id);
+
+    }
+
+
+    private void recyclerViewNewCheckboxCoteCreationList(String lastTitle, int id) {
+        recyclerViewNewCheckboxCoteCreationList = findViewById(R.id.new_checkbox_note_creation_recycler_view);
+        newCheckboxNoteCreationRecyclerViewAdapter = new NewCheckboxNoteCreationRecyclerViewAdapter(getList(lastTitle, id));
+        recyclerViewNewCheckboxCoteCreationList.setAdapter(newCheckboxNoteCreationRecyclerViewAdapter);
+        recyclerViewNewCheckboxCoteCreationList.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+
+    public ArrayList<NewCheckboxNoteCreationObjects> getList(String text, int id) {
         ArrayList<NewCheckboxNoteCreationObjects> list = new ArrayList<>();
+
+        for (id = id; id >= 0; id--) {
+            int tmpId = 0;
+            NewCheckboxNoteCreationObjects newCheckboxNoteCreationObjects = new NewCheckboxNoteCreationObjects(text, tmpId);
+            list.add(newCheckboxNoteCreationObjects);
+            tmpId++;
+
+        }
 
         return list;
     }

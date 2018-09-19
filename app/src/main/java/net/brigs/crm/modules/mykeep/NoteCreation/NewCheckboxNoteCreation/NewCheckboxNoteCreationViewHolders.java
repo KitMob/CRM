@@ -36,9 +36,9 @@ public class NewCheckboxNoteCreationViewHolders extends RecyclerView.ViewHolder 
 
         Toast.makeText(view.getContext(), "Clicked Position  = " + getPosition(), Toast.LENGTH_SHORT).show();
 
-        if (view.equals(imageButtonDell)) {
-            removeAt(getPosition());
-        }
+//        if (view.equals(imageButtonDell)) {
+//            removeAt(getPosition());
+//        }
     }
 
     private void removeAt(int position) {
