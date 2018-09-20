@@ -14,6 +14,7 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
 
     private List<NewCheckboxNoteCreationObjects> checkboxNoteList;
     private ViewGroup _parent;
+    public static OnItemClickListener listener;
 
     public NewCheckboxNoteCreationRecyclerViewAdapter(List<NewCheckboxNoteCreationObjects> itemList) {
 
@@ -41,5 +42,26 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
         if (checkboxNoteList != null)
             return checkboxNoteList.size();
         return 0;
+    }
+
+
+
+
+    public interface OnItemClickListener{
+        void onItemClick(View itemView, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.listener = listener;
+    }
+
+
+
+    public void addItem(int position, NewCheckboxNoteCreationObjects newCheckboxNoteCreationObjects){
+        this.checkboxNoteList.add(position, newCheckboxNoteCreationObjects);
+    }
+
+    public void deleteItem(int position){
+        this.checkboxNoteList.remove(position);
     }
 }

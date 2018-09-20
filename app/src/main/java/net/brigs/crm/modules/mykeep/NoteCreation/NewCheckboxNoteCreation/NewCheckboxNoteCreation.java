@@ -29,6 +29,8 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
     private String color;
     private String creationDateString;
     private int id;
+    private ArrayList<NewCheckboxNoteCreationObjects> list;
+    private int position;
 
 
     @Override
@@ -60,32 +62,54 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
 
     @Override
     public void onClick(View v) {
-        id++;
-        recyclerViewNewCheckboxCoteCreationList("", id);
+//        id++;
+//        recyclerViewNewCheckboxCoteCreationList("", id);
+        AdItem(position);
 
     }
 
 
     private void recyclerViewNewCheckboxCoteCreationList(String lastTitle, int id) {
         recyclerViewNewCheckboxCoteCreationList = findViewById(R.id.new_checkbox_note_creation_recycler_view);
-        newCheckboxNoteCreationRecyclerViewAdapter = new NewCheckboxNoteCreationRecyclerViewAdapter(getList(lastTitle, id));
+        list = getList(lastTitle, id);
+        newCheckboxNoteCreationRecyclerViewAdapter = new NewCheckboxNoteCreationRecyclerViewAdapter(list);
+        newCheckboxNoteCreationRecyclerViewAdapter.setOnItemClickListener(new NewCheckboxNoteCreationRecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View itemView, int position) {
+
+            }
+        });
         recyclerViewNewCheckboxCoteCreationList.setAdapter(newCheckboxNoteCreationRecyclerViewAdapter);
         recyclerViewNewCheckboxCoteCreationList.setLayoutManager(new LinearLayoutManager(this));
+        position = newCheckboxNoteCreationRecyclerViewAdapter.getItemCount();
     }
 
 
     public ArrayList<NewCheckboxNoteCreationObjects> getList(String text, int id) {
         ArrayList<NewCheckboxNoteCreationObjects> list = new ArrayList<>();
 
-        for (id = id; id >= 0; id--) {
-            int tmpId = 0;
-            NewCheckboxNoteCreationObjects newCheckboxNoteCreationObjects = new NewCheckboxNoteCreationObjects(text, tmpId);
-            list.add(newCheckboxNoteCreationObjects);
-            tmpId++;
+        NewCheckboxNoteCreationObjects newCheckboxNoteCreationObjects = new NewCheckboxNoteCreationObjects(text, id);
+        list.add(newCheckboxNoteCreationObjects);
 
-        }
 
         return list;
     }
 
+
+    private void AdItem(int position) {
+        //Скопируем элемент с индексом position и вставим копию в следующую позицию
+        int position1 = position ++;
+        NewCheckboxNoteCreationObjects newCheckboxNoteCreationObjects = new NewCheckboxNoteCreationObjects("", position);
+
+        newCheckboxNoteCreationRecyclerViewAdapter.addItem(position1, newCheckboxNoteCreationObjects);
+        newCheckboxNoteCreationRecyclerViewAdapter.notifyItemInserted(position1);
+        this.position = newCheckboxNoteCreationRecyclerViewAdapter.getItemCount();
+    }
+
+    private void DeleteItem(int position) {
+        //Удалим элемент из набора данных адаптера
+        newCheckboxNoteCreationRecyclerViewAdapter.deleteItem(position);
+        //И уведомим об этом адаптер
+        newCheckboxNoteCreationRecyclerViewAdapter.notifyItemRemoved(position);
+    }
 }
