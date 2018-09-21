@@ -84,7 +84,7 @@
         </TableLayout>
 
     <LinearLayout
-        android:id="@+id/note_actions_layout"
+        android:id="@+id/new_checkbox_note_actions_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/bottom_toolbar"
@@ -106,7 +106,7 @@
                 android:paddingTop="8dp">
 
                 <RadioGroup
-                    android:id="@+id/color_picker_radio_group"
+                    android:id="@+id/new_checkbox_color_picker_radio_group"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"

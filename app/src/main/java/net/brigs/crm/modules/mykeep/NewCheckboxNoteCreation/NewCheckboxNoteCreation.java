@@ -1,12 +1,19 @@
 package net.brigs.crm.modules.mykeep.NewCheckboxNoteCreation;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -14,23 +21,28 @@ import net.brigs.crm.R;
 
 import java.util.ArrayList;
 
+import static net.brigs.crm.modules.mykeep.NoteCreation.SimpleNoteCreation.darkenNoteColor;
+
 public class NewCheckboxNoteCreation extends AppCompatActivity implements View.OnClickListener {
 
     private RecyclerView recyclerViewNewCheckboxCoteCreationList;
-    private NewCheckboxNoteCreationObjects newCheckboxNoteCreationObjects;
     private NewCheckboxNoteCreationRecyclerViewAdapter newCheckboxNoteCreationRecyclerViewAdapter;
+    private RadioGroup colorPickerRadioGroup;
+
 
     private TextView textViewAdCheckBox;
     private ImageView imageViewAddCheckBox;
 
-    private TableLayout newCheckboxNoteCreationTableLayout;
+    private TableLayout newCheckboxNoteCreationTableLayout, bottomToolbar;
     private String lastTitle;
     private String lastContent;
-    private String color;
+    private String noteColor, color;
     private String creationDateString;
     private int id;
     private ArrayList<NewCheckboxNoteCreationObjects> list;
     private int position;
+    private LinearLayout noteActionsLayout;
+    private ImageButton noteActionsButton;
 
 
     @Override
@@ -44,6 +56,8 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
         color = editionIntent.getStringExtra("color");
         creationDateString = editionIntent.getStringExtra("creationDate");
 
+        colorPickerRadioGroup = findViewById(R.id.new_checkbox_color_picker_radio_group);
+
         id = 0;
         recyclerViewNewCheckboxCoteCreationList(lastTitle, id);
 
@@ -54,10 +68,81 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
         imageViewAddCheckBox.setOnClickListener(this);
         textViewAdCheckBox.setOnClickListener(this);
 
+        newCheckboxNoteCreationTableLayout = findViewById(R.id.new_checkbox_note_creation_table_layout);
+        noteActionsLayout = findViewById(R.id.new_checkbox_note_actions_layout);
+        noteActionsButton = findViewById(R.id.note_actions_button);
+        bottomToolbar = findViewById(R.id.bottom_toolbar);
+
+
+        // Set activity default color
+        newCheckboxNoteCreationTableLayout.setBackgroundColor(Color.parseColor(color));
+        noteActionsLayout.setBackgroundColor(Color.parseColor(color));
+        bottomToolbar.setBackgroundColor(Color.parseColor(color));
+        noteColor = color;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(darkenNoteColor(Color.parseColor(noteColor), 0.7f));
+        }
+
+
+        // Check the color picker
+        colorPickerRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @SuppressLint("ResourceType")
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                if (checkedId == R.id.default_color_checkbox) {
+                    noteColor = getResources().getString(R.color.colorNoteDefault);
+
+                } else if (checkedId == R.id.red_color_checkbox) {
+                    noteColor = getResources().getString(R.color.colorNoteRed);
+                } else if (checkedId == R.id.orange_color_checkbox) {
+                    noteColor = getResources().getString(R.color.colorNoteOrange);
+                } else if (checkedId == R.id.yellow_color_checkbox) {
+                    noteColor = getResources().getString(R.color.colorNoteYellow);
+                } else if (checkedId == R.id.green_color_checkbox) {
+                    noteColor = getResources().getString(R.color.colorNoteGreen);
+                } else if (checkedId == R.id.cyan_color_checkbox) {
+                    noteColor = getResources().getString(R.color.colorNoteCyan);
+                } else if (checkedId == R.id.light_blue_color_checkbox) {
+                    noteColor = getResources().getString(R.color.colorNoteLightBlue);
+                } else if (checkedId == R.id.dark_blue_color_checkbox) {
+                    noteColor = getResources().getString(R.color.colorNoteDarkBlue);
+                } else if (checkedId == R.id.purple_color_checkbox) {
+                    noteColor = getResources().getString(R.color.colorNotePurple);
+                } else if (checkedId == R.id.pink_color_checkbox) {
+                    noteColor = getResources().getString(R.color.colorNotePink);
+                } else if (checkedId == R.id.brown_color_checkbox) {
+                    noteColor = getResources().getString(R.color.colorNoteBrow);
+                } else if (checkedId == R.id.grey_color_checkbox) {
+                    noteColor = getResources().getString(R.color.colorNoteGrey);
+                }
+                newCheckboxNoteCreationTableLayout.setBackgroundColor(Color.parseColor(noteColor));
+                noteActionsLayout.setBackgroundColor(Color.parseColor(noteColor));
+                bottomToolbar.setBackgroundColor(Color.parseColor(noteColor));
+                getWindow().setStatusBarColor(darkenNoteColor(Color.parseColor(noteColor), 0.7f));
+
+                noteActionsButton.setBackgroundColor(darkenNoteColor(Color.parseColor(noteColor), 0.9f));
+            }
+        });
+
 
 //TODO
 
     }
+
+
+    public static int darkenNoteColor(int color, float factor) {
+        int a = Color.alpha(color);
+        int r = Math.round(Color.red(color) * factor);
+        int g = Math.round(Color.green(color) * factor);
+        int b = Math.round(Color.blue(color) * factor);
+        return Color.argb(a,
+                Math.min(r, 255),
+                Math.min(g, 255),
+                Math.min(b, 255));
+    }
+
 
 
     @Override
