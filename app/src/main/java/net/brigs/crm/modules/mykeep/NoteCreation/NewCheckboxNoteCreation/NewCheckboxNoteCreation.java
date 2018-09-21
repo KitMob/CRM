@@ -63,7 +63,7 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
     @Override
     public void onClick(View v) {
 //        id++;
-//        recyclerViewNewCheckboxCoteCreationList("", id);
+        position = newCheckboxNoteCreationRecyclerViewAdapter.getItemCount();
         AdItem(position);
 
     }
@@ -73,15 +73,8 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
         recyclerViewNewCheckboxCoteCreationList = findViewById(R.id.new_checkbox_note_creation_recycler_view);
         list = getList(lastTitle, id);
         newCheckboxNoteCreationRecyclerViewAdapter = new NewCheckboxNoteCreationRecyclerViewAdapter(list);
-        newCheckboxNoteCreationRecyclerViewAdapter.setOnItemClickListener(new NewCheckboxNoteCreationRecyclerViewAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View itemView, int position) {
-
-            }
-        });
         recyclerViewNewCheckboxCoteCreationList.setAdapter(newCheckboxNoteCreationRecyclerViewAdapter);
         recyclerViewNewCheckboxCoteCreationList.setLayoutManager(new LinearLayoutManager(this));
-        position = newCheckboxNoteCreationRecyclerViewAdapter.getItemCount();
     }
 
 
@@ -98,18 +91,12 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
 
     private void AdItem(int position) {
         //Скопируем элемент с индексом position и вставим копию в следующую позицию
-        int position1 = position ++;
         NewCheckboxNoteCreationObjects newCheckboxNoteCreationObjects = new NewCheckboxNoteCreationObjects("", position);
 
-        newCheckboxNoteCreationRecyclerViewAdapter.addItem(position1, newCheckboxNoteCreationObjects);
-        newCheckboxNoteCreationRecyclerViewAdapter.notifyItemInserted(position1);
+        newCheckboxNoteCreationRecyclerViewAdapter.addItem(position, newCheckboxNoteCreationObjects);
+        newCheckboxNoteCreationRecyclerViewAdapter.notifyItemInserted(position);
         this.position = newCheckboxNoteCreationRecyclerViewAdapter.getItemCount();
     }
 
-    private void DeleteItem(int position) {
-        //Удалим элемент из набора данных адаптера
-        newCheckboxNoteCreationRecyclerViewAdapter.deleteItem(position);
-        //И уведомим об этом адаптер
-        newCheckboxNoteCreationRecyclerViewAdapter.notifyItemRemoved(position);
-    }
+
 }

@@ -1,16 +1,22 @@
 package net.brigs.crm.modules.mykeep.NoteCreation.NewCheckboxNoteCreation;
 
 import android.annotation.SuppressLint;
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import net.brigs.crm.R;
 
 import java.util.List;
 
-public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Adapter<NewCheckboxNoteCreationViewHolders> {
+public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Adapter<NewCheckboxNoteCreationRecyclerViewAdapter.NewCheckboxNoteCreationViewHolders> {
 
     private List<NewCheckboxNoteCreationObjects> checkboxNoteList;
     private ViewGroup _parent;
@@ -45,23 +51,75 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
     }
 
 
-
-
-    public interface OnItemClickListener{
+    public interface OnItemClickListener {
         void onItemClick(View itemView, int position);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener){
+    public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
 
 
-
-    public void addItem(int position, NewCheckboxNoteCreationObjects newCheckboxNoteCreationObjects){
+    public void addItem(int position, NewCheckboxNoteCreationObjects newCheckboxNoteCreationObjects) {
         this.checkboxNoteList.add(position, newCheckboxNoteCreationObjects);
     }
 
-    public void deleteItem(int position){
+    public void deleteItem(int position) {
         this.checkboxNoteList.remove(position);
     }
+
+
+    public class NewCheckboxNoteCreationViewHolders extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        private final RecyclerView recyclerViewNewCheckboxCoteCreationList;
+        private CheckBox checkBox;
+        private EditText text;
+        private ImageView imageButtonDell;
+
+        public NewCheckboxNoteCreationViewHolders(View itemView) {
+            super(itemView);
+
+            recyclerViewNewCheckboxCoteCreationList = itemView.findViewById(R.id.new_checkbox_note_creation_recycler_view);
+            checkBox = itemView.findViewById(R.id.new_checkbox_note_creation_check_box);
+            checkBox.setId(getLayoutPosition());
+            text = itemView.findViewById(R.id.new_checkbox_note_creation_text_check_box);
+            imageButtonDell = itemView.findViewById(R.id.image_button_dell_check_box);
+            imageButtonDell.setOnClickListener(this);
+            checkBox.setOnClickListener(this);
+
+            itemView.setOnClickListener(this);
+        }
+
+
+        @SuppressLint("ResourceAsColor")
+        @Override
+        public void onClick(View view) {
+            //TODO dell
+
+            Toast.makeText(view.getContext(), "Clicked Position  = " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+
+            if (checkBox.isChecked() == true) {
+
+                text.setPaintFlags(text.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            } else if (checkBox.isChecked() == false) {
+                //TODO color
+                Log.d("MyLog", " in");
+                text.setPaintFlags(0);
+            }
+
+            if (view.equals(imageButtonDell)) {
+                DeleteItem(getAdapterPosition());
+            }
+        }
+
+
+    }
+
+    private void DeleteItem(int position) {
+       deleteItem(position);
+       notifyItemRemoved(position);
+    }
+
 }
+
+
