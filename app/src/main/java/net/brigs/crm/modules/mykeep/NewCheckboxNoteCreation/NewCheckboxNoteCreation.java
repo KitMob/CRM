@@ -1,6 +1,7 @@
 package net.brigs.crm.modules.mykeep.NewCheckboxNoteCreation;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -10,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,7 +21,10 @@ import android.widget.TextView;
 
 import net.brigs.crm.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 import static net.brigs.crm.modules.mykeep.NoteCreation.SimpleNoteCreation.darkenNoteColor;
 
@@ -43,6 +48,8 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
     private int position;
     private LinearLayout noteActionsLayout;
     private ImageButton noteActionsButton;
+    private String lastUpdateDateString;
+    private TextView lastUpdateDateTextView;
 
 
     @Override
@@ -56,10 +63,11 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
         color = editionIntent.getStringExtra("color");
         creationDateString = editionIntent.getStringExtra("creationDate");
 
+        lastUpdateDateTextView = findViewById(R.id.last_modification_date);
+
+
         colorPickerRadioGroup = findViewById(R.id.new_checkbox_color_picker_radio_group);
 
-        id = 0;
-        recyclerViewNewCheckboxCoteCreationList(lastTitle, id);
 
         imageViewAddCheckBox = findViewById(R.id.imageView_add_check_box);
         textViewAdCheckBox = findViewById(R.id.text_view_add_check_box);
@@ -78,10 +86,48 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
         newCheckboxNoteCreationTableLayout.setBackgroundColor(Color.parseColor(color));
         noteActionsLayout.setBackgroundColor(Color.parseColor(color));
         bottomToolbar.setBackgroundColor(Color.parseColor(color));
+        id = 0;
+        recyclerViewNewCheckboxCoteCreationList(lastTitle, id, color);
+
         noteColor = color;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(darkenNoteColor(Color.parseColor(noteColor), 0.7f));
         }
+
+
+        // Get date
+        if (creationDateString.isEmpty())
+            creationDateString = new SimpleDateFormat("ddMMyyyyhhmmss", Locale.getDefault()).format(new Date());
+        lastUpdateDateString = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
+
+
+        // Set "Last Update" field content
+        lastUpdateDateTextView.setText("Last update : " + lastUpdateDateString);
+
+        // Open keyboard and put focus on the content edit text
+//        if (lastTitle.isEmpty() && lastContent.isEmpty()) {
+//            contentEditText.requestFocus();
+//            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//            assert imm != null;
+//            imm.showSoftInput(contentEditText, InputMethodManager.SHOW_IMPLICIT);
+//        }
+
+        // Hide note actions by default
+        noteActionsLayout.setVisibility(View.GONE);
+
+        // Hide/Show note actions
+        noteActionsButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (noteActionsLayout.getVisibility() == View.GONE) {
+                    noteActionsLayout.setVisibility(View.VISIBLE);
+                    noteActionsButton.setBackgroundColor(darkenNoteColor(Color.parseColor(noteColor), 0.9f));
+                } else if (noteActionsLayout.getVisibility() == View.VISIBLE) {
+                    noteActionsButton.setBackgroundColor(Color.parseColor(noteColor));
+                    noteActionsLayout.setVisibility(View.GONE);
+                }
+            }
+        });
+
 
 
         // Check the color picker
@@ -154,11 +200,14 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
     }
 
 
-    private void recyclerViewNewCheckboxCoteCreationList(String lastTitle, int id) {
+    private void recyclerViewNewCheckboxCoteCreationList(String lastTitle, int id, String color) {
         recyclerViewNewCheckboxCoteCreationList = findViewById(R.id.new_checkbox_note_creation_recycler_view);
         list = getList(lastTitle, id);
         newCheckboxNoteCreationRecyclerViewAdapter = new NewCheckboxNoteCreationRecyclerViewAdapter(list);
         recyclerViewNewCheckboxCoteCreationList.setAdapter(newCheckboxNoteCreationRecyclerViewAdapter);
+
+        //TODO
+        recyclerViewNewCheckboxCoteCreationList.setBackgroundColor(Color.parseColor(color));
         recyclerViewNewCheckboxCoteCreationList.setLayoutManager(new LinearLayoutManager(this));
     }
 
