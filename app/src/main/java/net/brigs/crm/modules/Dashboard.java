@@ -34,7 +34,7 @@ import android.widget.Toast;
 import net.brigs.crm.R;
 import net.brigs.crm.modules.mykeep.GridSpacingItemDecoration;
 import net.brigs.crm.modules.mykeep.ItemObjects;
-import net.brigs.crm.modules.mykeep.NoteCreation.NewCheckboxNoteCreation.NewCheckboxNoteCreation;
+import net.brigs.crm.modules.mykeep.NewCheckboxNoteCreation.NewCheckboxNoteCreation;
 import net.brigs.crm.modules.mykeep.NoteCreation.SimpleNoteCreation;
 import net.brigs.crm.modules.mykeep.SolventRecyclerViewAdapter;
 
