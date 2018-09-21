@@ -104,13 +104,6 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
         // Set "Last Update" field content
         lastUpdateDateTextView.setText("Last update : " + lastUpdateDateString);
 
-        // Open keyboard and put focus on the content edit text
-//        if (lastTitle.isEmpty() && lastContent.isEmpty()) {
-//            contentEditText.requestFocus();
-//            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//            assert imm != null;
-//            imm.showSoftInput(contentEditText, InputMethodManager.SHOW_IMPLICIT);
-//        }
 
         // Hide note actions by default
         noteActionsLayout.setVisibility(View.GONE);
@@ -202,6 +195,15 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
 
     private void recyclerViewNewCheckboxCoteCreationList(String lastTitle, int id, String color) {
         recyclerViewNewCheckboxCoteCreationList = findViewById(R.id.new_checkbox_note_creation_recycler_view);
+
+        // Open keyboard and put focus on the content point
+        if (lastTitle.isEmpty() && lastContent.isEmpty()) {
+            recyclerViewNewCheckboxCoteCreationList.requestFocus();
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            assert imm != null;
+            imm.showSoftInput(recyclerViewNewCheckboxCoteCreationList, InputMethodManager.SHOW_IMPLICIT);
+        }
+
         list = getList(lastTitle, id);
         newCheckboxNoteCreationRecyclerViewAdapter = new NewCheckboxNoteCreationRecyclerViewAdapter(list);
         recyclerViewNewCheckboxCoteCreationList.setAdapter(newCheckboxNoteCreationRecyclerViewAdapter);
