@@ -1,6 +1,7 @@
 package net.brigs.crm.modules.mykeep.NewCheckboxNoteCreation;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -33,12 +34,20 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
         @SuppressLint("InflateParams")
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.new_checkbox_note_creation_list, null);
 
+
         _parent = parent;
         return new NewCheckboxNoteCreationViewHolders(layoutView);
     }
 
     @Override
     public void onBindViewHolder(NewCheckboxNoteCreationViewHolders holder, int position) {
+
+        NewCheckboxNoteCreationObjects currentCheckboxNoteCreationObjects = checkboxNoteList.get(position);
+        if (currentCheckboxNoteCreationObjects.get_color() != null) {
+            holder.text.setBackgroundColor(Color.parseColor(currentCheckboxNoteCreationObjects.get_color()));
+            holder.checkBox.setBackgroundColor(Color.parseColor(currentCheckboxNoteCreationObjects.get_color()));
+            holder.imageButtonDell.setBackgroundColor(Color.parseColor(currentCheckboxNoteCreationObjects.get_color()));
+        }
 
     }
 
@@ -71,7 +80,6 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
 
     public class NewCheckboxNoteCreationViewHolders extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private final RecyclerView recyclerViewNewCheckboxCoteCreationList;
         private CheckBox checkBox;
         private EditText text;
         private ImageView imageButtonDell;
@@ -79,9 +87,7 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
         public NewCheckboxNoteCreationViewHolders(View itemView) {
             super(itemView);
 
-            recyclerViewNewCheckboxCoteCreationList = itemView.findViewById(R.id.new_checkbox_note_creation_recycler_view);
             checkBox = itemView.findViewById(R.id.new_checkbox_note_creation_check_box);
-            checkBox.setId(getLayoutPosition());
             text = itemView.findViewById(R.id.new_checkbox_note_creation_text_check_box);
             imageButtonDell = itemView.findViewById(R.id.image_button_dell_check_box);
             imageButtonDell.setOnClickListener(this);
@@ -116,8 +122,8 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
     }
 
     private void DeleteItem(int position) {
-       deleteItem(position);
-       notifyItemRemoved(position);
+        deleteItem(position);
+        notifyItemRemoved(position);
     }
 
 }
