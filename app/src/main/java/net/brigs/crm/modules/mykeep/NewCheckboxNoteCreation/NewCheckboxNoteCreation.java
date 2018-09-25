@@ -128,7 +128,6 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
         });
 
 
-
         // Check the color picker
         colorPickerRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -173,6 +172,7 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
 
 
                 noteActionsButton.setBackgroundColor(darkenNoteColor(Color.parseColor(noteColor), 0.9f));
+                recyclerViewNewCheckboxCoteCreationList("", 1, noteColor);
 
             }
         });
@@ -191,7 +191,6 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
                 Math.min(g, 255),
                 Math.min(b, 255));
     }
-
 
 
     @Override
@@ -225,10 +224,9 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
     }
 
 
-    public ArrayList<NewCheckboxNoteCreationObjects> getList(String text, int position, String color) {
-        ArrayList<NewCheckboxNoteCreationObjects> list = new ArrayList<>();
-
-        NewCheckboxNoteCreationObjects newCheckboxNoteCreationObjects = new NewCheckboxNoteCreationObjects(text, position,color);
+    private ArrayList<NewCheckboxNoteCreationObjects> getList(String text, int position, String color) {
+        list = new ArrayList<>();
+        NewCheckboxNoteCreationObjects newCheckboxNoteCreationObjects = new NewCheckboxNoteCreationObjects(text, position, color);
         list.add(newCheckboxNoteCreationObjects);
 
 
@@ -237,7 +235,7 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
 
 
     private void AdItem(int position) {
-        NewCheckboxNoteCreationObjects newCheckboxNoteCreationObjects = new NewCheckboxNoteCreationObjects("", position,noteColor);
+        NewCheckboxNoteCreationObjects newCheckboxNoteCreationObjects = new NewCheckboxNoteCreationObjects("", position, noteColor);
 
         newCheckboxNoteCreationRecyclerViewAdapter.addItem(position, newCheckboxNoteCreationObjects);
         newCheckboxNoteCreationRecyclerViewAdapter.notifyItemInserted(position);
