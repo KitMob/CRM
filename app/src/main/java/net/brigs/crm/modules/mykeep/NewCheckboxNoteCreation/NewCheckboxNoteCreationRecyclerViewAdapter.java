@@ -17,17 +17,22 @@ import android.widget.Toast;
 
 import net.brigs.crm.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Adapter<NewCheckboxNoteCreationRecyclerViewAdapter.NewCheckboxNoteCreationViewHolders> {
 
-    private List<NewCheckboxNoteCreationObjects> checkboxNoteList;
+    private ArrayList<NewCheckboxNoteCreationObjects> checkboxNoteList;
     private ViewGroup _parent;
     public static OnItemClickListener listener;
 
-    public NewCheckboxNoteCreationRecyclerViewAdapter(List<NewCheckboxNoteCreationObjects> itemList) {
+    public NewCheckboxNoteCreationRecyclerViewAdapter(ArrayList<NewCheckboxNoteCreationObjects> itemList) {
 
         checkboxNoteList = itemList;
+    }
+
+    public ArrayList<NewCheckboxNoteCreationObjects> getCheckboxNoteList() {
+        return checkboxNoteList;
     }
 
     @Override
