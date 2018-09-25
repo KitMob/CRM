@@ -92,8 +92,8 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
         noteActionsLayout.setBackgroundColor(Color.parseColor(color));
         bottomToolbar.setBackgroundColor(Color.parseColor(color));
         title.setBackgroundColor(Color.parseColor(color));
-        id = 0;
-        recyclerViewNewCheckboxCoteCreationList(lastTitle, id, color);
+        position = 0;
+        recyclerViewNewCheckboxCoteCreationList(lastTitle, position, color);
         recyclerViewNewCheckboxCoteCreationList.setBackgroundColor(Color.parseColor(color));
 
 
