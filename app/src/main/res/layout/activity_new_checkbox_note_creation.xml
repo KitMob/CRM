@@ -45,7 +45,6 @@
                     android:id="@+id/new_checkbox_note_creation_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="5dp"
                     android:layout_span="3"/>
 
             </TableRow>

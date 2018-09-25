@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -50,6 +51,7 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
     private ImageButton noteActionsButton;
     private String lastUpdateDateString;
     private TextView lastUpdateDateTextView;
+    private EditText title;
 
 
     @Override
@@ -63,6 +65,7 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
         color = editionIntent.getStringExtra("color");
         creationDateString = editionIntent.getStringExtra("creationDate");
 
+        title = findViewById(R.id.new_checkbox_note_creation_title_edit_text);
         lastUpdateDateTextView = findViewById(R.id.last_modification_date);
 
 
@@ -86,6 +89,7 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
         newCheckboxNoteCreationTableLayout.setBackgroundColor(Color.parseColor(color));
         noteActionsLayout.setBackgroundColor(Color.parseColor(color));
         bottomToolbar.setBackgroundColor(Color.parseColor(color));
+        title.setBackgroundColor(Color.parseColor(color));
         id = 0;
         recyclerViewNewCheckboxCoteCreationList(lastTitle, id, color);
 
@@ -156,10 +160,12 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
                 } else if (checkedId == R.id.grey_color_checkbox) {
                     noteColor = getResources().getString(R.color.colorNoteGrey);
                 }
+                title.setBackgroundColor(Color.parseColor(noteColor));
                 newCheckboxNoteCreationTableLayout.setBackgroundColor(Color.parseColor(noteColor));
                 noteActionsLayout.setBackgroundColor(Color.parseColor(noteColor));
                 bottomToolbar.setBackgroundColor(Color.parseColor(noteColor));
                 getWindow().setStatusBarColor(darkenNoteColor(Color.parseColor(noteColor), 0.7f));
+                //TODO change color of list
 
                 noteActionsButton.setBackgroundColor(darkenNoteColor(Color.parseColor(noteColor), 0.9f));
             }
@@ -204,7 +210,7 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
             imm.showSoftInput(recyclerViewNewCheckboxCoteCreationList, InputMethodManager.SHOW_IMPLICIT);
         }
 
-        list = getList(lastTitle, id);
+        list = getList(lastTitle, id, color);
         newCheckboxNoteCreationRecyclerViewAdapter = new NewCheckboxNoteCreationRecyclerViewAdapter(list);
         recyclerViewNewCheckboxCoteCreationList.setAdapter(newCheckboxNoteCreationRecyclerViewAdapter);
 
@@ -214,10 +220,10 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
     }
 
 
-    public ArrayList<NewCheckboxNoteCreationObjects> getList(String text, int id) {
+    public ArrayList<NewCheckboxNoteCreationObjects> getList(String text, int id, String color) {
         ArrayList<NewCheckboxNoteCreationObjects> list = new ArrayList<>();
 
-        NewCheckboxNoteCreationObjects newCheckboxNoteCreationObjects = new NewCheckboxNoteCreationObjects(text, id);
+        NewCheckboxNoteCreationObjects newCheckboxNoteCreationObjects = new NewCheckboxNoteCreationObjects(text, id,color);
         list.add(newCheckboxNoteCreationObjects);
 
 
@@ -227,7 +233,7 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
 
     private void AdItem(int position) {
         //Скопируем элемент с индексом position и вставим копию в следующую позицию
-        NewCheckboxNoteCreationObjects newCheckboxNoteCreationObjects = new NewCheckboxNoteCreationObjects("", position);
+        NewCheckboxNoteCreationObjects newCheckboxNoteCreationObjects = new NewCheckboxNoteCreationObjects("", position,noteColor);
 
         newCheckboxNoteCreationRecyclerViewAdapter.addItem(position, newCheckboxNoteCreationObjects);
         newCheckboxNoteCreationRecyclerViewAdapter.notifyItemInserted(position);
