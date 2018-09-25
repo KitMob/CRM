@@ -3,6 +3,7 @@ package net.brigs.crm.modules.mykeep.NewCheckboxNoteCreation;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import net.brigs.crm.R;
@@ -47,6 +49,7 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
             holder.text.setBackgroundColor(Color.parseColor(currentCheckboxNoteCreationObjects.get_color()));
             holder.checkBox.setBackgroundColor(Color.parseColor(currentCheckboxNoteCreationObjects.get_color()));
             holder.imageButtonDell.setBackgroundColor(Color.parseColor(currentCheckboxNoteCreationObjects.get_color()));
+            _parent.setBackground(Drawable.createFromPath(currentCheckboxNoteCreationObjects.get_color()));
         }
 
     }
@@ -80,6 +83,7 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
 
     public class NewCheckboxNoteCreationViewHolders extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        private LinearLayout linearLayoutNewCheckboxNoteCreationViewHolders;
         private CheckBox checkBox;
         private EditText text;
         private ImageView imageButtonDell;
