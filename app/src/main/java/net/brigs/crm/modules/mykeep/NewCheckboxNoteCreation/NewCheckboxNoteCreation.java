@@ -192,7 +192,6 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
 
     @Override
     public void onClick(View v) {
-//        id++;
         position = newCheckboxNoteCreationRecyclerViewAdapter.getItemCount();
         AdItem(position);
 

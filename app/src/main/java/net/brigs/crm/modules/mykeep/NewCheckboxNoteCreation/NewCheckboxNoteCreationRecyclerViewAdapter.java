@@ -116,7 +116,8 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
             }
 
             if (view.equals(imageButtonDell)) {
-                DeleteItem(getAdapterPosition());
+                this.text.setText("");
+                DeleteItem(getLayoutPosition());
             }
         }
 
