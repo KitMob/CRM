@@ -65,6 +65,8 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
         color = editionIntent.getStringExtra("color");
         creationDateString = editionIntent.getStringExtra("creationDate");
 
+        recyclerViewNewCheckboxCoteCreationList = findViewById(R.id.new_checkbox_note_creation_recycler_view);
+
         title = findViewById(R.id.new_checkbox_note_creation_title_edit_text);
         lastUpdateDateTextView = findViewById(R.id.last_modification_date);
 
@@ -92,6 +94,8 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
         title.setBackgroundColor(Color.parseColor(color));
         id = 0;
         recyclerViewNewCheckboxCoteCreationList(lastTitle, id, color);
+        recyclerViewNewCheckboxCoteCreationList.setBackgroundColor(Color.parseColor(color));
+
 
         noteColor = color;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -199,7 +203,6 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
 
 
     private void recyclerViewNewCheckboxCoteCreationList(String lastTitle, int id, String color) {
-        recyclerViewNewCheckboxCoteCreationList = findViewById(R.id.new_checkbox_note_creation_recycler_view);
 
         // Open keyboard and put focus on the content point
         if (lastTitle.isEmpty() && lastContent.isEmpty()) {
@@ -212,9 +215,6 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
         list = getList(lastTitle, id, color);
         newCheckboxNoteCreationRecyclerViewAdapter = new NewCheckboxNoteCreationRecyclerViewAdapter(list);
         recyclerViewNewCheckboxCoteCreationList.setAdapter(newCheckboxNoteCreationRecyclerViewAdapter);
-
-        //TODO
-        recyclerViewNewCheckboxCoteCreationList.setBackgroundColor(Color.parseColor(color));
         recyclerViewNewCheckboxCoteCreationList.setLayoutManager(new LinearLayoutManager(this));
     }
 
