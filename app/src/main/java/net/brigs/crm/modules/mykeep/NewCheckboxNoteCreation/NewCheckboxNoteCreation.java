@@ -27,8 +27,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-import static net.brigs.crm.modules.mykeep.NoteCreation.SimpleNoteCreation.darkenNoteColor;
-
 public class NewCheckboxNoteCreation extends AppCompatActivity implements View.OnClickListener {
 
     private RecyclerView recyclerViewNewCheckboxCoteCreationList;
@@ -168,8 +166,11 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
                 newCheckboxNoteCreationTableLayout.setBackgroundColor(Color.parseColor(noteColor));
                 noteActionsLayout.setBackgroundColor(Color.parseColor(noteColor));
                 bottomToolbar.setBackgroundColor(Color.parseColor(noteColor));
+                recyclerViewNewCheckboxCoteCreationList.setBackgroundColor(Color.parseColor(noteColor));
+
                 getWindow().setStatusBarColor(darkenNoteColor(Color.parseColor(noteColor), 0.7f));
                 //TODO change color of list
+
 
                 noteActionsButton.setBackgroundColor(darkenNoteColor(Color.parseColor(noteColor), 0.9f));
 
@@ -195,6 +196,8 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
 
     @Override
     public void onClick(View v) {
+
+        //TODO if push enter
         position = newCheckboxNoteCreationRecyclerViewAdapter.getItemCount();
         AdItem(position);
 
@@ -204,17 +207,21 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
     private void recyclerViewNewCheckboxCoteCreationList(String lastTitle, int position, String color) {
 
         // Open keyboard and put focus on the content point
+        openKeyboardAndPutFocusOnTheContentPoint(lastTitle);
+
+        list = getList(lastTitle, position, color);
+        newCheckboxNoteCreationRecyclerViewAdapter = new NewCheckboxNoteCreationRecyclerViewAdapter(list);
+        recyclerViewNewCheckboxCoteCreationList.setAdapter(newCheckboxNoteCreationRecyclerViewAdapter);
+        recyclerViewNewCheckboxCoteCreationList.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void openKeyboardAndPutFocusOnTheContentPoint(String lastTitle) {
         if (lastTitle.isEmpty() && lastContent.isEmpty()) {
             recyclerViewNewCheckboxCoteCreationList.requestFocus();
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             assert imm != null;
             imm.showSoftInput(recyclerViewNewCheckboxCoteCreationList, InputMethodManager.SHOW_IMPLICIT);
         }
-
-        list = getList(lastTitle, position, color);
-        newCheckboxNoteCreationRecyclerViewAdapter = new NewCheckboxNoteCreationRecyclerViewAdapter(list);
-        recyclerViewNewCheckboxCoteCreationList.setAdapter(newCheckboxNoteCreationRecyclerViewAdapter);
-        recyclerViewNewCheckboxCoteCreationList.setLayoutManager(new LinearLayoutManager(this));
     }
 
 
