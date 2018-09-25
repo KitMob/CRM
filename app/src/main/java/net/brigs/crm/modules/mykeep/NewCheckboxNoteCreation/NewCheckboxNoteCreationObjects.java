@@ -1,13 +1,12 @@
 package net.brigs.crm.modules.mykeep.NewCheckboxNoteCreation;
 
 import android.widget.CheckBox;
-import android.widget.ImageView;
 
 public class NewCheckboxNoteCreationObjects {
     private CheckBox _newCheckbox;
     private String _text;
     private String _color;
-    private int _id;
+    private int _position;
 
     public CheckBox get_newCheckbox() {
         return _newCheckbox;
@@ -21,13 +20,13 @@ public class NewCheckboxNoteCreationObjects {
         return _color;
     }
 
-    public int get_id() {
-        return _id;
+    public int get_position() {
+        return _position;
     }
 
-    public NewCheckboxNoteCreationObjects(String _text, int _id) {
+    public NewCheckboxNoteCreationObjects(String _text, int position) {
         this._text = _text;
-        this._id = _id;
+        this._position = position;
     }
 
     public NewCheckboxNoteCreationObjects(CheckBox newCheckbox, String text, String color) {
@@ -40,9 +39,9 @@ public class NewCheckboxNoteCreationObjects {
         _text = lastContent;
     }
 
-    public NewCheckboxNoteCreationObjects(String text, int id, String color) {
-        this._text = _text;
-        this._id = _id;
+    public NewCheckboxNoteCreationObjects(String text, int position, String color) {
+        this._text = text;
+        this._position = position;
         this._color = color;
     }
 }

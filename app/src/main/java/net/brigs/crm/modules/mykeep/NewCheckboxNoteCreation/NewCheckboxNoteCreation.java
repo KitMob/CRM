@@ -172,6 +172,7 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
                 //TODO change color of list
 
                 noteActionsButton.setBackgroundColor(darkenNoteColor(Color.parseColor(noteColor), 0.9f));
+
             }
         });
 
@@ -200,7 +201,7 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
     }
 
 
-    private void recyclerViewNewCheckboxCoteCreationList(String lastTitle, int id, String color) {
+    private void recyclerViewNewCheckboxCoteCreationList(String lastTitle, int position, String color) {
 
         // Open keyboard and put focus on the content point
         if (lastTitle.isEmpty() && lastContent.isEmpty()) {
@@ -210,17 +211,17 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
             imm.showSoftInput(recyclerViewNewCheckboxCoteCreationList, InputMethodManager.SHOW_IMPLICIT);
         }
 
-        list = getList(lastTitle, id, color);
+        list = getList(lastTitle, position, color);
         newCheckboxNoteCreationRecyclerViewAdapter = new NewCheckboxNoteCreationRecyclerViewAdapter(list);
         recyclerViewNewCheckboxCoteCreationList.setAdapter(newCheckboxNoteCreationRecyclerViewAdapter);
         recyclerViewNewCheckboxCoteCreationList.setLayoutManager(new LinearLayoutManager(this));
     }
 
 
-    public ArrayList<NewCheckboxNoteCreationObjects> getList(String text, int id, String color) {
+    public ArrayList<NewCheckboxNoteCreationObjects> getList(String text, int position, String color) {
         ArrayList<NewCheckboxNoteCreationObjects> list = new ArrayList<>();
 
-        NewCheckboxNoteCreationObjects newCheckboxNoteCreationObjects = new NewCheckboxNoteCreationObjects(text, id,color);
+        NewCheckboxNoteCreationObjects newCheckboxNoteCreationObjects = new NewCheckboxNoteCreationObjects(text, position,color);
         list.add(newCheckboxNoteCreationObjects);
 
 
