@@ -176,8 +176,6 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
         });
 
 
-//TODO
-
     }
 
 
@@ -231,7 +229,6 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
 
 
     private void AdItem(int position) {
-        //Скопируем элемент с индексом position и вставим копию в следующую позицию
         NewCheckboxNoteCreationObjects newCheckboxNoteCreationObjects = new NewCheckboxNoteCreationObjects("", position,noteColor);
 
         newCheckboxNoteCreationRecyclerViewAdapter.addItem(position, newCheckboxNoteCreationObjects);
