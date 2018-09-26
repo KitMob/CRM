@@ -6,13 +6,13 @@
     android:layout_height="match_parent"
     android:background="@color/colorAppBackground">
 
-        <!--TODO-->
         <TableLayout
             android:id="@+id/new_checkbox_note_creation_table_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorNoteDefault"
-            android:stretchColumns="1">
+            android:stretchColumns="1"
+            android:layout_above="@id/bottom_toolbar">
 
             <TableRow
                 android:layout_width="match_parent"
@@ -227,10 +227,11 @@
         </HorizontalScrollView>
 
     </LinearLayout>
+    <!--//TODO -->
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="3dp"
         android:layout_above="@id/bottom_toolbar"
         android:background="#60545454" />
 

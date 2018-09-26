@@ -112,7 +112,6 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
         @SuppressLint("ResourceAsColor")
         @Override
         public void onClick(View view) {
-            Toast.makeText(view.getContext(), "Clicked Position  = " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
 
             if (checkBox.isChecked() == true) {
 
