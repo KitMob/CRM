@@ -258,5 +258,5 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
     }
 
 
-    //TODO safe nontte
+    //TODO safe
 }
