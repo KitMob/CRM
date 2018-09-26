@@ -8,6 +8,23 @@ public class NewCheckboxNoteCreationObjects {
     private String _color;
     private int _position;
 
+    public void set_newCheckbox(CheckBox _newCheckbox) {
+        this._newCheckbox = _newCheckbox;
+    }
+
+    public void set_text(String _text) {
+        this._text = _text;
+    }
+
+    public void set_color(String _color) {
+        this._color = _color;
+    }
+
+    public void set_position(int _position) {
+        this._position = _position;
+    }
+
+
     public CheckBox get_newCheckbox() {
         return _newCheckbox;
     }
@@ -23,6 +40,7 @@ public class NewCheckboxNoteCreationObjects {
     public int get_position() {
         return _position;
     }
+
 
     public NewCheckboxNoteCreationObjects(String _text, int position) {
         this._text = _text;

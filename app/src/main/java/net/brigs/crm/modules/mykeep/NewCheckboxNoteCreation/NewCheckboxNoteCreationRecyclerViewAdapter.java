@@ -66,6 +66,9 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
             return checkboxNoteList.size();
         return 0;
     }
+    public void setList(ArrayList<NewCheckboxNoteCreationObjects> itemList){
+        this.checkboxNoteList = itemList;
+    }
 
 
     public interface OnItemClickListener {

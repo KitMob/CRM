@@ -43,7 +43,7 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
     private String noteColor, color;
     private String creationDateString;
     private int id;
-    private ArrayList<NewCheckboxNoteCreationObjects> list;
+    private ArrayList<NewCheckboxNoteCreationObjects> list = new ArrayList<>();
     private int position;
     private LinearLayout noteActionsLayout;
     private ImageButton noteActionsButton;
@@ -172,7 +172,7 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
 
 
                 noteActionsButton.setBackgroundColor(darkenNoteColor(Color.parseColor(noteColor), 0.9f));
-                recyclerViewNewCheckboxCoteCreationList("", 1, noteColor);
+                recyclerViewNewCheckboxCoteCreationListSetColor(noteColor);
 
             }
         });
@@ -214,6 +214,21 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
         recyclerViewNewCheckboxCoteCreationList.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    private void recyclerViewNewCheckboxCoteCreationListSetColor(String color) {
+
+
+
+        ArrayList<NewCheckboxNoteCreationObjects> getCheckboxNoteList = newCheckboxNoteCreationRecyclerViewAdapter.getCheckboxNoteList();
+        ArrayList<NewCheckboxNoteCreationObjects> newItems = new ArrayList<>();
+        for (int currentItems = 0; currentItems < getCheckboxNoteList.size(); currentItems++) {
+            getCheckboxNoteList.get(currentItems).set_color(color);
+           // newItems.add(newItems.get(currentItems));
+        }
+
+        newCheckboxNoteCreationRecyclerViewAdapter.setList(getCheckboxNoteList);
+        newCheckboxNoteCreationRecyclerViewAdapter.notifyDataSetChanged();
+    }
+
     private void openKeyboardAndPutFocusOnTheContentPoint(String lastTitle) {
         if (lastTitle.isEmpty() && lastContent.isEmpty()) {
             recyclerViewNewCheckboxCoteCreationList.requestFocus();
@@ -225,7 +240,7 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
 
 
     private ArrayList<NewCheckboxNoteCreationObjects> getList(String text, int position, String color) {
-        list = new ArrayList<>();
+        //list = new ArrayList<>();
         NewCheckboxNoteCreationObjects newCheckboxNoteCreationObjects = new NewCheckboxNoteCreationObjects(text, position, color);
         list.add(newCheckboxNoteCreationObjects);
 
@@ -243,4 +258,5 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
     }
 
 
+    //TODO safe nontte
 }
