@@ -20,6 +20,9 @@ import net.brigs.crm.R;
 
 import java.util.ArrayList;
 
+import static android.view.KeyEvent.ACTION_DOWN;
+import static android.view.KeyEvent.ACTION_UP;
+
 public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Adapter<NewCheckboxNoteCreationRecyclerViewAdapter.NewCheckboxNoteCreationViewHolders> {
 
     private ArrayList<NewCheckboxNoteCreationObjects> checkboxNoteList;
@@ -52,8 +55,12 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
         NewCheckboxNoteCreationObjects currentCheckboxNoteCreationObjects = checkboxNoteList.get(position);
         if (currentCheckboxNoteCreationObjects.get_color() != null) {
             holder.text.setBackgroundColor(Color.parseColor(currentCheckboxNoteCreationObjects.get_color()));
+            holder.text.setId(currentCheckboxNoteCreationObjects.getId());
+            holder.text.requestFocus();
             holder.checkBox.setBackgroundColor(Color.parseColor(currentCheckboxNoteCreationObjects.get_color()));
             holder.imageButtonDell.setBackgroundColor(Color.parseColor(currentCheckboxNoteCreationObjects.get_color()));
+            holder.color = currentCheckboxNoteCreationObjects.get_color();
+
             _parent.setBackground(Drawable.createFromPath(currentCheckboxNoteCreationObjects.get_color()));
         }
 
@@ -96,6 +103,9 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
         private CheckBox checkBox;
         private EditText text;
         private ImageView imageButtonDell;
+        private String color;
+
+        private int newPosition;
 
         public NewCheckboxNoteCreationViewHolders(View itemView) {
             super(itemView);
@@ -110,8 +120,18 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                     if (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                        AdItem(getLayoutPosition() +1);
-                        return false;
+
+                        if (event.getAction() == ACTION_DOWN) {
+                            newPosition =getLayoutPosition() + 1;
+                            AdItem(newPosition, color);
+                            return true;
+                        }
+                        if (event.getAction() == ACTION_UP) {
+                            Log.d("myLog", "id: " + text.getId());
+
+                        }
+
+
                     }
                     return false;
                 }
@@ -147,8 +167,8 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
         notifyItemRemoved(position);
     }
 
-    private void AdItem(int position) {
-        NewCheckboxNoteCreationObjects newCheckboxNoteCreationObjects = new NewCheckboxNoteCreationObjects("", position);
+    private void AdItem(int position, String color) {
+        NewCheckboxNoteCreationObjects newCheckboxNoteCreationObjects = new NewCheckboxNoteCreationObjects("", position, color);
         addItem(position, newCheckboxNoteCreationObjects);
         notifyItemInserted(position);
     }

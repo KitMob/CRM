@@ -6,7 +6,7 @@ public class NewCheckboxNoteCreationObjects {
     private CheckBox _newCheckbox;
     private String _text;
     private String _color;
-    private int _position;
+    private int id;
 
     public void set_newCheckbox(CheckBox _newCheckbox) {
         this._newCheckbox = _newCheckbox;
@@ -20,8 +20,8 @@ public class NewCheckboxNoteCreationObjects {
         this._color = _color;
     }
 
-    public void set_position(int _position) {
-        this._position = _position;
+    public void setId(int id) {
+        this.id = id;
     }
 
 
@@ -37,14 +37,14 @@ public class NewCheckboxNoteCreationObjects {
         return _color;
     }
 
-    public int get_position() {
-        return _position;
+    public int getId() {
+        return id;
     }
 
 
     public NewCheckboxNoteCreationObjects(String _text, int position) {
         this._text = _text;
-        this._position = position;
+        this.id = position;
     }
 
     public NewCheckboxNoteCreationObjects(CheckBox newCheckbox, String text, String color) {
@@ -59,7 +59,7 @@ public class NewCheckboxNoteCreationObjects {
 
     public NewCheckboxNoteCreationObjects(String text, int position, String color) {
         this._text = text;
-        this._position = position;
+        this.id = position;
         this._color = color;
     }
 }
