@@ -206,8 +206,6 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
     private void recyclerViewNewCheckboxCoteCreationList(String lastTitle, int position, String color) {
 
         // Open keyboard and put focus on the content point
-        openKeyboardAndPutFocusOnTheContentPoint(lastTitle);
-
         list = getList(lastTitle, position, color);
         newCheckboxNoteCreationRecyclerViewAdapter = new NewCheckboxNoteCreationRecyclerViewAdapter(list);
         recyclerViewNewCheckboxCoteCreationList.setAdapter(newCheckboxNoteCreationRecyclerViewAdapter);
@@ -229,14 +227,7 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
         newCheckboxNoteCreationRecyclerViewAdapter.notifyDataSetChanged();
     }
 
-    private void openKeyboardAndPutFocusOnTheContentPoint(String lastTitle) {
-        if (lastTitle.isEmpty() && lastContent.isEmpty()) {
-            recyclerViewNewCheckboxCoteCreationList.requestFocus();
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            assert imm != null;
-            imm.showSoftInput(recyclerViewNewCheckboxCoteCreationList, InputMethodManager.SHOW_IMPLICIT);
-        }
-    }
+
 
 
     private ArrayList<NewCheckboxNoteCreationObjects> getList(String text, int position, String color) {
