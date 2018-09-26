@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +14,11 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import net.brigs.crm.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Adapter<NewCheckboxNoteCreationRecyclerViewAdapter.NewCheckboxNoteCreationViewHolders> {
 
@@ -66,7 +66,8 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
             return checkboxNoteList.size();
         return 0;
     }
-    public void setList(ArrayList<NewCheckboxNoteCreationObjects> itemList){
+
+    public void setList(ArrayList<NewCheckboxNoteCreationObjects> itemList) {
         this.checkboxNoteList = itemList;
     }
 
@@ -105,6 +106,17 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
             imageButtonDell.setOnClickListener(this);
             checkBox.setOnClickListener(this);
 
+            text.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                        AdItem(getLayoutPosition() +1);
+                        return false;
+                    }
+                    return false;
+                }
+            });
+
             itemView.setOnClickListener(this);
         }
 
@@ -118,7 +130,6 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
                 text.setPaintFlags(text.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             } else if (checkBox.isChecked() == false) {
                 //TODO color
-                Log.d("MyLog", " in");
                 text.setPaintFlags(0);
             }
 
@@ -135,6 +146,13 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
         deleteItem(position);
         notifyItemRemoved(position);
     }
+
+    private void AdItem(int position) {
+        NewCheckboxNoteCreationObjects newCheckboxNoteCreationObjects = new NewCheckboxNoteCreationObjects("", position);
+        addItem(position, newCheckboxNoteCreationObjects);
+        notifyItemInserted(position);
+    }
+
 
 }
 
