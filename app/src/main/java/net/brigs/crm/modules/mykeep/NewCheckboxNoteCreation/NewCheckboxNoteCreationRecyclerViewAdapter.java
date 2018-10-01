@@ -7,8 +7,6 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,14 +14,10 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import net.brigs.crm.R;
 
 import java.util.ArrayList;
-
-import static android.view.KeyEvent.ACTION_DOWN;
-import static android.view.KeyEvent.ACTION_UP;
 
 public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Adapter<NewCheckboxNoteCreationRecyclerViewAdapter.NewCheckboxNoteCreationViewHolders> {
 
@@ -143,26 +137,6 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
 
             text.addTextChangedListener(textWatcher);
 
-
-            text.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                @Override
-                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                    if (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-
-                        if (event.getAction() == ACTION_DOWN) {
-                            newItem(getLayoutPosition());
-                            return true;
-                        }
-                        if (event.getAction() == ACTION_UP) {
-                            Log.d("myLog", "id: " + text.getId());
-
-                        }
-
-
-                    }
-                    return false;
-                }
-            });
 
             itemView.setOnClickListener(this);
         }
