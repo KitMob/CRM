@@ -118,6 +118,8 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
             imageButtonDell.setOnClickListener(this);
             checkBox.setOnClickListener(this);
 
+            // creation of new point of the list on clicking of the button an enter
+
             TextWatcher textWatcher = new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -140,6 +142,7 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
             };
 
             text.addTextChangedListener(textWatcher);
+
 
             text.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
