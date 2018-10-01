@@ -210,6 +210,7 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
         newCheckboxNoteCreationRecyclerViewAdapter = new NewCheckboxNoteCreationRecyclerViewAdapter(list);
         recyclerViewNewCheckboxCoteCreationList.setAdapter(newCheckboxNoteCreationRecyclerViewAdapter);
         recyclerViewNewCheckboxCoteCreationList.setLayoutManager(new LinearLayoutManager(this));
+
     }
 
     private void recyclerViewNewCheckboxCoteCreationListSetColor(String color) {

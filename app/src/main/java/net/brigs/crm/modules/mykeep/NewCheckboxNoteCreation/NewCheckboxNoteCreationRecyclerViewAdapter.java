@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -116,14 +118,36 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
             imageButtonDell.setOnClickListener(this);
             checkBox.setOnClickListener(this);
 
+            TextWatcher textWatcher = new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if ((s.length() > start) && (s.charAt(start) == '\n')) {
+                        newItem(getAdapterPosition());
+                    }
+
+                }
+
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            };
+
+            text.addTextChangedListener(textWatcher);
+
             text.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                     if (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
 
                         if (event.getAction() == ACTION_DOWN) {
-                            newPosition =getLayoutPosition() + 1;
-                            AdItem(newPosition, color);
+                            newItem(getLayoutPosition());
                             return true;
                         }
                         if (event.getAction() == ACTION_UP) {
@@ -138,6 +162,11 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
             });
 
             itemView.setOnClickListener(this);
+        }
+
+        private void newItem(int layoutPosition) {
+            newPosition = layoutPosition + 1;
+            AdItem(newPosition, color);
         }
 
 
