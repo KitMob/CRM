@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +52,7 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
         NewCheckboxNoteCreationObjects currentCheckboxNoteCreationObjects = checkboxNoteList.get(position);
         if (currentCheckboxNoteCreationObjects.get_color() != null) {
             holder.text.setBackgroundColor(Color.parseColor(currentCheckboxNoteCreationObjects.get_color()));
-            holder.text.setId(currentCheckboxNoteCreationObjects.getId());
+            // holder.text.setId(currentCheckboxNoteCreationObjects.getId());
             holder.text.requestFocus();
             holder.checkBox.setBackgroundColor(Color.parseColor(currentCheckboxNoteCreationObjects.get_color()));
             holder.imageButtonDell.setBackgroundColor(Color.parseColor(currentCheckboxNoteCreationObjects.get_color()));
@@ -136,6 +137,16 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
             };
 
             text.addTextChangedListener(textWatcher);
+            text.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (!hasFocus) {
+                        imageButtonDell.setVisibility(View.GONE);
+                    }if (hasFocus){
+                        imageButtonDell.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
 
 
             itemView.setOnClickListener(this);
@@ -162,6 +173,10 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
             if (view.equals(imageButtonDell)) {
                 this.text.setText("");
                 DeleteItem(getLayoutPosition());
+            }
+            if (view.equals(text)) {
+                Log.d("myLog", "text");
+//                imageButtonDell.setVisibility(View.VISIBLE);
             }
         }
 
