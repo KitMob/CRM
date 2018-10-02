@@ -52,7 +52,6 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
         NewCheckboxNoteCreationObjects currentCheckboxNoteCreationObjects = checkboxNoteList.get(position);
         if (currentCheckboxNoteCreationObjects.get_color() != null) {
             holder.text.setBackgroundColor(Color.parseColor(currentCheckboxNoteCreationObjects.get_color()));
-            // holder.text.setId(currentCheckboxNoteCreationObjects.getId());
             holder.text.requestFocus();
             holder.checkBox.setBackgroundColor(Color.parseColor(currentCheckboxNoteCreationObjects.get_color()));
             holder.imageButtonDell.setBackgroundColor(Color.parseColor(currentCheckboxNoteCreationObjects.get_color()));
@@ -113,8 +112,14 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
             imageButtonDell.setOnClickListener(this);
             checkBox.setOnClickListener(this);
 
-            // creation of new point of the list on clicking of the button an enter
 
+            creationOfNewPointOfTheListOnClickingOfTheButtonEnter();
+
+
+            itemView.setOnClickListener(this);
+        }
+
+        private void creationOfNewPointOfTheListOnClickingOfTheButtonEnter() {
             TextWatcher textWatcher = new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -147,9 +152,6 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
                     }
                 }
             });
-
-
-            itemView.setOnClickListener(this);
         }
 
         private void newItem(int layoutPosition) {
