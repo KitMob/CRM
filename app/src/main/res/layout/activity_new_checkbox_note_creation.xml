@@ -50,35 +50,7 @@
         </TableRow>
 
 
-        <TableRow
-            android:id="@+id/new_checkbox_note_creation_table_row_add_check_box"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="20dp">
 
-            <ImageView
-                android:id="@+id/imageView_add_check_box"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|left"
-                android:clickable="true"
-                android:paddingStart="12dp"
-                android:paddingTop="8dp"
-                app:srcCompat="@drawable/checkbox_add" />
-
-            <TextView
-                android:id="@+id/text_view_add_check_box"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_span="2"
-                android:clickable="true"
-                android:gravity="center"
-                android:paddingStart="12dp"
-                android:paddingTop="8dp"
-                android:text="@string/text_view_add_check_box" />
-
-
-        </TableRow>
 
 
     </TableLayout>

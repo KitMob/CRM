@@ -7,14 +7,14 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 import net.brigs.crm.R;
 
@@ -95,7 +95,9 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
 
     public class NewCheckboxNoteCreationViewHolders extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private LinearLayout linearLayoutNewCheckboxNoteCreationViewHolders;
+        private final ImageView imageViewAddCheckBox;
+        private final TextView textViewAdCheckBox;
+        private final TableRow rowAdCheckBox;
         private CheckBox checkBox;
         private EditText text;
         private ImageView imageButtonDell;
@@ -109,6 +111,13 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
             checkBox = itemView.findViewById(R.id.new_checkbox_note_creation_check_box);
             text = itemView.findViewById(R.id.new_checkbox_note_creation_text_check_box);
             imageButtonDell = itemView.findViewById(R.id.image_button_dell_check_box);
+            imageViewAddCheckBox = itemView.findViewById(R.id.imageView_add_check_box);
+            textViewAdCheckBox = itemView.findViewById(R.id.text_view_add_check_box);
+            rowAdCheckBox = itemView.findViewById(R.id.new_checkbox_note_creation_table_row_add_check_box);
+
+            imageViewAddCheckBox.setOnClickListener(this);
+            textViewAdCheckBox.setOnClickListener(this);
+
             imageButtonDell.setOnClickListener(this);
             checkBox.setOnClickListener(this);
 
@@ -147,7 +156,8 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (!hasFocus) {
                         imageButtonDell.setVisibility(View.GONE);
-                    }if (hasFocus){
+                    }
+                    if (hasFocus) {
                         imageButtonDell.setVisibility(View.VISIBLE);
                     }
                 }
@@ -155,6 +165,7 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
         }
 
         private void newItem(int layoutPosition) {
+            rowAdCheckBox.setVisibility(View.GONE);
             newPosition = layoutPosition + 1;
             AdItem(newPosition, color);
         }
@@ -176,10 +187,11 @@ public class NewCheckboxNoteCreationRecyclerViewAdapter extends RecyclerView.Ada
                 this.text.setText("");
                 DeleteItem(getLayoutPosition());
             }
-            if (view.equals(text)) {
-                Log.d("myLog", "text");
-//                imageButtonDell.setVisibility(View.VISIBLE);
+            if (view.equals(textViewAdCheckBox) || view.equals(imageViewAddCheckBox)) {
+                newItem(getAdapterPosition());
+
             }
+
         }
 
 

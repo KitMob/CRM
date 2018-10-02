@@ -71,13 +71,13 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
 
         colorPickerRadioGroup = findViewById(R.id.new_checkbox_color_picker_radio_group);
 
+//TODO dell
+//        imageViewAddCheckBox = findViewById(R.id.imageView_add_check_box);
+//        textViewAdCheckBox = findViewById(R.id.text_view_add_check_box);
 
-        imageViewAddCheckBox = findViewById(R.id.imageView_add_check_box);
-        textViewAdCheckBox = findViewById(R.id.text_view_add_check_box);
 
-
-        imageViewAddCheckBox.setOnClickListener(this);
-        textViewAdCheckBox.setOnClickListener(this);
+//        imageViewAddCheckBox.setOnClickListener(this);
+//        textViewAdCheckBox.setOnClickListener(this);
 
         newCheckboxNoteCreationTableLayout = findViewById(R.id.new_checkbox_note_creation_table_layout);
         noteActionsLayout = findViewById(R.id.new_checkbox_note_actions_layout);
