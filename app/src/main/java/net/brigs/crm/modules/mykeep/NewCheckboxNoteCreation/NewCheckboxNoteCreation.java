@@ -1,7 +1,6 @@
 package net.brigs.crm.modules.mykeep.NewCheckboxNoteCreation;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -11,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -23,8 +21,8 @@ import android.widget.TextView;
 import net.brigs.crm.R;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.Locale;
 
 public class NewCheckboxNoteCreation extends AppCompatActivity implements View.OnClickListener {
@@ -43,7 +41,7 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
     private String noteColor, color;
     private String creationDateString;
     private int id;
-    private ArrayList<NewCheckboxNoteCreationObjects> list = new ArrayList<>();
+    private LinkedList<NewCheckboxNoteCreationObjects> list = new LinkedList<>();
     private int position;
     private LinearLayout noteActionsLayout;
     private ImageButton noteActionsButton;
@@ -217,8 +215,8 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
 
 
 
-        ArrayList<NewCheckboxNoteCreationObjects> getCheckboxNoteList = newCheckboxNoteCreationRecyclerViewAdapter.getCheckboxNoteList();
-        ArrayList<NewCheckboxNoteCreationObjects> newItems = new ArrayList<>();
+        LinkedList<NewCheckboxNoteCreationObjects> getCheckboxNoteList = newCheckboxNoteCreationRecyclerViewAdapter.getCheckboxNoteList();
+        LinkedList<NewCheckboxNoteCreationObjects> newItems = new LinkedList<>();
         for (int currentItems = 0; currentItems < getCheckboxNoteList.size(); currentItems++) {
             getCheckboxNoteList.get(currentItems).set_color(color);
            // newItems.add(newItems.get(currentItems));
@@ -231,7 +229,7 @@ public class NewCheckboxNoteCreation extends AppCompatActivity implements View.O
 
 
 
-    private ArrayList<NewCheckboxNoteCreationObjects> getList(String text, int position, String color) {
+    private LinkedList<NewCheckboxNoteCreationObjects> getList(String text, int position, String color) {
         //list = new ArrayList<>();
         NewCheckboxNoteCreationObjects newCheckboxNoteCreationObjects = new NewCheckboxNoteCreationObjects(text, position, color);
         list.add(newCheckboxNoteCreationObjects);
