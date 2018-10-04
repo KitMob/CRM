@@ -64,6 +64,8 @@ public class SimpleNoteCreation extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        //TODO возможность прикреплять файлы, а так меню изображено на картинке
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simple_note_creation);
         imageViewPhoto = findViewById(R.id.simple_note_creation_image_view_photo);
