@@ -16,6 +16,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity implements Runnable {
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
     private Handler h;
     private String aut;
 
+    Date currentTime = Calendar.getInstance().getTime();
 
     private Client client = new Client();
     private String email;
@@ -61,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         password = "1234";
 
         //TODO log vith data
-        aut += "\n post to  uri: " + uri +
+        aut += "\n" + currentTime + "\n post to  uri: " + uri +
                 "\n email: " + email +
                 "\n password: " + password;
 
