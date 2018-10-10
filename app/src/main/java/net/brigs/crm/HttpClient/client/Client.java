@@ -1,4 +1,4 @@
-package net.brigs.crm.HttpClient;
+package net.brigs.crm.HttpClient.client;
 
 import android.support.annotation.NonNull;
 
@@ -33,7 +33,6 @@ public class Client {
         List nameValuePairs = new ArrayList();
         nameValuePairs.add(new BasicNameValuePair("email", email)); //you can as many name value pair as you want in the list.
         nameValuePairs.add(new BasicNameValuePair("password", password)); //you can as many name value pair as you want in the list.
-        System.out.println(nameValuePairs.toString());
         post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
         HttpResponse response = client.execute(post);

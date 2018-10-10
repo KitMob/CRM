@@ -1,6 +1,6 @@
 package net.brigs.crm;
 
-import net.brigs.crm.HttpClient.Client;
+import net.brigs.crm.HttpClient.client.Client;
 
 import org.junit.Test;
 
@@ -44,20 +44,20 @@ public class RestApiTest {
 
         //before
         uri = "https://brigs.top/login";
-
         email = "android@mail.com";
         password = "1234";
 
         BufferedReader rd = client.setPost(uri, email, password);
 
         //then
-        String excepted = "{\"success\":true,\"user\":{\"id\":\"83\",\"hash\":\"HmeC2iJK7r6mbh1K\"}}";
+        String excepted = "{\"success\":true,\"user\":{\"id\":\"83\",";
         String actual = "";
         actual = rd.readLine();
+        actual = actual.split("\"hash\":")[0];
+
         assertEquals(" POST success\":true", excepted, actual);
 
 
     }
-
 
 }
