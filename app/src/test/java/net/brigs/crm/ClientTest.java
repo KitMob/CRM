@@ -42,4 +42,25 @@ public class ClientTest {
 
     }
 
+  @Test
+    public void POST_success_false() throws IOException {
+
+        //before
+        uri = "https://brigs.top/login";
+        email = "android@mail.com";
+        password = "123";
+
+        BufferedReader rd = client.setPost(uri, email, password);
+
+        //then
+        String excepted = "{\"success\":false}";
+        String actual = "";
+        actual = rd.readLine();
+        actual = actual.split("\"hash\":")[0];
+
+        assertEquals(" POST_success_false", excepted, actual);
+
+
+    }
+
 }
