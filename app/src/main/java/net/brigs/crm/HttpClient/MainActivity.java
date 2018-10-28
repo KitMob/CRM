@@ -77,7 +77,12 @@ public class MainActivity extends AppCompatActivity implements Runnable {
                 aut += "\n answer" + answer;
             }
         } catch (IOException e) {
+
+            Log.e(LOG_TAG, "appendLog " + e.getCause() + " " + e.getMessage());
+            appendLog(e.getMessage());
             e.printStackTrace();
+
+
         }
 
         appendLog(aut);
@@ -137,6 +142,8 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         }
         return sdPath;
     }
+
+
 
 
 }
