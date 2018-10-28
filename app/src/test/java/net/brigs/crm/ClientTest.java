@@ -10,7 +10,7 @@ import java.io.IOException;
 import static junit.framework.TestCase.assertEquals;
 
 
-public class RestApiTest {
+public class ClientTest {
     private Client client = new Client();
 
     private String email;
@@ -19,24 +19,6 @@ public class RestApiTest {
 
 
 // cod get from http://automation-remarks.com/java-rest-client/
-
-
-    @Test
-    public void GET_success_false() throws IOException {
-        //before
-        uri = "https://brigs.top/login";
-
-        BufferedReader rd = client.get(uri);
-
-        //then
-        String excepted = "{\"success\":false,\"message\":\"No hash provided!\"}";
-        String actual = "";
-        while ((actual = rd.readLine()) != null) {
-            assertEquals(" GET success\":false", excepted, actual);
-        }
-
-
-    }
 
 
     @Test
