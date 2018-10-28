@@ -18,19 +18,13 @@ import java.util.List;
 
 public class Client {
 
-    @NonNull
-    public BufferedReader get(String uri) throws IOException {
-        HttpClient client = new DefaultHttpClient();
-        HttpGet request = new HttpGet(uri);
-        HttpResponse response = client.execute(request);
-        return new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-    }
+
 
     @NonNull
     public BufferedReader setPost(String uri, String email, String password) throws IOException {
         HttpClient client = new DefaultHttpClient();
         HttpPost post = new HttpPost(uri);
-        List nameValuePairs = new ArrayList();
+        List nameValuePairs = new ArrayList();//TODO optimization
         nameValuePairs.add(new BasicNameValuePair("email", email)); //you can as many name value pair as you want in the list.
         nameValuePairs.add(new BasicNameValuePair("password", password)); //you can as many name value pair as you want in the list.
         post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
