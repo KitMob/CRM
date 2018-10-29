@@ -15,9 +15,8 @@ import net.brigs.crm.R;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity implements Runnable {
@@ -26,13 +25,14 @@ public class MainActivity extends AppCompatActivity implements Runnable {
     private TextView textViewLog;
     private AppendLog appendLog = new AppendLog();
     private String aut;
+    private String pathname;
 
-    Date currentTime = Calendar.getInstance().getTime();
 
     private Client client;
     private String email;
     private String password;
     private String uri;
+    private String logFaille;
 
 
     @Override
@@ -52,23 +52,37 @@ public class MainActivity extends AppCompatActivity implements Runnable {
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             textViewLog = findViewById(R.id.log_TextView);
-            textViewLog.append(aut);
+            textViewLog.append(logFaille);
         }
     };
 
     @Override
     public void run() {
+        this.pathname = writeFileSD() + "/application_log.txt";
+
         Log.d(LOG_TAG, "Start trend");
         client = new Client();
         uri = "https://brigs.top/login";
         email = "android@mail.com";
         password = "1234";
 
-        aut += "\n" + currentTime + "\n post to  uri: " + uri +
+        aut += "\n post to  uri: " + uri +
                 "\n email: " + email +
                 "\n password: " + password + "\n";
 
 
+        writeLog(pathname);
+
+        appendLog.appendLog(aut, pathname);
+
+        logFaille = readFile(new File(writeFileSD(),"application_log.txt")); //TODO
+
+
+        handler.sendEmptyMessage(0);
+
+    }
+
+    private void writeLog(String pathname) {
         BufferedReader rd = null;
         try {
             rd = client.setPost(uri, email, password);
@@ -79,17 +93,33 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         } catch (IOException e) {
             String messageError = new GetMessageError().getMessageError(e);
             aut += messageError;
-            Log.e(LOG_TAG, "appendLog " + e.getCause() + " " + messageError);
-            appendLog.appendLog(messageError, writeFileSD());
+            Log.e(LOG_TAG, "appendLog " + messageError);
+            appendLog.appendLog(messageError, pathname);
             e.printStackTrace();
 
 
         }
+    }
 
-        appendLog.appendLog(aut, writeFileSD());
+    private String readFile(File file) {
 
-        handler.sendEmptyMessage(0);
+        StringBuilder text = new StringBuilder();
 
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                text.append(line);
+                text.append('\n');
+            }
+            br.close();
+        }
+        catch (IOException e) {
+            //You'll need to add proper error handling here
+        }
+
+        return String.valueOf(text);
     }
 
 
@@ -100,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         // проверяем доступность SD
         if (!Environment.getExternalStorageState().equals(
                 Environment.MEDIA_MOUNTED)) {
-            sdPath = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+            sdPath = getExternalFilesDir(Environment.DIRECTORY_PICTURES); // TODO
 
             Log.d(LOG_TAG, "SD-карта не доступна: " + Environment.getExternalStorageState());
         } else {
