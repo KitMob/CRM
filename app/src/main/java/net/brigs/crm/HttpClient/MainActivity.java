@@ -10,12 +10,11 @@ import android.widget.TextView;
 
 import net.brigs.crm.HttpClient.client.AppendLog;
 import net.brigs.crm.HttpClient.client.Client;
+import net.brigs.crm.HttpClient.client.GetMessageError;
 import net.brigs.crm.R;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;

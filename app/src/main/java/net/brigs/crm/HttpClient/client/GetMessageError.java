@@ -1,4 +1,4 @@
-package net.brigs.crm.HttpClient;
+package net.brigs.crm.HttpClient.client;
 
 public class GetMessageError {
     public String getMessageError(Exception e) {
