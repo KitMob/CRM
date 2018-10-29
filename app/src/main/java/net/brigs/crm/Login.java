@@ -14,7 +14,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
+//TODO Аутентификация пользователя с возвратом уведомления об прохождения логирования (if true – intent, else false – not user)
 
         findViewById(R.id.accept_but).setOnClickListener(new View.OnClickListener() {
             @Override

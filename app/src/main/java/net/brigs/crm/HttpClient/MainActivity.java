@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
 
     Date currentTime = Calendar.getInstance().getTime();
 
-    private Client client = new Client();
+    private Client client;
     private String email;
     private String password;
     private String uri;
@@ -59,13 +59,14 @@ public class MainActivity extends AppCompatActivity implements Runnable {
     @Override
     public void run() {
         Log.d(LOG_TAG, "Start trend");
+        client = new Client();
         uri = "https://brigs.top/login";
         email = "android@mail.com";
         password = "1234";
 
         aut += "\n" + currentTime + "\n post to  uri: " + uri +
                 "\n email: " + email +
-                "\n password: " + password;
+                "\n password: " + password + "\n";
 
 
         BufferedReader rd = null;
@@ -76,21 +77,20 @@ public class MainActivity extends AppCompatActivity implements Runnable {
                 aut += "\n answer" + answer;
             }
         } catch (IOException e) {
-             aut += new GetMessageError().getMessageError(e);
-            Log.e(LOG_TAG, "appendLog " + e.getCause() + " " + new GetMessageError().getMessageError(e));
-            appendLog.appendLog(e.getMessage(),writeFileSD());
+            String messageError = new GetMessageError().getMessageError(e);
+            aut += messageError;
+            Log.e(LOG_TAG, "appendLog " + e.getCause() + " " + messageError);
+            appendLog.appendLog(messageError, writeFileSD());
             e.printStackTrace();
 
 
         }
 
-        appendLog.appendLog(aut,writeFileSD());
+        appendLog.appendLog(aut, writeFileSD());
 
         handler.sendEmptyMessage(0);
 
     }
-
-
 
 
     private File writeFileSD() {
@@ -116,8 +116,6 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         }
         return sdPath;
     }
-
-
 
 
 }
