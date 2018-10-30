@@ -19,7 +19,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 
-public class MainActivity extends AppCompatActivity implements Runnable {
+public class ShowLog extends AppCompatActivity implements Runnable {
 
     private final String LOG_TAG = "myLogs";
     private TextView textViewLog;
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
             String messageError = new GetMessageError().getMessageError(e);
             aut += messageError;
             Log.e(LOG_TAG, "appendLog " + messageError);
-            appendLog.appendLog(messageError, pathname);
+            appendLog.appendLog(aut, pathname);
             e.printStackTrace();
 
 

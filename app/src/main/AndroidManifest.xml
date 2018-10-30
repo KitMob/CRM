@@ -26,7 +26,7 @@
         </provider>
 
         <activity
-            android:name=".HttpClient.MainActivity"
+            android:name=".HttpClient.ShowLog"
             android:theme="@style/NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

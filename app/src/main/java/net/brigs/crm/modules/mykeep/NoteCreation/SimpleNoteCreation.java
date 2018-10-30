@@ -241,7 +241,7 @@ public class SimpleNoteCreation extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            // Return note JSON to MainActivity
+            // Return note JSON to HowLog
             Intent resultIntent = new Intent();
             resultIntent.putExtra("noteJSON", noteJSON.toString());
             setResult(Activity.RESULT_OK, resultIntent);
