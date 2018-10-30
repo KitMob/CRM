@@ -19,6 +19,7 @@ import java.util.List;
 public class Client {
 
 
+// cod get from http://automation-remarks.com/java-rest-client/
 
     @NonNull
     public BufferedReader setPost(String uri, String email, String password) throws IOException {
