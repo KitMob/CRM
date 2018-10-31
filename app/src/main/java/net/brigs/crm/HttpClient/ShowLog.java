@@ -246,7 +246,7 @@ public class ShowLog extends AppCompatActivity implements Runnable {
 
     private void openActivity() {
         //add your further process after giving permission or to download images from remote server.
-        setContentView(R.layout.activity_main_client);
+        setContentView(R.layout.activity_show_log);
 
         Thread thread = new Thread(this);
         thread.start();
