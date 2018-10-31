@@ -94,8 +94,6 @@ public class ShowLog extends AppCompatActivity implements Runnable {
 
         writeLog(pathname);
 
-        logFaille = readFile(new File(writeFileSD(), APPLICATION_LOG_NAME)); //TODO
-
 
         handler.sendEmptyMessage(0);
 
@@ -109,11 +107,11 @@ public class ShowLog extends AppCompatActivity implements Runnable {
             while ((answer = rd.readLine()) != null) {
                 aut += "\n answer" + answer;
             }
+            logFaille = readFile(appendLog.appendLog(aut, pathname)); //TODO
         } catch (IOException e) {
             String messageError = new GetMessageError().getMessageError(e);
             aut += messageError;
             Log.e(LOG_TAG, "appendLog " + messageError);
-            appendLog.appendLog(aut, pathname);
             e.printStackTrace();
 
 

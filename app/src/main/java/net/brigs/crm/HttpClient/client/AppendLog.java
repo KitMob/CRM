@@ -18,7 +18,7 @@ public class AppendLog {
     private Date currentTime = Calendar.getInstance().getTime();
 
 
-    public void appendLog(String text, String pathname) {
+    public File appendLog(String text, String pathname) {
 
         android.util.Log.d(LOG_TAG, "appendLog ");
 
@@ -41,6 +41,8 @@ public class AppendLog {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return logFile;
 
     }
 
@@ -71,6 +73,8 @@ public class AppendLog {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
     }
 
 
