@@ -1,10 +1,13 @@
 package net.brigs.crm;
 
-import net.brigs.crm.HttpClient.client.Client;
 
+import net.brigs.crm.HttpClient.client.Client;
+import net.brigs.crm.HttpClient.parser.JsonParser;
+import net.brigs.crm.HttpClient.parser.User;
+
+import org.json.JSONException;
 import org.junit.Test;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 
 import static junit.framework.TestCase.assertEquals;
@@ -29,15 +32,53 @@ public class ClientTest {
         email = "android@mail.com";
         password = "1234";
 
-        BufferedReader rd = client.setPost(uri, email, password);
+
+        String rd = client.setPost(uri, email, password);
+
 
         //then
         String excepted = "{\"success\":true,\"user\":{\"id\":\"83\",";
         String actual = "";
-        actual = rd.readLine();
+        actual = rd.toString();
         actual = actual.split("\"hash\":")[0];
 
         assertEquals(" POST success\":true", excepted, actual);
+
+
+    }
+
+    @Test
+
+
+    public void parser_success_true() throws IOException {
+
+        //before
+        uri = "https://brigs.top/login";
+        email = "android@mail.com";
+        password = "1234";
+        User user;
+
+
+        String rd = client.setPost(uri, email, password);
+
+    try {
+      user = new JsonParser().getUser(String.valueOf(rd));
+
+
+        //then
+        String excepted = "true";
+        String actual = user.toString();
+        System.out.println();
+
+        //  actual = actual.split("\"hash\":")[0];
+
+
+        assertEquals("parser_success_true", excepted, actual);
+
+
+    } catch (JSONException e) {
+        e.printStackTrace();
+    }
 
 
     }
@@ -50,12 +91,12 @@ public class ClientTest {
         email = "android@mail.com";
         password = "123";
 
-        BufferedReader rd = client.setPost(uri, email, password);
+        String rd = client.setPost(uri, email, password);
 
         //then
         String excepted = "{\"success\":false}";
         String actual = "";
-        actual = rd.readLine();
+        actual = rd.toString();
         actual = actual.split("\"hash\":")[0];
 
         assertEquals(" POST_success_false", excepted, actual);
