@@ -100,14 +100,12 @@ public class ShowLog extends AppCompatActivity implements Runnable {
     }
 
     private void writeLog(String pathname) {
-        BufferedReader rd = null;
+        String rd = null;
         try {
-            rd = client.setPost(uri, email, password);
-            String answer = "";
-            while ((answer = rd.readLine()) != null) {
-                aut += "\n answer" + answer;
-            }
-            logFaille = readFile(appendLog.appendLog(aut, pathname)); //TODO
+            rd = client.setPost(uri, email, password).toString();
+            String answer = rd;
+                aut += "\n answer" + answer; //TODO
+            logFaille = readFile(appendLog.appendLog(aut, pathname));
         } catch (IOException e) {
             String messageError = new GetMessageError().getMessageError(e);
             aut += messageError;
