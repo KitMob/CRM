@@ -79,7 +79,7 @@ public class ShowLog extends AppCompatActivity implements Runnable {
 
     @Override
     public void run() {
-        this.pathname = writeFileSD().getAbsolutePath() + APPLICATION_LOG_NAME;
+        this.pathname = writeFileSD(APPLICATION_LOG_NAME).getAbsolutePath() + APPLICATION_LOG_NAME;
 
         Log.d(LOG_TAG, "Start trend");
         client = new Client();
@@ -145,7 +145,7 @@ public class ShowLog extends AppCompatActivity implements Runnable {
     }
 
 
-    private File writeFileSD() {
+    private File writeFileSD(String applicationLogName) {
         File sdPath = null;
         Log.d(LOG_TAG, "writeFileSD ");
 
@@ -167,7 +167,7 @@ public class ShowLog extends AppCompatActivity implements Runnable {
                 if (!sdPath.exists()) {
                     sdPath.mkdirs();
                 }
-                File sdFile = new File(sdPath, APPLICATION_LOG_NAME);
+                File sdFile = new File(sdPath, applicationLogName);
                 try {
                     sdFile.createNewFile();
                 } catch (IOException e) {
