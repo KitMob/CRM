@@ -12,6 +12,7 @@ import java.io.IOException;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 
 public class ClientTest {
@@ -68,6 +69,35 @@ public class ClientTest {
             boolean actual = user.getSuccess();
 
             assertTrue("parser_success_true", actual);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    @Test
+    public void parser_success_false() throws IOException {
+
+        //before
+        uri = "https://brigs.top/login";
+        email = "android@mail.com";
+        password = "123";
+        User user;
+
+
+        String rd = client.setPost(uri, email, password);
+
+        try {
+            user = new JsonParser().getUser(String.valueOf(rd));
+
+
+            //then
+            boolean actual = user.getSuccess();
+
+            assertFalse("parser_success_false", actual);
 
 
         } catch (JSONException e) {

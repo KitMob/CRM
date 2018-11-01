@@ -22,7 +22,9 @@ public class JsonParser {
 
         success = (boolean) in.get("success");
 
-        user = in.get("user").toString();
+        if(success) {
+            user = in.get("user").toString();
+        }
         return new User(success, user);
     }
 }
