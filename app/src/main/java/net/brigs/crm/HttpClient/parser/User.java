@@ -27,7 +27,6 @@ public class User {
         return "User{" +
                 "success=" + success +
                 ", user='" + user + '\'' +
-                ", id='" + id + '\'' +
                 '}';
     }
 }

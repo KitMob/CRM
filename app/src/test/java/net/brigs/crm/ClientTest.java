@@ -11,6 +11,7 @@ import org.junit.Test;
 import java.io.IOException;
 
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
 
 
 public class ClientTest {
@@ -48,8 +49,6 @@ public class ClientTest {
     }
 
     @Test
-
-
     public void parser_success_true() throws IOException {
 
         //before
@@ -61,29 +60,57 @@ public class ClientTest {
 
         String rd = client.setPost(uri, email, password);
 
-    try {
-      user = new JsonParser().getUser(String.valueOf(rd));
+        try {
+            user = new JsonParser().getUser(String.valueOf(rd));
 
 
-        //then
-        String excepted = "true";
-        String actual = user.toString();
-        System.out.println();
+            //then
+            boolean actual = user.getSuccess();
 
-        //  actual = actual.split("\"hash\":")[0];
+            assertTrue("parser_success_true", actual);
 
 
-        assertEquals("parser_success_true", excepted, actual);
-
-
-    } catch (JSONException e) {
-        e.printStackTrace();
-    }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
     }
 
-  @Test
+    @Test
+    public void parser_success_get_users() throws IOException {
+
+        //before
+        uri = "https://brigs.top/login";
+        email = "android@mail.com";
+        password = "1234";
+        User user;
+
+
+        String rd = client.setPost(uri, email, password);
+
+        try {
+            user = new JsonParser().getUser(String.valueOf(rd));
+
+
+            //then
+            String excepted = "{\"id\":\"83\",";
+            String actual = user.getUser();
+
+            actual = actual.split("\"hash\":")[0];
+
+
+            assertEquals("parser_success_get_users", excepted, actual);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    @Test
     public void POST_success_false() throws IOException {
 
         //before
