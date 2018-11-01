@@ -26,7 +26,7 @@
         </provider>
 
         <activity
-            android:name=".HttpClient.ShowLog"
+            android:name=".Login"
             android:theme="@style/NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,6 +39,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".modules.mykeep.NoteCreation.SimpleNoteCreation" />
         <activity android:name=".modules.mykeep.NewCheckboxNoteCreation.NewCheckboxNoteCreation" />
+        <activity android:name=".HttpClient.ShowLog" />
     </application>
 
 </manifest>
