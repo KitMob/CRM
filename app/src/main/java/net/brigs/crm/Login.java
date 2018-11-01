@@ -66,7 +66,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Ru
             }
         }
 
-//TODO Аутентификация пользователя с возвратом уведомления об прохождения логирования (if true – intent, else false – not user)
 
 
     }
@@ -101,7 +100,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Ru
 
             if (success) {
                 String users = user.getUser();
-                Log.d(LOG_TAG, "true \n" + user.toString());
+                Log.d(LOG_TAG, "true \n" + user.toString()); //TODO сохроняит и брать значение их БД
                 //  Toast.makeText(this,"Успех: \n" + users,Toast.LENGTH_LONG);
             }
             if (!success) {
