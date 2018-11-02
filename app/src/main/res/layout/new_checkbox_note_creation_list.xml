@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/new_checkbox_note_creation_list_liner_layout_liner_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAppBackground"
+    android:orientation="horizontal">
+
+    <TableRow>
+
+    <CheckBox
+        android:id="@+id/new_checkbox_note_creation_check_box"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+
+    <EditText
+        android:id="@+id/new_checkbox_note_creation_text_check_box"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusedByDefault="true"
+        android:gravity="left"
+        android:inputType="textMultiLine|textCapSentences"
+        android:maxWidth="@dimen/new_checkbox_note_creation_text_check_box_min_width"
+        android:minWidth="@dimen/new_checkbox_note_creation_text_check_box_min_width"
+        android:paddingStart="12dp"
+        android:paddingTop="8dp"
+        tools:ignore="RtlSymmetry" />
+
+    <ImageView
+        android:id="@+id/image_button_dell_check_box"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        app:srcCompat="@drawable/checkbox_dell" />
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/new_checkbox_note_creation_table_row_add_check_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView_add_check_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|left"
+            android:clickable="true"
+            android:paddingStart="12dp"
+            android:paddingTop="8dp"
+            app:srcCompat="@drawable/checkbox_add" />
+
+        <TextView
+            android:id="@+id/text_view_add_check_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_span="2"
+            android:clickable="true"
+            android:gravity="center"
+            android:paddingStart="12dp"
+            android:paddingTop="8dp"
+            android:text="@string/text_view_add_check_box" />
+
+
+    </TableRow>
+
+
+</TableLayout>

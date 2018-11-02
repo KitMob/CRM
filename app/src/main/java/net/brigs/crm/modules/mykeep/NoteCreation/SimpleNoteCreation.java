@@ -1,6 +1,7 @@
 package net.brigs.crm.modules.mykeep.NoteCreation;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -45,12 +47,13 @@ public class SimpleNoteCreation extends AppCompatActivity {
     RadioGroup colorPickerRadioGroup;
 
     LinearLayout noteLayout, noteActionsLayout;
+    NestedScrollView nestedScrollView;
     TableLayout bottomToolbar;
     ImageButton noteActionsButton;
     ImageView imageViewPhoto;
 
-    String photo;
-    String noteColor;
+    String photo, photoDrawable;
+    String noteColor, color;
     String lastUpdateDateString, creationDateString;
 
     String lastTitle, lastContent;
@@ -61,12 +64,15 @@ public class SimpleNoteCreation extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        //TODO возможность прикреплять файлы, а так меню изображено на картинке
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simple_note_creation);
         imageViewPhoto = findViewById(R.id.simple_note_creation_image_view_photo);
         titleEditText = findViewById(R.id.title_edit_text);
         contentEditText = findViewById(R.id.content_edit_text);
         colorPickerRadioGroup = findViewById(R.id.color_picker_radio_group);
+        nestedScrollView = findViewById(R.id.simple_note_creation_nested_scrollView);
         noteLayout = findViewById(R.id.simple_note_creation_linear_layout);
         noteActionsLayout = findViewById(R.id.note_actions_layout);
         bottomToolbar = findViewById(R.id.bottom_toolbar);
@@ -75,15 +81,17 @@ public class SimpleNoteCreation extends AppCompatActivity {
 
         Intent editionIntent = getIntent();
         photo = editionIntent.getStringExtra("photo");
+        photoDrawable = editionIntent.getStringExtra("photoDrawable");
         lastTitle = editionIntent.getStringExtra("title");
         lastContent = editionIntent.getStringExtra("content");
-        String color = editionIntent.getStringExtra("color");
+        color = editionIntent.getStringExtra("color");
         creationDateString = editionIntent.getStringExtra("creationDate");
         notePosition = editionIntent.getIntExtra("position", -1);
 
         // Set activity default color
         noteLayout.setBackgroundColor(Color.parseColor(color));
         noteActionsLayout.setBackgroundColor(Color.parseColor(color));
+        nestedScrollView.setBackgroundColor(Color.parseColor(color));
         bottomToolbar.setBackgroundColor(Color.parseColor(color));
         noteColor = color;
 //        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(color)));
@@ -91,9 +99,11 @@ public class SimpleNoteCreation extends AppCompatActivity {
 
         // Set title and content if edit
         if (photo != null) {
+            imageViewPhoto.setTag(photo);
             imageViewPhoto.setImageURI(Uri.parse(photo));
-
         }
+
+
         titleEditText.setText(lastTitle);
         contentEditText.setText(lastContent);
 
@@ -162,6 +172,7 @@ public class SimpleNoteCreation extends AppCompatActivity {
                 } else if (checkedId == R.id.grey_color_checkbox) {
                     noteColor = getResources().getString(R.color.colorNoteGrey);
                 }
+                nestedScrollView.setBackgroundColor(Color.parseColor(noteColor));
                 noteLayout.setBackgroundColor(Color.parseColor(noteColor));
                 noteActionsLayout.setBackgroundColor(Color.parseColor(noteColor));
                 bottomToolbar.setBackgroundColor(Color.parseColor(noteColor));
@@ -184,18 +195,30 @@ public class SimpleNoteCreation extends AppCompatActivity {
     }
 
     // Save note content on back pressed
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onBackPressed() {
 
         Boolean changed = false;
         String titleText = titleEditText.getText().toString();
         String contentText = contentEditText.getText().toString();
+        String ativityColor = noteColor;
 
-        if (!titleText.equals(lastTitle) || !contentText.equals(lastContent))
+        //TODO
+        String imageViewPhotoText = (String) imageViewPhoto.getTag();
+
+        if (photo != null && imageViewPhotoText != null) {
+            if (!titleText.equals(lastTitle) || !contentText.equals(lastContent) || !ativityColor.equals(color) || !imageViewPhotoText.equals(Uri.parse(photo))) {
+                changed = true;
+            }
+        } else if (!titleText.equals(lastTitle) || !contentText.equals(lastContent) || !ativityColor.equals(color)) {
             changed = true;
+        }
+
 
         // Check if fields are not empty
-        if ((!TextUtils.isEmpty(titleText) || !TextUtils.isEmpty(contentText)) && changed) {
+        if ((!TextUtils.isEmpty(titleText) || !TextUtils.isEmpty(contentText) || photo != null || photoDrawable != null) && changed) {
 
 
             JSONObject noteJSON = new JSONObject();
@@ -207,13 +230,18 @@ public class SimpleNoteCreation extends AppCompatActivity {
                 noteJSON.put("noteLastUpdateDate", lastUpdateDateString);
                 noteJSON.put("notePosition", notePosition);
                 if (photo != null) {
-                    noteJSON.put("imageViewPhoto", imageViewPhoto.getDrawable());
+                    noteJSON.put("imageViewPhoto", imageViewPhoto.getTag());
+                } else if (photo == null) {
+                    noteJSON.put("imageViewPhoto", 0);
+
                 }
+
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            // Return note JSON to MainActivity
+            // Return note JSON to HowLog
             Intent resultIntent = new Intent();
             resultIntent.putExtra("noteJSON", noteJSON.toString());
             setResult(Activity.RESULT_OK, resultIntent);
@@ -222,8 +250,6 @@ public class SimpleNoteCreation extends AppCompatActivity {
 
 
     }
-
-
 
 
 }

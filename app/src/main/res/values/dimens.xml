@@ -25,6 +25,8 @@
     <dimen name="user_list_text_size">25dp</dimen>
     <dimen name="padding_text_view_user_module_info">10dp</dimen>
     <dimen name="padding_delete_tab_user_list">8dp</dimen>
+    <!--//TODO select size-->
+    <dimen name="new_checkbox_note_creation_text_check_box_min_width">300dp</dimen>
 
     <!-- Dashboard. -->
 
