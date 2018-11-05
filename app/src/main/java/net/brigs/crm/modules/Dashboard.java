@@ -28,12 +28,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+//import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import net.brigs.crm.R;
+import net.brigs.crm.adapters.ExpandableListAdapter;
+import net.brigs.crm.adapters.MenuModel;
 import net.brigs.crm.modules.mykeep.GridSpacingItemDecoration;
 import net.brigs.crm.modules.mykeep.ItemObjects;
+import net.brigs.crm.modules.mykeep.NewCheckboxNoteCreation.NewCheckboxNoteCreation;
 import net.brigs.crm.modules.mykeep.NoteCreation.SimpleNoteCreation;
 import net.brigs.crm.modules.mykeep.SolventRecyclerViewAdapter;
 
@@ -50,23 +55,49 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 
 public class Dashboard extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    static final int REQUEST_TAKE_PHOTO = 2;
     private static final String TAG = "myLog";
 
-    static final int REQUEST_TAKE_PHOTO = 1;
-    private String mCurrentPhotoPath;
-    private Uri photoURI;
+    ExpandableListAdapter expandableListAdapter;
+    ExpandableListView expandableListView;
+    List<MenuModel> headerList = new ArrayList<>();
+    HashMap<MenuModel, List<MenuModel>> childList = new HashMap<>();
 
+    private Uri photoURI;
+    private String mCurrentPhotoPath;
 
     List<ItemObjects> staggeredList;
     SolventRecyclerViewAdapter rcAdapter;
-
     List<ItemObjects> listViewItems;
     RecyclerView recyclerView;
+    // Drag and drop
+    ItemTouchHelper.Callback _ithCallback = new ItemTouchHelper.Callback() {
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+
+            Collections.swap(staggeredList, viewHolder.getAdapterPosition(), target.getAdapterPosition());
+            rcAdapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+            return true;
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+            //TODO
+        }
+
+        // Defines the enabled move directions in each state (idle, swiping, dragging).
+        @Override
+        public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+
+            return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG,
+                    ItemTouchHelper.DOWN | ItemTouchHelper.UP | ItemTouchHelper.START | ItemTouchHelper.END);
+        }
+    };
 
 
     @Override
@@ -86,6 +117,9 @@ public class Dashboard extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
+        expandableListView = findViewById(R.id.dynamic);
+        prepareMenuData();
+        populateExpandableList();
 
         if (Build.VERSION.SDK_INT >= 23) {
             if (!checkPermissionForReadExternalStorage())
@@ -112,9 +146,6 @@ public class Dashboard extends AppCompatActivity
         int spacing = (int) (1 * scale + 0.5f);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(spacing));
 
-        // Load data
-        //staggeredList = getListItemData();
-
         // Load notes from internal storage
         staggeredList = loadNotes();
 
@@ -125,7 +156,7 @@ public class Dashboard extends AppCompatActivity
         ItemTouchHelper ith = new ItemTouchHelper(_ithCallback);
         ith.attachToRecyclerView(recyclerView);
 
-        // Create a simple note button click listener
+        // Create a simple note button click listenersimpleNoteIntent
         Button createSimpleNoteButton = findViewById(R.id.create_new_note);
         createSimpleNoteButton.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("ResourceType")
@@ -136,8 +167,23 @@ public class Dashboard extends AppCompatActivity
                 simpleNoteIntent.putExtra("color", getResources().getString(R.color.colorNoteDefault));
                 simpleNoteIntent.putExtra("creationDate", "");
                 simpleNoteIntent.putExtra("position", -1);
-                // TODO
                 startActivityForResult(simpleNoteIntent, 1);
+            }
+        });
+
+        //create new checkbox note
+        ImageButton createNewNoteChekboxNote = findViewById(R.id.create_new_checkbox_note);
+        createNewNoteChekboxNote.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceType")
+            public void onClick(View v) {
+                //TODO create_new_checkbox_note
+                Intent NewCheckboxNoteCreationNoteIntent = new Intent(getApplicationContext(), NewCheckboxNoteCreation.class);
+                NewCheckboxNoteCreationNoteIntent.putExtra("title", "");
+                NewCheckboxNoteCreationNoteIntent.putExtra("content", "");
+                NewCheckboxNoteCreationNoteIntent.putExtra("color", getResources().getString(R.color.colorNoteDefault));
+                NewCheckboxNoteCreationNoteIntent.putExtra("creationDate", "");
+                NewCheckboxNoteCreationNoteIntent.putExtra("position", -1);
+                startActivityForResult(NewCheckboxNoteCreationNoteIntent, 1);
             }
         });
 
@@ -146,35 +192,11 @@ public class Dashboard extends AppCompatActivity
         createNewPhotoNote.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("ResourceType")
             public void onClick(View v) {
-                //TODO
+
                 dispatchTakePictureIntent();
             }
         });
     }
-
-
-    // Drag and drop
-    ItemTouchHelper.Callback _ithCallback = new ItemTouchHelper.Callback() {
-        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-
-            Collections.swap(staggeredList, viewHolder.getAdapterPosition(), target.getAdapterPosition());
-            rcAdapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
-            return true;
-        }
-
-        @Override
-        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-            //TODO
-        }
-
-        // Defines the enabled move directions in each state (idle, swiping, dragging).
-        @Override
-        public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-
-            return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG,
-                    ItemTouchHelper.DOWN | ItemTouchHelper.UP | ItemTouchHelper.START | ItemTouchHelper.END);
-        }
-    };
 
     // Get the data from the note creation
     @Override
@@ -189,6 +211,9 @@ public class Dashboard extends AppCompatActivity
             try {
                 JSONObject json = new JSONObject(noteJSON);
 
+                String noteLastFoto = json.getString("imageViewPhoto");
+                Log.d(TAG, "noteLastFoto = " + noteLastFoto);
+
                 String noteTitle = json.getString("noteTitle");
                 String noteContent = json.getString("noteContent");
                 String noteColor = json.getString("noteColor");
@@ -197,13 +222,16 @@ public class Dashboard extends AppCompatActivity
                 int notePosition = json.getInt("notePosition");
 
                 saveNote(noteJSON, noteCreationDate);
+                Log.d(TAG, "Get the data from the note creation: " + noteJSON.toString());
 
                 if (notePosition > -1) {
+
                     listViewItems.remove(notePosition);
-                    listViewItems.add(notePosition, new ItemObjects(noteTitle, noteContent, noteColor, noteLastUpdateDate, noteCreationDate));
+
+                    listViewItems.add(notePosition, new ItemObjects(noteTitle, noteContent, noteLastFoto, noteColor, noteLastUpdateDate, noteCreationDate));
                     rcAdapter.notifyItemChanged(notePosition);
                 } else {
-                    listViewItems.add(new ItemObjects(noteTitle, noteContent, noteColor, noteLastUpdateDate, noteCreationDate));
+                    listViewItems.add(new ItemObjects(noteTitle, noteContent, noteLastFoto, noteColor, noteLastUpdateDate, noteCreationDate));
                     rcAdapter.notifyDataSetChanged();
                 }
 
@@ -249,6 +277,7 @@ public class Dashboard extends AppCompatActivity
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
 
             JSONObject json = null;
             try {
@@ -299,9 +328,21 @@ public class Dashboard extends AppCompatActivity
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            String notePoto = null;
+            try {
+                if (json != null) {
+                    notePoto = json.getString("imageViewPhoto");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
-            if (secure)
-                listViewItems.add(new ItemObjects(noteTitle, noteContent, noteColor, noteLastUpdateDate, noteCreationDate));
+            if (secure) {
+
+                Log.d(TAG, "notePoto: " + notePoto);
+                listViewItems.add(new ItemObjects(noteTitle, noteContent, notePoto, noteColor,
+                        noteLastUpdateDate, noteCreationDate));
+            }
         }
         return listViewItems;
     }
@@ -355,48 +396,6 @@ public class Dashboard extends AppCompatActivity
     }
 
 
-    @SuppressLint("ResourceType")
-    private List<ItemObjects> getListItemData() {
-
-        listViewItems = new ArrayList<>();
-
-        listViewItems.add(new ItemObjects("", "Cat cat cat cat", getResources().getString(R.color.colorNoteRed)));
-        listViewItems.add(new ItemObjects("Lorem", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nullapariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", getResources().getString(R.color.colorNoteOrange)));
-        listViewItems.add(new ItemObjects("", "Length length length length", getResources().getString(R.color.colorNoteYellow)));
-        listViewItems.add(new ItemObjects("", "String string string string", getResources().getString(R.color.colorNoteGreen)));
-        listViewItems.add(new ItemObjects("", "Content content content content", getResources().getString(R.color.colorNoteCyan)));
-        listViewItems.add(new ItemObjects("", "Size size size size size size size size size size size", getResources().getString(R.color.colorNoteLightBlue)));
-        listViewItems.add(new ItemObjects("", "Char char char char char char char", getResources().getString(R.color.colorNoteDarkBlue)));
-        listViewItems.add(new ItemObjects("", "Dog dog dog dog dog dog", getResources().getString(R.color.colorNotePurple)));
-        listViewItems.add(new ItemObjects("", "Int hold dog cat hold hold hold cat hold hold dog hold int hold hold hold hold hold", getResources().getString(R.color.colorNotePink)));
-
-        listViewItems.add(new ItemObjects("", "test test test test test test", getResources().getString(R.color.colorNoteRed)));
-        listViewItems.add(new ItemObjects("Lorem", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nullapariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", getResources().getString(R.color.colorNoteOrange)));
-        listViewItems.add(new ItemObjects("Alkane", "Hello Markdown", R.drawable.one, getResources().getString(R.color.colorNoteYellow)));
-        listViewItems.add(new ItemObjects("Ethane", "Hello Markdown", getResources().getString(R.color.colorNoteGreen)));
-        listViewItems.add(new ItemObjects("Alkyne", "Hello Markdown", R.drawable.three, getResources().getString(R.color.colorNoteCyan)));
-        listViewItems.add(new ItemObjects("Benzene", "Hello Markdown", R.drawable.four, getResources().getString(R.color.colorNoteLightBlue)));
-        listViewItems.add(new ItemObjects("Amide", "Hello Markdown", R.drawable.one, getResources().getString(R.color.colorNoteDarkBlue)));
-        listViewItems.add(new ItemObjects("Amino Acid", "Hello Markdown", R.drawable.two, getResources().getString(R.color.colorNotePurple)));
-        listViewItems.add(new ItemObjects("Phenol", "Hello Markdown", getResources().getString(R.color.colorNotePink)));
-        listViewItems.add(new ItemObjects("Carbonxylic", "Hello Markdown", R.drawable.four, getResources().getString(R.color.colorNoteRed)));
-        listViewItems.add(new ItemObjects("Nitril", "Hello Markdown", R.drawable.one, getResources().getString(R.color.colorNoteOrange)));
-        listViewItems.add(new ItemObjects("Ether", "Hello Markdown", R.drawable.two, getResources().getString(R.color.colorNoteYellow)));
-        listViewItems.add(new ItemObjects("Ester", "Hello Markdown", R.drawable.three, getResources().getString(R.color.colorNoteGreen)));
-        listViewItems.add(new ItemObjects("Alcohol", "Hello Markdown", getResources().getString(R.color.colorNoteCyan)));
-        listViewItems.add(new ItemObjects("Title only", "", getResources().getString(R.color.colorNoteLightBlue)));
-        listViewItems.add(new ItemObjects("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "", getResources().getString(R.color.colorNoteDarkBlue)));
-        listViewItems.add(new ItemObjects("", "Content only", getResources().getString(R.color.colorNotePurple)));
-        listViewItems.add(new ItemObjects("", "Kkk", getResources().getString(R.color.colorNotePink)));
-        listViewItems.add(new ItemObjects("", "Kkkkkk", getResources().getString(R.color.colorNoteRed)));
-        listViewItems.add(new ItemObjects("", "Kkkkkkkkkk", getResources().getString(R.color.colorNoteOrange)));
-        listViewItems.add(new ItemObjects("", "Kkkkkkkkkkkkk", getResources().getString(R.color.colorNoteYellow)));
-        listViewItems.add(new ItemObjects("", "Kkkkkkkkkkkkkkkkkkk", getResources().getString(R.color.colorNoteGreen)));
-        listViewItems.add(new ItemObjects("", "Kkkkkkkkkkkkkkkkkkkkkkkk", getResources().getString(R.color.colorNoteCyan)));
-
-        return listViewItems;
-    }
-
     // Check for read in external storage
     public boolean checkPermissionForReadExternalStorage() {
 
@@ -445,17 +444,91 @@ public class Dashboard extends AppCompatActivity
         return true;
     }
 
+    private void prepareMenuData() {
+
+        MenuModel menuModel = new MenuModel("Android WebView Tutorial", true, false, ""); //Menu of Android Tutorial. No sub menus
+        headerList.add(menuModel);
+
+        if (!menuModel.hasChildren) {
+            childList.put(menuModel, null);
+        }
+
+        menuModel = new MenuModel("Java Tutorials", true, true, ""); //Menu of Java Tutorials
+        headerList.add(menuModel);
+        List<MenuModel> childModelsList = new ArrayList<>();
+        MenuModel childModel = new MenuModel("Core Java Tutorial", false, false, "https://www.journaldev.com/7153/core-java-tutorial");
+        childModelsList.add(childModel);
+
+        childModel = new MenuModel("Java FileInputStream", false, false, "https://www.journaldev.com/19187/java-fileinputstream");
+        childModelsList.add(childModel);
+
+        childModel = new MenuModel("Java FileReader", false, false, "https://www.journaldev.com/19115/java-filereader");
+        childModelsList.add(childModel);
+
+
+        if (menuModel.hasChildren) {
+            Log.d("API123", "here");
+            childList.put(menuModel, childModelsList);
+        }
+
+        childModelsList = new ArrayList<>();
+        menuModel = new MenuModel("Python Tutorials", true, true, ""); //Menu of Python Tutorials
+        headerList.add(menuModel);
+        childModel = new MenuModel("Python AST – Abstract Syntax Tree", false, false, "https://www.journaldev.com/19243/python-ast-abstract-syntax-tree");
+        childModelsList.add(childModel);
+
+        childModel = new MenuModel("Python Fractions", false, false, "https://www.journaldev.com/19226/python-fractions");
+        childModelsList.add(childModel);
+
+        if (menuModel.hasChildren) {
+            childList.put(menuModel, childModelsList);
+        }
+    }
+
+    private void populateExpandableList() {
+
+        expandableListAdapter = new ExpandableListAdapter(this, headerList, childList);
+        expandableListView.setAdapter(expandableListAdapter);
+
+        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+
+                if (headerList.get(groupPosition).isGroup) {
+                    if (!headerList.get(groupPosition).hasChildren) {
+
+                    }
+                }
+
+                return false;
+            }
+        });
+
+        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+
+                if (childList.get(headerList.get(groupPosition)) != null) {
+                    MenuModel model = childList.get(headerList.get(groupPosition)).get(childPosition);
+                    if (model.url.length() > 0) {
+
+                    }
+                }
+
+                return false;
+            }
+        });
+    }
+
 
 //for foto from camera
-
-
 
 
     private void fotoFromCameraCoise(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
             startSimpleNoteIntentForFoto(photoURI);
-        }else if (resultCode == RESULT_CANCELED) {
-            //TODO
+        } else if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_CANCELED) {
+
             Log.d(TAG, "Canceled");
         }
     }
@@ -467,7 +540,6 @@ public class Dashboard extends AppCompatActivity
         simpleNoteIntent.putExtra("photo", photo.toString());
         simpleNoteIntent.putExtra("title", "");
         simpleNoteIntent.putExtra("content", "");
-
         simpleNoteIntent.putExtra("color", getResources().getString(R.color.colorNoteDefault));
         simpleNoteIntent.putExtra("creationDate", "");
         simpleNoteIntent.putExtra("position", -1);
@@ -475,6 +547,28 @@ public class Dashboard extends AppCompatActivity
     }
 
 
+    //part of a code is taken from here: https://startandroid.ru/ru/uroki/vse-uroki-spiskom/138-urok-75-hranenie-dannyh-rabota-s-fajlami.html
+    private File writeFileSD() {
+        File sdPath = null;
+        // проверяем доступность SD
+        if (!Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED)) {
+            sdPath = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+
+            Log.d(TAG, "SD-карта не доступна: " + Environment.getExternalStorageState());
+        } else {
+            // получаем путь к SD
+            sdPath = Environment.getExternalStorageDirectory();
+            // добавляем свой каталог к пути
+            sdPath = new File(sdPath.getAbsolutePath() + "/" + "." + getPackageName() + "/" + Environment.DIRECTORY_PICTURES);
+            // создаем каталог
+            if (!sdPath.exists()) {
+                sdPath.mkdirs();
+            }
+            return sdPath;
+        }
+        return sdPath;
+    }
 
     private File createImageFile() throws IOException {
         // Create an image file name
@@ -485,7 +579,8 @@ public class Dashboard extends AppCompatActivity
             timeStamp = String.valueOf(System.currentTimeMillis());
         }
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File storageDir = writeFileSD();
+        Log.d(TAG, "storageDir: " + storageDir);
         File image = File.createTempFile(imageFileName, ".jpg", storageDir
         );
 
@@ -493,7 +588,6 @@ public class Dashboard extends AppCompatActivity
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
-
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
@@ -502,20 +596,20 @@ public class Dashboard extends AppCompatActivity
             File photoFile = null;
             try {
                 photoFile = createImageFile();
+
             } catch (IOException ex) {
                 // Error occurred while creating the File
-                Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Error occurred while creating the File!", Toast.LENGTH_SHORT).show();
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                photoURI = FileProvider.getUriForFile(this,
-                        "net.brigs.crm.provider",
+                photoURI = FileProvider.getUriForFile(this, "net.brigs.crm.provider",
                         photoFile);
+                Log.d(TAG, "photoURI: " + photoURI);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             }
         }
     }
-
 
 }

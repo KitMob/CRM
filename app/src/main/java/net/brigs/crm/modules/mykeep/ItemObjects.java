@@ -4,7 +4,7 @@ public class ItemObjects {
 
     private String  _title;
     private String  _content;
-    private int     _image;
+    private String     _image;
     private String  _color;
     private String  _lastUpdateDate;
     private String  _creationDate;
@@ -13,11 +13,11 @@ public class ItemObjects {
 
         _title = title;
         _content = content;
-        _image = -1;
+        _image = null;
         _color = color;
     }
 
-    public ItemObjects(String title, String content, int image, String color) {
+    public ItemObjects(String title, String content, String image, String color) {
 
         _title = title;
         _content = content;
@@ -34,7 +34,7 @@ public class ItemObjects {
         _creationDate = creationDate;
     }
 
-    ItemObjects(String title, String content, int image, String color, String lastUpdateDate, String creationDate) {
+    public ItemObjects(String title, String content, String image, String color, String lastUpdateDate, String creationDate) {
 
         _title = title;
         _content = content;
@@ -55,7 +55,7 @@ public class ItemObjects {
         return _color;
     }
 
-    int             getImage() {
+    String             getImage() {
         return _image;
     }
 
@@ -76,7 +76,7 @@ public class ItemObjects {
         _color = color;
     }
 
-    public void     setImage(int image) {
+    public void     setImage(String image) {
         _image = image;
     }
 

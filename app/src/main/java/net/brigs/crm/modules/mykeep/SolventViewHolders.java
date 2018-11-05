@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -41,6 +42,8 @@ public class SolventViewHolders extends RecyclerView.ViewHolder implements View.
         Toast.makeText(view.getContext(), "Clicked Position = " + getPosition(), Toast.LENGTH_SHORT).show();
 
         Intent simpleNoteEditionIntent = new Intent(view.getContext(), SimpleNoteCreation.class);
+
+        simpleNoteEditionIntent.putExtra("photo", image.getTag().toString());
         simpleNoteEditionIntent.putExtra("title", title.getText());
         simpleNoteEditionIntent.putExtra("content", content.getText());
         simpleNoteEditionIntent.putExtra("color", color);

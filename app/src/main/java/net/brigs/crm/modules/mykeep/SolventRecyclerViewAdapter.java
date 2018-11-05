@@ -3,7 +3,9 @@ package net.brigs.crm.modules.mykeep;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,11 +47,12 @@ public class SolventRecyclerViewAdapter extends RecyclerView.Adapter<SolventView
             holder.content.setHeight(0);
         }
 
-        if (_itemList.get(position).getImage() != -1) {
-            holder.image.setImageResource(_itemList.get(position).getImage());
+        if (_itemList.get(position).getImage() != null) {
+            holder.image.setImageURI(Uri.parse(_itemList.get(position).getImage()));
+            holder.image.setTag(_itemList.get(position).getImage().toString());
         }
 
-        if (_itemList.get(position).getImage() != -1 || (!holder.title.getText().toString().isEmpty() && holder.content.getText().toString().isEmpty())) {
+        if (_itemList.get(position).getImage() != null || (!holder.title.getText().toString().isEmpty() && holder.content.getText().toString().isEmpty())) {
 
             final float scale = _parent.getContext().getResources().getDisplayMetrics().density;
             int pixels = (int) (8 * scale + 0.5f);
