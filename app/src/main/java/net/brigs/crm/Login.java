@@ -103,12 +103,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Ru
                 String users = user.getUser();
                 Log.d(LOG_TAG, "true \n" + user.toString()); //TODO сохроняит и брать значение их БД
                 //  Toast.makeText(this,"Успех: \n" + users,Toast.LENGTH_LONG);
+                startActivity(new Intent(Login.this, Dashboard.class));
+
             }
             if (!success) {
                 //   Toast.makeText(this,"Не удача не верный логин или пароль \n",Toast.LENGTH_LONG);
                 Log.d(LOG_TAG, "false \n" + user.toString());
 
-                startActivity(new Intent(Login.this, Dashboard.class));
 
 
             }
