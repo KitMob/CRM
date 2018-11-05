@@ -123,7 +123,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Ru
 
     }
 
-
     private File writeFileSD(String applicationLogName) {
         File sdPath = null;
         Log.d(LOG_TAG, "writeFileSD ");

@@ -22,7 +22,7 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_dashboard"
         app:menu="@menu/activity_dashboard_drawer"
-        app:itemTextColor="@color/white"/>
+        app:itemTextColor="@color/white">
     <ExpandableListView
         android:id="@+id/dynamic"
         android:layout_width="match_parent"
@@ -31,5 +31,5 @@
         android:background="@android:color/white"
         android:dividerHeight="0dp"
         android:groupIndicator="@null" />
-
+    </android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>

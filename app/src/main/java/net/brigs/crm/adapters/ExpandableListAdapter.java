@@ -99,7 +99,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         return convertView;
     }
-
     @Override
     public boolean hasStableIds() {
         return false;

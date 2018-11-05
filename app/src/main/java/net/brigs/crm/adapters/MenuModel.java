@@ -1,6 +1,5 @@
 package net.brigs.crm.adapters;
 
-
 public class MenuModel {
 
     public String menuName, url;
