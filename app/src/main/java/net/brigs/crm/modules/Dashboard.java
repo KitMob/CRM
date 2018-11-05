@@ -28,10 +28,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+//import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import net.brigs.crm.R;
+import net.brigs.crm.adapters.ExpandableListAdapter;
+import net.brigs.crm.adapters.MenuModel;
 import net.brigs.crm.modules.mykeep.GridSpacingItemDecoration;
 import net.brigs.crm.modules.mykeep.ItemObjects;
 import net.brigs.crm.modules.mykeep.NewCheckboxNoteCreation.NewCheckboxNoteCreation;
@@ -51,6 +55,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -58,6 +63,11 @@ public class Dashboard extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     static final int REQUEST_TAKE_PHOTO = 2;
     private static final String TAG = "myLog";
+
+    ExpandableListAdapter expandableListAdapter;
+    ExpandableListView expandableListView;
+    List<MenuModel> headerList = new ArrayList<>();
+    HashMap<MenuModel, List<MenuModel>> childList = new HashMap<>();
 
     private Uri photoURI;
     private String mCurrentPhotoPath;
@@ -107,6 +117,9 @@ public class Dashboard extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
+        expandableListView = findViewById(R.id.dynamic);
+        prepareMenuData();
+        populateExpandableList();
 
         if (Build.VERSION.SDK_INT >= 23) {
             if (!checkPermissionForReadExternalStorage())
@@ -163,7 +176,7 @@ public class Dashboard extends AppCompatActivity
         createNewNoteChekboxNote.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("ResourceType")
             public void onClick(View v) {
-             //TODO create_new_checkbox_note
+                //TODO create_new_checkbox_note
                 Intent NewCheckboxNoteCreationNoteIntent = new Intent(getApplicationContext(), NewCheckboxNoteCreation.class);
                 NewCheckboxNoteCreationNoteIntent.putExtra("title", "");
                 NewCheckboxNoteCreationNoteIntent.putExtra("content", "");
@@ -227,8 +240,6 @@ public class Dashboard extends AppCompatActivity
             }
         }
     }
-
-
 
 
     // Load notes from internal storage
@@ -431,6 +442,82 @@ public class Dashboard extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void prepareMenuData() {
+
+        MenuModel menuModel = new MenuModel("Android WebView Tutorial", true, false, ""); //Menu of Android Tutorial. No sub menus
+        headerList.add(menuModel);
+
+        if (!menuModel.hasChildren) {
+            childList.put(menuModel, null);
+        }
+
+        menuModel = new MenuModel("Java Tutorials", true, true, ""); //Menu of Java Tutorials
+        headerList.add(menuModel);
+        List<MenuModel> childModelsList = new ArrayList<>();
+        MenuModel childModel = new MenuModel("Core Java Tutorial", false, false, "https://www.journaldev.com/7153/core-java-tutorial");
+        childModelsList.add(childModel);
+
+        childModel = new MenuModel("Java FileInputStream", false, false, "https://www.journaldev.com/19187/java-fileinputstream");
+        childModelsList.add(childModel);
+
+        childModel = new MenuModel("Java FileReader", false, false, "https://www.journaldev.com/19115/java-filereader");
+        childModelsList.add(childModel);
+
+
+        if (menuModel.hasChildren) {
+            Log.d("API123", "here");
+            childList.put(menuModel, childModelsList);
+        }
+
+        childModelsList = new ArrayList<>();
+        menuModel = new MenuModel("Python Tutorials", true, true, ""); //Menu of Python Tutorials
+        headerList.add(menuModel);
+        childModel = new MenuModel("Python AST – Abstract Syntax Tree", false, false, "https://www.journaldev.com/19243/python-ast-abstract-syntax-tree");
+        childModelsList.add(childModel);
+
+        childModel = new MenuModel("Python Fractions", false, false, "https://www.journaldev.com/19226/python-fractions");
+        childModelsList.add(childModel);
+
+        if (menuModel.hasChildren) {
+            childList.put(menuModel, childModelsList);
+        }
+    }
+
+    private void populateExpandableList() {
+
+        expandableListAdapter = new ExpandableListAdapter(this, headerList, childList);
+        expandableListView.setAdapter(expandableListAdapter);
+
+        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+
+                if (headerList.get(groupPosition).isGroup) {
+                    if (!headerList.get(groupPosition).hasChildren) {
+
+                    }
+                }
+
+                return false;
+            }
+        });
+
+        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+
+                if (childList.get(headerList.get(groupPosition)) != null) {
+                    MenuModel model = childList.get(headerList.get(groupPosition)).get(childPosition);
+                    if (model.url.length() > 0) {
+
+                    }
+                }
+
+                return false;
+            }
+        });
     }
 
 

@@ -12,7 +12,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <provider
@@ -27,7 +27,8 @@
 
         <activity
             android:name=".Login"
-            android:theme="@style/NoActionBar">
+            android:theme="@style/NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,9 +38,9 @@
         <activity
             android:name=".modules.Dashboard"
             android:screenOrientation="portrait" />
-        <activity android:name=".modules.mykeep.NoteCreation.SimpleNoteCreation" />
-        <activity android:name=".modules.mykeep.NewCheckboxNoteCreation.NewCheckboxNoteCreation" />
-        <activity android:name=".HttpClient.ShowLog" />
+        <activity android:name=".modules.mykeep.NoteCreation.SimpleNoteCreation"   android:screenOrientation="portrait"/>
+        <activity android:name=".modules.mykeep.NewCheckboxNoteCreation.NewCheckboxNoteCreation"   android:screenOrientation="portrait"/>
+        <activity android:name=".HttpClient.ShowLog"  android:screenOrientation="portrait" />
     </application>
 
 </manifest>

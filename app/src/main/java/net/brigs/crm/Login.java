@@ -24,6 +24,7 @@ import net.brigs.crm.HttpClient.client.AppendLog;
 import net.brigs.crm.HttpClient.client.Client;
 import net.brigs.crm.HttpClient.parser.JsonParser;
 import net.brigs.crm.HttpClient.parser.User;
+import net.brigs.crm.modules.Dashboard;
 
 import org.json.JSONException;
 
@@ -107,7 +108,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Ru
                 //   Toast.makeText(this,"Не удача не верный логин или пароль \n",Toast.LENGTH_LONG);
                 Log.d(LOG_TAG, "false \n" + user.toString());
 
-                startActivity(new Intent(Login.this, ShowLog.class));
+                startActivity(new Intent(Login.this, Dashboard.class));
 
 
             }
