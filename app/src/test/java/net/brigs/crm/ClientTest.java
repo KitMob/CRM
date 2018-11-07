@@ -27,7 +27,7 @@ public class ClientTest {
 
 
     @Test
-    public void POST_success_true() throws IOException {
+    public void POST_success_true() throws Exception {
 
         //before
         uri = "https://brigs.top/login";
@@ -50,7 +50,7 @@ public class ClientTest {
     }
 
     @Test
-    public void parser_success_true() throws IOException {
+    public void parser_success_true() throws Exception {
 
         //before
         uri = "https://brigs.top/login";
@@ -79,7 +79,7 @@ public class ClientTest {
     }
 
     @Test
-    public void parser_success_false() throws IOException {
+    public void parser_success_false() throws Exception {
 
         //before
         uri = "https://brigs.top/login";
@@ -108,7 +108,7 @@ public class ClientTest {
     }
 
     @Test
-    public void parser_success_get_users() throws IOException {
+    public void parser_success_get_users() throws Exception {
 
         //before
         uri = "https://brigs.top/login";
@@ -117,9 +117,10 @@ public class ClientTest {
         User user;
 
 
-        String rd = client.setPost(uri, email, password);
 
         try {
+            String rd = client.setPost(uri, email, password);
+
             user = new JsonParser().getUser(String.valueOf(rd));
 
 
@@ -141,7 +142,7 @@ public class ClientTest {
     }
 
     @Test
-    public void POST_success_false() throws IOException {
+    public void POST_success_false() throws Exception {
 
         //before
         uri = "https://brigs.top/login";

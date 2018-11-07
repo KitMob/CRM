@@ -2,33 +2,35 @@ package net.brigs.crm.HttpClient.client;
 
 import android.support.annotation.NonNull;
 
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Client {
 
 
-// cod get from http://automation-remarks.com/java-rest-client/
-
     @NonNull
-    public String setPost(String uri, String email, String password) throws IOException {
-        HttpClient client = new DefaultHttpClient();
-        HttpPost post = new HttpPost(uri);
-        List nameValuePairs = new ArrayList();//TODO optimization
-        nameValuePairs.add(new BasicNameValuePair("email", email)); //you can as many name value pair as you want in the list.
-        nameValuePairs.add(new BasicNameValuePair("password", password)); //you can as many name value pair as you want in the list.
-        post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+    public String setPost(String uri, String email, String password) throws Exception {
 
-        String response = client.execute(post,new BasicResponseHandler());
-        return response;
+        OkHttpClient client = new OkHttpClient();
+
+        FormBody formBody = new FormBody.Builder()
+                .add("email", email)
+                .add("password", password)
+                .build();
+
+        Request request = new Request.Builder()
+                .url(uri)
+                .post(formBody)
+                .build();
+
+        Response response = client.newCall(request).execute();
+        return response.body().string();
+
+
     }
 }
 

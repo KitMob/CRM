@@ -115,7 +115,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Ru
             }
 
 
-        } catch (JSONException | IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
