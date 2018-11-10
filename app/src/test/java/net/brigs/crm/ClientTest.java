@@ -8,8 +8,6 @@ import net.brigs.crm.HttpClient.parser.User;
 import org.json.JSONException;
 import org.junit.Test;
 
-import java.io.IOException;
-
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
@@ -62,7 +60,7 @@ public class ClientTest {
         String rd = client.setPost(uri, email, password);
 
         try {
-            user = new JsonParser().getUser(String.valueOf(rd));
+            user = new JsonParser().getLoginAnswer(String.valueOf(rd));
 
 
             //then
@@ -91,7 +89,7 @@ public class ClientTest {
         String rd = client.setPost(uri, email, password);
 
         try {
-            user = new JsonParser().getUser(String.valueOf(rd));
+            user = new JsonParser().getLoginAnswer(String.valueOf(rd));
 
 
             //then
@@ -121,12 +119,12 @@ public class ClientTest {
         try {
             String rd = client.setPost(uri, email, password);
 
-            user = new JsonParser().getUser(String.valueOf(rd));
+            user = new JsonParser().getLoginAnswer(String.valueOf(rd));
 
 
             //then
-            String excepted = "{\"id\":\"83\",";
-            String actual = user.getUser();
+            String excepted = "83";
+            String actual = user.getId().toString();
 
             actual = actual.split("\"hash\":")[0];
 

@@ -19,14 +19,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import net.brigs.crm.HttpClient.ShowLog;
 import net.brigs.crm.HttpClient.client.AppendLog;
 import net.brigs.crm.HttpClient.client.Client;
 import net.brigs.crm.HttpClient.parser.JsonParser;
 import net.brigs.crm.HttpClient.parser.User;
 import net.brigs.crm.modules.Dashboard;
-
-import org.json.JSONException;
 
 import java.io.File;
 import java.io.IOException;
@@ -80,7 +77,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Ru
 
     @Override
     public void run() {
-        this.pathname = writeFileSD(APPLICATION_LOG_NAME).getAbsolutePath() + APPLICATION_LOG_NAME;
+        this.pathname = writeFileSD().getAbsolutePath() + APPLICATION_LOG_NAME;
 
         Log.d(LOG_TAG, "Start trend");
         client = new Client();
@@ -90,17 +87,17 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Ru
         aut += "\n post to  uri: " + uri +
                 "\n email: " + email +
                 "\n password: " + password + "\n";
-
+         // TODO перенести в хенлер
         try {
             String rd = client.setPost(uri, email, password);
-            User user = new JsonParser().getUser(String.valueOf(rd));
+            User user = new JsonParser().getLoginAnswer(String.valueOf(rd));
             success = user.getSuccess();
 
             aut += "\n answer:" + user.toString();
             logFaille = appendLog.appendLog(aut, pathname);
 
             if (success) {
-                String users = user.getUser();
+                String users = user.toString();
                 Log.d(LOG_TAG, "true \n" + user.toString()); //TODO сохроняит и брать значение их БД
                 //  Toast.makeText(this,"Успех: \n" + users,Toast.LENGTH_LONG);
                 startActivity(new Intent(Login.this, Dashboard.class));
@@ -109,6 +106,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Ru
             if (!success) {
                 //   Toast.makeText(this,"Не удача не верный логин или пароль \n",Toast.LENGTH_LONG);
                 Log.d(LOG_TAG, "false \n" + user.toString());
+                //TODO сделать кнопку активной
+
 
 
 
@@ -124,7 +123,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Ru
 
     }
 
-    private File writeFileSD(String applicationLogName) {
+    private File writeFileSD() {
         File sdPath = null;
         Log.d(LOG_TAG, "writeFileSD ");
 
@@ -146,7 +145,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Ru
                 if (!sdPath.exists()) {
                     sdPath.mkdirs();
                 }
-                File sdFile = new File(sdPath, applicationLogName);
+                File sdFile = new File(sdPath, Login.APPLICATION_LOG_NAME);
                 try {
                     sdFile.createNewFile();
                 } catch (IOException e) {
@@ -232,6 +231,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Ru
 
 
         buttonAccept.setOnClickListener(this);
+        //TODO сделать кнопку не активной
 
 
     }

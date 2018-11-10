@@ -3,28 +3,34 @@ package net.brigs.crm.HttpClient.parser;
 import org.json.JSONException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 
 public class JsonParser {
 
     private boolean success;
-    private String user;
+    private JSONObject user;
+    private String id;
+    private String hash;
 
-    public User getUser(String response) throws JSONException{
+    public User getLoginAnswer(String response) throws JSONException {
         JSONParser parser = new JSONParser();
-        JSONObject in = null;
+        org.json.simple.JSONObject in = null;
         try {
-            in = (JSONObject) parser.parse(response);
-        } catch (ParseException e) {
+            in = (org.json.simple.JSONObject) parser.parse(response);
+        } catch (org.json.simple.parser.ParseException e) {
             e.printStackTrace();
         }
 
+
         success = (boolean) in.get("success");
 
-        if(success) {
-            user = in.get("user").toString();
+        if (success) {
+            user = (JSONObject) in.get("user");
+            id = user.get("id").toString();
+            hash = user.get("hash").toString();
+
         }
-        return new User(success, user);
+
+        return new User(success, id, hash);
     }
 }

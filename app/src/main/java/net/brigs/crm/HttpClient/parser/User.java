@@ -2,31 +2,28 @@ package net.brigs.crm.HttpClient.parser;
 
 public class User {
     private  boolean success;
-    private String user;
     private String id;
+    private String hash;
 
+
+
+    public User(boolean success, String id, String hash) {
+        this.success = success;
+        this.id = id;
+        this.hash = hash;
+    }
 
     public boolean getSuccess() {
         return success;
     }
 
-    public String getUser() {
-        return user;
+    public Object getId() {
+        return id;
     }
 
-
-    public User(boolean success, String user) {
-
-        this.success = success;
-        this.user = user;
-
+    public String getHash() {
+        return hash;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "success=" + success +
-                ", user='" + user + '\'' +
-                '}';
-    }
 }
+
