@@ -1,9 +1,9 @@
 package net.brigs.crm.HttpClient.parser;
 
+
 import org.json.JSONException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-
 
 public class JsonParser {
 
@@ -14,9 +14,9 @@ public class JsonParser {
 
     public User getLoginAnswer(String response) throws JSONException {
         JSONParser parser = new JSONParser();
-        org.json.simple.JSONObject in = null;
+        JSONObject in = null;
         try {
-            in = (org.json.simple.JSONObject) parser.parse(response);
+            in = (JSONObject) parser.parse(response);
         } catch (org.json.simple.parser.ParseException e) {
             e.printStackTrace();
         }
