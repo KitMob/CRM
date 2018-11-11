@@ -2,8 +2,8 @@ package net.brigs.crm;
 
 
 import net.brigs.crm.HttpClient.client.Client;
-import net.brigs.crm.HttpClient.parser.JsonParser;
-import net.brigs.crm.HttpClient.parser.User;
+import net.brigs.crm.HttpClient.client.parser.JsonParser;
+import net.brigs.crm.HttpClient.client.parser.User;
 
 import org.json.JSONException;
 import org.junit.Test;

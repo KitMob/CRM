@@ -1,4 +1,4 @@
-package net.brigs.crm.HttpClient.parser;
+package net.brigs.crm.HttpClient.client.parser;
 
 public class User {
     private  boolean success;

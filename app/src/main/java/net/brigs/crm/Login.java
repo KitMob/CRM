@@ -21,8 +21,8 @@ import android.widget.TextView;
 
 import net.brigs.crm.HttpClient.client.AppendLog;
 import net.brigs.crm.HttpClient.client.Client;
-import net.brigs.crm.HttpClient.parser.JsonParser;
-import net.brigs.crm.HttpClient.parser.User;
+import net.brigs.crm.HttpClient.client.parser.JsonParser;
+import net.brigs.crm.HttpClient.client.parser.User;
 import net.brigs.crm.modules.Dashboard;
 
 import java.io.File;
