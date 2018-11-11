@@ -1,5 +1,6 @@
 package net.brigs.crm;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,12 +19,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import net.brigs.crm.HttpClient.ShowLog;
 import net.brigs.crm.HttpClient.client.AppendLog;
 import net.brigs.crm.HttpClient.client.Client;
 import net.brigs.crm.HttpClient.client.parser.JsonParser;
 import net.brigs.crm.HttpClient.client.parser.User;
+import net.brigs.crm.HttpClient.data.HttpclientDbHelper;
 import net.brigs.crm.modules.Dashboard;
+
+import org.json.JSONException;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,6 +55,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Ru
     private File logFaille;
     private boolean success;
     private Thread thread;
+    private HttpclientDbHelper httpclientDbHelper;
 
 
     @Override
@@ -69,8 +76,35 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Ru
     }
 
 
+    @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
+            String rd = msg.obj.toString();
+            User user = null;
+            try {
+                user = new JsonParser().getLoginAnswer(String.valueOf(rd));
+
+                success = user.getSuccess();
+                if (success) {
+                    String users = user.getId().toString();
+                    Log.d(LOG_TAG, "true \n" + user.toString()); //TODO сохроняит и брать значение их БД
+                    Toast.makeText(Login.this,"Успех: \n" + users,Toast.LENGTH_LONG).show();//TODO разобратса с текстом в 9 андроиде
+                    startActivity(new Intent(Login.this, Dashboard.class));
+
+                }
+                if (!success) {
+                    Toast.makeText(Login.this,"Не удача не верный логин или пароль \n",Toast.LENGTH_LONG).show();
+                    buttonAccept.setEnabled(true);
+
+                    Log.d(LOG_TAG, "false \n" + user.toString());
+
+
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
 
         }
     };
@@ -78,48 +112,32 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Ru
     @Override
     public void run() {
         this.pathname = writeFileSD().getAbsolutePath() + APPLICATION_LOG_NAME;
+        Message message;
 
         Log.d(LOG_TAG, "Start trend");
         client = new Client();
         uri = "https://brigs.top/login";
 
 
-        aut += "\n post to  uri: " + uri +
-                "\n email: " + email +
-                "\n password: " + password + "\n";
-         // TODO перенести в хенлер
+        aut += "\n post to  uri: " + uri;
+
         try {
-            String rd = client.setPost(uri, email, password);
+            String rd = client.setPost(uri, email, password); //TODO сохроняит и брать значение их БД
             User user = new JsonParser().getLoginAnswer(String.valueOf(rd));
             success = user.getSuccess();
 
             aut += "\n answer:" + user.toString();
             logFaille = appendLog.appendLog(aut, pathname);
+            //                Log.d(LOG_TAG, "true \n" + user.toString());
 
-            if (success) {
-                String users = user.toString();
-                Log.d(LOG_TAG, "true \n" + user.toString()); //TODO сохроняит и брать значение их БД
-                //  Toast.makeText(this,"Успех: \n" + users,Toast.LENGTH_LONG);
-                startActivity(new Intent(Login.this, Dashboard.class));
-
-            }
-            if (!success) {
-                //   Toast.makeText(this,"Не удача не верный логин или пароль \n",Toast.LENGTH_LONG);
-                Log.d(LOG_TAG, "false \n" + user.toString());
-                //TODO сделать кнопку активной
-
-
-
-
-            }
+            message = handler.obtainMessage(0,0,0,rd);
+            handler.sendMessage(message);
 
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-
-        handler.sendEmptyMessage(0);
 
     }
 
@@ -231,7 +249,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Ru
 
 
         buttonAccept.setOnClickListener(this);
-        //TODO сделать кнопку не активной
+        httpclientDbHelper = new HttpclientDbHelper(this);
 
 
     }
@@ -239,6 +257,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Ru
 
     @Override
     public void onClick(View v) {
+        buttonAccept.setEnabled(false);
         email = emailLogin.getText().toString();
         password = passwordLogin.getText().toString();
 
