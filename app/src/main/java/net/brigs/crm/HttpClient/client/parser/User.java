@@ -25,5 +25,13 @@ public class User {
         return hash;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "success=" + success +
+                ", id='" + id + '\'' +
+                ", hash='" + hash + '\'' +
+                '}';
+    }
 }
 
