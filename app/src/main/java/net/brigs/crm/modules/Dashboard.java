@@ -371,6 +371,8 @@ public class Dashboard extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+
+        //TODO обработать
     }
 
     @Override
