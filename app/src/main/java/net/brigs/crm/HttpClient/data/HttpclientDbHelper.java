@@ -27,10 +27,10 @@ public class HttpclientDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String SQL_CREATE_LOGIN_TABLE = "CREATE TABLE " + HttpclientContract.LoginData.TABLE_NAME + " ("
+        String SQL_CREATE_LOGIN_TABLE = "CREATE TABLE " + HttpclientContract.LoginData.TABLE_NAME + "("
                 + HttpclientContract.LoginData._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + HttpclientContract.LoginData.COLUMN_SUCCESS + " INTEGER ,"
-                + HttpclientContract.LoginData.COLUMN_USER_ID + " TEXT , "
+                + HttpclientContract.LoginData.COLUMN_USER_ID + " INTEGER ,"
                 + HttpclientContract.LoginData.COLUMN_HASH + " TEXT );";
 
         db.execSQL(SQL_CREATE_LOGIN_TABLE);
