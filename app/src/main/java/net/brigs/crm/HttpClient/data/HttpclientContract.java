@@ -12,6 +12,6 @@ public final class HttpclientContract {
         public final static String _ID = BaseColumns._ID;
         public final static String COLUMN_SUCCESS = "success";
         public final static String COLUMN_HASH = "hash";
-        public final static String COLUMN_USER_ID = "UserId";
+        public final static String COLUMN_USER_ID = "userId";
     }
 }
