@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -40,7 +41,7 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class Login extends AppCompatActivity implements View.OnClickListener, Runnable {
 
-    public static final String APPLICATION_LOG_NAME = "application_log.txt";
+    public static final String APPLICATION_LOG_NAME = "application_log.txt";//TODO вынисли в AppendLog
     private final String LOG_TAG = "myLogs";
     private TextView emailLogin, passwordLogin;
     private Button buttonAccept;
@@ -114,6 +115,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Ru
     public void run() {
         this.pathname = writeFileSD().getAbsolutePath() + APPLICATION_LOG_NAME;
         Message message;
+        SQLiteDatabase database =  httpclientDbHelper.getWritableDatabase();
+        //TODO
+
 
         Log.d(LOG_TAG, "Start trend");
         client = new Client();
@@ -172,7 +176,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Ru
                     e.printStackTrace();
                 }
             }
-            return sdPath;
+            return sdPath; //TODO сделать обшим для лога
         }
 
 
@@ -248,7 +252,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Ru
         emailLogin = findViewById(R.id.login_edit_text_mail);
         passwordLogin = findViewById(R.id.login_edit_text_password);
         buttonAccept = findViewById(R.id.accept_but);
-
 
         buttonAccept.setOnClickListener(this);
         httpclientDbHelper = new HttpclientDbHelper(this);
