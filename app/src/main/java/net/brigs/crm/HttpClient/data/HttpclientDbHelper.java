@@ -34,17 +34,12 @@ public class HttpclientDbHelper extends SQLiteOpenHelper {
                 + HttpclientContract.LoginData.COLUMN_HASH + " TEXT );";
 
         db.execSQL(SQL_CREATE_LOGIN_TABLE);
-
+     //TODO add log
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        ClearTables(db, oldVersion, newVersion);
-
-    }
-
-    private void ClearTables(SQLiteDatabase db, int oldVersion, int newVersion) {
         aut += "SQLite: \n Обновляемся с версии " + oldVersion + " на версию " + newVersion;
         Log.w(LOG_TAG, "SQLite: \n Обновляемся с версии " + oldVersion + " на версию " + newVersion);
 
@@ -53,5 +48,8 @@ public class HttpclientDbHelper extends SQLiteOpenHelper {
 
         db.execSQL("DROP TABLE IF  EXISTS " + DATABASE_TABLE_Login_Data);
         onCreate(db);
+
     }
+
+
 }
