@@ -2,6 +2,7 @@ package net.brigs.crm;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -57,7 +58,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Ru
     private File logFaille;
     private boolean success;
     private Thread thread;
+
     private HttpclientDbHelper httpclientDbHelper;
+    private HttpclientContract httpclientContract;
+    private ContentValues contentValues;
 
 
     @Override
@@ -113,13 +117,21 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Ru
 
     @Override
     public void run() {
+        Log.d(LOG_TAG, "Start trend");
+
         this.pathname = writeFileSD().getAbsolutePath() + APPLICATION_LOG_NAME;
         Message message;
+
+
+        // создаем объект для данных
+        contentValues = new ContentValues();
+        httpclientContract = new HttpclientContract();
+        // подключаемся к БД
         SQLiteDatabase database =  httpclientDbHelper.getWritableDatabase();
         //TODO
 
 
-        Log.d(LOG_TAG, "Start trend");
+
         client = new Client();
         uri = "https://brigs.top/login";
 
@@ -131,10 +143,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Ru
             User user = new JsonParser().getLoginAnswer(String.valueOf(rd));
             success = user.getSuccess();
 
+            // подготовим данные для вставки в виде пар: наименование столбца - значение
+           // contentValues.put(httpclientContract.;
+
 
             aut += "\n answer:" + user.toString();
             logFaille = appendLog.appendLog(aut, pathname);
-            //                Log.d(LOG_TAG, "true \n" + user.toString());
 
             message = handler.obtainMessage(0,0,0,rd);
             handler.sendMessage(message);

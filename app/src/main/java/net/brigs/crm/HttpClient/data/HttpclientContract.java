@@ -7,7 +7,7 @@ public final class HttpclientContract {
     }
 
     public static final class LoginData {
-        public final static String TABLE_NAME = "login user info";
+        public final static String TABLE_NAME = "loginUserInfo";
 
         public final static String _ID = BaseColumns._ID;
         public final static String COLUMN_SUCCESS = "success";
