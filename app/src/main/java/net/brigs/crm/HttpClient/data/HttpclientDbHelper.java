@@ -15,7 +15,7 @@ public class HttpclientDbHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "httpclient.db";
 
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private String DATABASE_TABLE_Login_Data = HttpclientContract.LoginData.TABLE_NAME;
     private String aut;
@@ -30,7 +30,7 @@ public class HttpclientDbHelper extends SQLiteOpenHelper {
         String SQL_CREATE_LOGIN_TABLE = "CREATE TABLE " + HttpclientContract.LoginData.TABLE_NAME + "("
                 + HttpclientContract.LoginData._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + HttpclientContract.LoginData.COLUMN_SUCCESS + " INTEGER ,"
-                + HttpclientContract.LoginData.COLUMN_USER_ID + " INTEGER ,"
+                + HttpclientContract.LoginData.COLUMN_USER_ID + " TEXT ,"
                 + HttpclientContract.LoginData.COLUMN_HASH + " TEXT );";
 
         db.execSQL(SQL_CREATE_LOGIN_TABLE);

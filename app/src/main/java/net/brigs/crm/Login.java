@@ -60,7 +60,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Ru
     private Thread thread;
 
     private HttpclientDbHelper httpclientDbHelper;
-    private HttpclientContract httpclientContract;
     private ContentValues contentValues;
 
 
@@ -125,7 +124,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Ru
 
         // создаем объект для данных
         contentValues = new ContentValues();
-        httpclientContract = new HttpclientContract();
         // подключаемся к БД
         SQLiteDatabase database =  httpclientDbHelper.getWritableDatabase();
         //TODO
@@ -144,7 +142,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Ru
             success = user.getSuccess();
 
             // подготовим данные для вставки в виде пар: наименование столбца - значение
-           // contentValues.put(httpclientContract.;
+            contentValues.put(HttpclientContract.LoginData.COLUMN_SUCCESS,user.getSuccess());
+            contentValues.put(HttpclientContract.LoginData.COLUMN_HASH,user.getHash());
+            contentValues.put(HttpclientContract.LoginData.COLUMN_USER_ID,user.getId());
+
+            // вставляем запись и получаем ее ID
+            long rowID = database.insert(HttpclientContract.LoginData.TABLE_NAME, null, contentValues);
+            Log.d(LOG_TAG, "row inserted, ID = " + rowID);
+
+            // закрываем подключение к БД
+            httpclientDbHelper.close();
 
 
             aut += "\n answer:" + user.toString();

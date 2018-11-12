@@ -17,7 +17,7 @@ public class User {
         return success;
     }
 
-    public Object getId() {
+    public String getId() {
         return id;
     }
 
