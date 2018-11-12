@@ -26,6 +26,7 @@ import net.brigs.crm.HttpClient.client.AppendLog;
 import net.brigs.crm.HttpClient.client.Client;
 import net.brigs.crm.HttpClient.client.parser.JsonParser;
 import net.brigs.crm.HttpClient.client.parser.User;
+import net.brigs.crm.HttpClient.data.HttpclientContract;
 import net.brigs.crm.HttpClient.data.HttpclientDbHelper;
 import net.brigs.crm.modules.Dashboard;
 
@@ -125,6 +126,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Ru
             String rd = client.setPost(uri, email, password); //TODO сохроняит и брать значение их БД
             User user = new JsonParser().getLoginAnswer(String.valueOf(rd));
             success = user.getSuccess();
+
 
             aut += "\n answer:" + user.toString();
             logFaille = appendLog.appendLog(aut, pathname);
