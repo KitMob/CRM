@@ -72,6 +72,7 @@
     <string name="text_view_add_check_box"> add new point</string>
     <string name="permission_necessary">Доступ к хранилищу</string>
     <string name="storage_permission_is_encessary_to_wrote_event">для корректной работы приложения необходимо предоставить доступ к хранилищу</string>
+    <string name="close_app">Exit</string>
 
     <!-- Note colors -->
     <color name="colorNoteDefault">#FAFAFA</color>
