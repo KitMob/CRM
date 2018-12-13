@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="net.brigs.crm">
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -13,7 +14,8 @@
         android:label="@string/app_name"
 
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -35,12 +37,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".modules.Dashboard"
-            android:screenOrientation="portrait" />
-        <activity android:name=".modules.mykeep.NoteCreation.SimpleNoteCreation"   android:screenOrientation="portrait"/>
-        <activity android:name=".modules.mykeep.NewCheckboxNoteCreation.NewCheckboxNoteCreation"   android:screenOrientation="portrait"/>
+
         <activity android:name=".HttpClient.ShowLog"  android:screenOrientation="portrait" />
+        <activity android:name=".modules.MainActivity" />
     </application>
 
 </manifest>

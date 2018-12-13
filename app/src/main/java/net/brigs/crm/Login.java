@@ -21,13 +21,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import net.brigs.crm.HttpClient.ShowLog;
 import net.brigs.crm.HttpClient.client.AppendLog;
 import net.brigs.crm.HttpClient.client.Client;
 import net.brigs.crm.HttpClient.client.parser.JsonParser;
 import net.brigs.crm.HttpClient.client.parser.User;
 import net.brigs.crm.HttpClient.data.HttpclientDbHelper;
-import net.brigs.crm.modules.Dashboard;
+import net.brigs.crm.modules.MainActivity;
 
 import org.json.JSONException;
 
@@ -89,7 +88,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Ru
                     String users = user.getId().toString();
                     Log.d(LOG_TAG, "true \n" + user.toString()); //TODO сохроняит и брать значение их БД
                     Toast.makeText(Login.this,"Успех: \n" + users,Toast.LENGTH_LONG).show();//TODO разобратса с текстом в 9 андроиде
-                    startActivity(new Intent(Login.this, Dashboard.class));
+                    startActivity(new Intent(Login.this, MainActivity.class));
 
                 }
                 if (!success) {
